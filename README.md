@@ -1,1 +1,1 @@
-Trabajo final laboratorio IV - Aldinio Tomas, Nahuel Tolosa, Marina Orpianesi
+Trabajo final lab IV y metodologia - Tolosa, Orpianesi, Aldinio
