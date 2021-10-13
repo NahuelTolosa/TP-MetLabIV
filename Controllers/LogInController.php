@@ -9,7 +9,13 @@
         {
             $validation = $this->serchStudent($email);
 
-            if(!is_null($validation)){
+            if($email=ADMIN){
+
+                $_SESSION["user"]="admin";
+
+                require_once(VIEWS_PATH."admin-menu.php");
+            }
+            else if(!is_null($validation)){
                 
                 $_SESSION["studentId"]=  $validation->getStudentId();
                 $_SESSION["careerId"]= $validation->getCareerId();
