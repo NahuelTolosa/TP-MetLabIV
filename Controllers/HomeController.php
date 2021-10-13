@@ -3,9 +3,10 @@
 
     class HomeController
     {
-        public function Index($message = "")
+        public function Index()
         {
-            require_once(VIEWS_PATH."student-add.php");
+            $message="";
+            require_once(VIEWS_PATH."logIn.php");
         }        
     }
 ?>

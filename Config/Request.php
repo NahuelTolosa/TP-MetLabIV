@@ -9,6 +9,7 @@
         
         public function __construct()
         {
+            
             $url = filter_input(INPUT_GET, "url", FILTER_SANITIZE_URL);
 
             $urlArray = explode("/", $url);
@@ -39,8 +40,11 @@
                 else
                     $this->parameters = $urlArray;
             }
-            elseif ($_POST)
+            elseif ($_POST){
                 $this->parameters = $_POST;
+                unset($this->parameters["button"]);
+            }
+                
             
             if($_FILES)
             {
