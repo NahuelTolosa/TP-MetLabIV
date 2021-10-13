@@ -9,7 +9,3 @@ define("JS_PATH", FRONT_ROOT.VIEWS_PATH . "js/");
 define("API_URL_STUDENT", 'https://utn-students-api.herokuapp.com/api/Student');
 define("API_KEY", 'x-api-key: 4f3bceed-50ba-4461-a910-518598664c08');
 ?>
-
-
-
-
