@@ -23,7 +23,7 @@
                 $_SESSION["phoneNumber"]= $validation->getPhoneNumber();
                 $_SESSION["active"]=  $validation->getActive();
 
-                require_once(VIEWS_PATH."student-add.php");
+                require_once(VIEWS_PATH."student-menu.php");
             }
             else{
                 $message="No hay estudiantes registrados con ese Email";
