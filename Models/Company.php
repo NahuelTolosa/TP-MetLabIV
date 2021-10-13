@@ -2,10 +2,18 @@
 
 class Company{
 
+    private $idCompany;
     private $name;
     private $cuit;
     private $phoneNumber;
     private $email;
+    private $jobOffers = array();
+
+    function __construct()
+    {
+        //No es la forma mas óptima, pero sirve para esta primera entrega.
+        $this->idCompany = rand(100000,999999);
+    }
 
     public function getName()
     {
@@ -55,6 +63,29 @@ class Company{
         return $this;
     } 
 
+    public function getJobOffers()
+    {
+        return $this->jobOffers;
+    }
+
+    public function setJobOffers($jobOffers): self
+    {
+        $this->jobOffers = $jobOffers;
+
+        return $this;
+    }
+
+    public function getIdCompany()
+    {
+        return $this->idCompany;
+    }
+
+    public function setIdCompany($idCompany): self
+    {
+        $this->idCompany = $idCompany;
+
+        return $this;
+    }
 }
 
 ?>

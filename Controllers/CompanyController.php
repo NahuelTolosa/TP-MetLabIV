@@ -20,7 +20,7 @@
 
         public function ShowListView()
         {
-            // $studentList = $this->studentDAO->GetAll();
+            // $companyList = $this->companyDAO->GetAll();
 
             // require_once(VIEWS_PATH."company-list.php");
         }
