@@ -27,14 +27,14 @@
 
         public function Add($recordId, $firstName, $lastName)
         {
-            $student = new Student();
+           /* $student = new Student();
             $student->setRecordId($recordId);
             $student->setfirstName($firstName);
             $student->setLastName($lastName);
 
-            $this->studentDAO->Add($student);
+            $this->studentDAO->Add();
 
-            $this->ShowAddView();
+            $this->ShowAddView();*/
         }
 
         public function ShowPersonalInfo(){
