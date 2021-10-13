@@ -20,7 +20,7 @@
         public function GetAll()
         {
             $this->RetrieveData();
-
+            
             return $this->studentList;
         }
 
@@ -44,24 +44,34 @@
 
         private function RetrieveData()
         {
-            $this->studentList = array();
+            
+            $apiStudent = curl_init();
 
-            if(file_exists('Data/students.json'))
+            curl_setopt($apiStudent, CURLOPT_URL, API_URL_STUDENT);
+            curl_setopt($apiStudent, CURLOPT_HTTPHEADER, array(API_KEY));
+            curl_setopt($apiStudent, CURLOPT_RETURNTRANSFER, true);
+            
+            $arrayToDecode =json_decode(curl_exec($apiStudent), true);
+            
+            foreach($arrayToDecode as $valuesArray)
             {
-                $jsonContent = file_get_contents('Data/students.json');
+                $student = new Student();
+                $student->setStudentId($valuesArray["studentId"]);
+                $student->setCareerId($valuesArray["careerId"]);
+                $student->setFirstName($valuesArray["firstName"]);
+                $student->setLastName($valuesArray["lastName"]);
+                $student->setDni($valuesArray["dni"]);
+                $student->setFileNumber($valuesArray["fileNumber"]);
+                $student->setGender($valuesArray["gender"]);
+                $student->setBirthDate($valuesArray["birthDate"]);
+                $student->setEmail($valuesArray["email"]);
+                $student->setPhoneNumber($valuesArray["phoneNumber"]);
+                $student->setActive($valuesArray["active"]);
 
-                $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
 
-                foreach($arrayToDecode as $valuesArray)
-                {
-                    $student = new Student();
-                    $student->setRecordId($valuesArray["recordId"]);
-                    $student->setFirstName($valuesArray["firstName"]);
-                    $student->setLastName($valuesArray["lastName"]);
-
-                    array_push($this->studentList, $student);
-                }
+                array_push($this->studentList, $student);
             }
+            
         }
     }
 ?>
