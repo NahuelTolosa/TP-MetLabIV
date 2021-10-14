@@ -28,7 +28,7 @@
         public function Add($recordId, $firstName, $lastName)
         {
             $student = new Student();
-            $student->setRecordId($recordId);
+            $student->setStudentId($recordId);
             $student->setfirstName($firstName);
             $student->setLastName($lastName);
 

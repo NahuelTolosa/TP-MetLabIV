@@ -3,13 +3,11 @@
 use Models\Company as Company;
 use DAO\JobOfferDAO as JobOfferDAO;
 
-class CompanyDAO{
-
+class CompanyDAO implements IDAO{
 
     private $companyList = array();
 
-
-    public function Add(Company $company)
+    public function Add($company)
     {
         $this->RetrieveData();
             
@@ -18,7 +16,6 @@ class CompanyDAO{
         $this->SaveData();
     }
 
-
     public function GetAll()
     {
         $this->RetrieveData();
@@ -26,7 +23,16 @@ class CompanyDAO{
         return $this->companyList;
     }
 
+    public function Delete($object) //ToDO
+    {
+        
+    }
 
+    public function Update($object) //ToDo
+    {
+        
+    }
+    
     private function SaveData()
         {
             $arrayToEncode = array();
