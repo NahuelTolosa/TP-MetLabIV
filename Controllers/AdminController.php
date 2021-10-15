@@ -1,6 +1,7 @@
 <?php
 namespace Controllers;
 
+use Models\Company;
 use Models\Student as Student;
 
     /*
@@ -16,11 +17,11 @@ use Models\Student as Student;
 
     class AdminController
     {
-        private $adminDAO; 
+        private $companyController;
 
         public function __construct()
         {
-            
+            $companyController = new CompanyController();
         }
 
         public function ShowAddOfferView()
@@ -61,6 +62,21 @@ use Models\Student as Student;
 
         public function ShowPersonalInfo(){
             require_once(VIEWS_PATH."student-showPersonalInfo.php");
+        }
+
+        public function AddCompany(){
+            $name = $_POST["name"];
+            $cuit = $_POST["cuit"];
+            $phone = $_POST["phoneNumber"];
+            $email = $_POST["email"];
+
+            $this->companyController->Add($name, $cuit, $phone, $email);
+        }
+
+        public function DeleteCompany(){
+            $companiesDeleted = array();
+            $companyId = $_POST["companyId"];
+            $this->companyController->Delete($companyId);
         }
     }
 ?>

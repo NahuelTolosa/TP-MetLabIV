@@ -18,7 +18,7 @@
             // require_once(VIEWS_PATH."company-add.php");
         }
 
-        public function ShowListView()
+        public function ShowListView($message="")
         {
             $companyList = $this->companyDAO->GetAll();
 
@@ -33,9 +33,24 @@
             $company->setPhoneNumber($phoneNumber);
             $company->setEmail($email);
 
-            // $this->companyDAO->Add($company);
+            $this->companyDAO->Add($company);
 
             $this->ShowAddView();
+        }
+
+        public function Delete($companyId){
+            if($companyDAO->idExist($companyId)){
+                $companyDAO->Delete($companyId);
+                $message = "Delete successful";
+                $this->ShowListView($message);
+            }else{
+                $message = "ERROR 404";
+                $this->ShowListView($message);
+            }
+        }
+
+        public function Update($name, $cuit, $phoneNumber, $email){
+           //ToDo
         }
     }
 ?>
