@@ -1,7 +1,6 @@
 <?php
 namespace Controllers;
 
-use DAO\AdminDAO as AdminDAO;
 use Models\Student as Student;
 
     /*
@@ -21,7 +20,7 @@ use Models\Student as Student;
 
         public function __construct()
         {
-            $this->adminDAO = new AdminDAO();
+            
         }
 
         public function ShowAddOfferView()
