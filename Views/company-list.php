@@ -27,7 +27,7 @@ else
                                                             echo $company->getName();
 
                                                             if($_SESSION['user']=='admin'){
-                                                                echo "<a href='".FRONT_ROOT."Company/ShowDeleteView/'> Modificar </a>";
+                                                                echo "<a href='".FRONT_ROOT."Company/ShowModify/".$company->getIdCompany()."'> Modificar </a>";
                                                                 echo "<a href='".FRONT_ROOT."Company/ShowDeleteView/".$company->getName()."/".$company->getIdCompany()."'> Dar de baja </a>";
                                                             }
                                                             

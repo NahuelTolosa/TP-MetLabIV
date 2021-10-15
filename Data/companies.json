@@ -9,9 +9,9 @@
     },
     {
         "idCompany": 234567,
-        "name": "Company 2",
-        "cuit": 81987654321,
-        "phoneNumber": 2235777777,
+        "name": "poe",
+        "cuit": "81987654321",
+        "phoneNumber": "2235777777",
         "email": "company2@meail.com",
         "isActive": true
     },
@@ -29,7 +29,7 @@
         "cuit": "987456321456",
         "phoneNumber": "2234568713",
         "email": "company4@mail.com",
-        "isActive": true
+        "isActive": false
     },
     {
         "idCompany": 474874,
@@ -45,6 +45,30 @@
         "cuit": "321546987302",
         "phoneNumber": "2238794613",
         "email": "company6@mail.com",
+        "isActive": true
+    },
+    {
+        "idCompany": 284211,
+        "name": "asd",
+        "cuit": "132132",
+        "phoneNumber": "123132",
+        "email": "asd@mail.com",
+        "isActive": true
+    },
+    {
+        "idCompany": 726069,
+        "name": "Company88",
+        "cuit": "81987654321",
+        "phoneNumber": "2235777777",
+        "email": "company2@meail.com",
+        "isActive": true
+    },
+    {
+        "idCompany": 366170,
+        "name": "Company77",
+        "cuit": "81987654321",
+        "phoneNumber": "2235777777",
+        "email": "company2@meail.com",
         "isActive": true
     }
 ]
