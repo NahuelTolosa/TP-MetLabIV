@@ -5,7 +5,7 @@
         "cuit": 13245678910,
         "phoneNumber": 2235111111,
         "email": "company1@meail.com",
-        "isActive": true
+        "isActive": false
     },
     {
         "idCompany": 234567,
@@ -38,5 +38,13 @@
         "phoneNumber": "2236324598",
         "email": "company5@mail.com",
         "isActive": false
+    },
+    {
+        "idCompany": 708691,
+        "name": "Company 6",
+        "cuit": "321546987302",
+        "phoneNumber": "2238794613",
+        "email": "company6@mail.com",
+        "isActive": true
     }
 ]
