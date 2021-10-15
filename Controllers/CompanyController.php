@@ -15,7 +15,7 @@
 
         public function ShowAddView()
         {
-            // require_once(VIEWS_PATH."company-add.php");
+            require_once(VIEWS_PATH."company-add.php");
         }
 
         public function ShowListView($message="")
@@ -37,9 +37,11 @@
             $company->setPhoneNumber($phoneNumber);
             $company->setEmail($email);
 
-            // $this->companyDAO->Add($company);
+             $this->companyDAO->Add($company);
 
-            $this->ShowAddView();
+            $message = "<h4 style='color: #072'>Compañía dada de alta con éxito</h4>";
+
+            $this->ShowListView($message);
         }
 
         public function DeleteCompany($companyID){
