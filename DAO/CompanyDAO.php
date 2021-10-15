@@ -23,14 +23,32 @@ class CompanyDAO implements IDAO{
         return $this->companyList;
     }
 
-    public function Delete($object) //ToDO
+    public function Delete($idObject) //actualizo json sin company, pero me queda una lista de companydeleted sin json
     {
+        $companiesDeleted = array();
+        $this->RetrieveData();
         
+        foreach($this->companyList as $company){
+            if($idObject == $company->getIdCompany()){
+                $company->setIsActive = false;
+                array_push($companiesDeleted, $company);
+            }
+        }
+        $this->SaveData();        
     }
 
-    public function Update($object) //ToDo
+    public function Update($object) 
     {
+        $companyList = array();
+        $this->RetrieveData();
         
+        foreach($this->companyList as $company){
+            if($company->getIdCompany() == $object->getIdCompany()){
+                $company = $object;
+            }                      
+            array_push($companyList, $company);                                            
+        }
+        $this->SaveData();
     }
     
     private function SaveData()
@@ -73,14 +91,32 @@ class CompanyDAO implements IDAO{
 
                 $offerDAO = new JobOfferDAO();
 
-                //$company->setJobOffers($offerDAO->getOffersByID($company->getIdCompany()));
+                $company->setJobOffers($offerDAO->getOffersByID($company->getIdCompany()));
 
                 array_push($this->companyList, $company);
             }
         }
     }
 
-    
+    public function idExist($idToValidate){
+        $companies = $this->GetAll();
+        foreach($companies as $company){
+            if($idToValidate == $company->getIdCompany()){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function nameCompanyExist($name){
+        $companies = $this->GetAll();
+        foreach($companies as $company){
+            if($name == $company->getName()){
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
 ?>
