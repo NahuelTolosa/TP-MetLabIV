@@ -8,6 +8,7 @@
         private $description;
         private $salary;
         private $active;
+        private $postulations= array();
 
         /**
          * Get the value of idCompany
@@ -104,6 +105,26 @@
         public function setActive($active): self
         {
                 $this->active = $active;
+
+                return $this;
+        }
+
+        /**
+         * Get the value of postulations
+         */ 
+        public function getPostulations()
+        {
+                return $this->postulations;
+        }
+
+        /**
+         * Set the value of postulations
+         *
+         * @return  self
+         */ 
+        public function setPostulations($postulations)
+        {
+                $this->postulations = $postulations;
 
                 return $this;
         }

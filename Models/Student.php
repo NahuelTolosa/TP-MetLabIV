@@ -150,6 +150,16 @@
 
                 return $this;
         }
+
+        public function isActive(){
+                if($this->getActive())
+                {
+                        return "Activo";
+                }
+                else{
+                        return "Inactivo";
+                }
+        }
     }
 ?>
 

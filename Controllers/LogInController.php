@@ -9,13 +9,13 @@
         {
             $validation = $this->serchStudent($email);
 
-            if($email=ADMIN){
+             if($email==ADMIN){
 
                 $_SESSION["user"]="admin";
 
                 require_once(VIEWS_PATH."admin-menu.php");
             }
-            else if(!is_null($validation)){
+             if(!is_null($validation)){
                 
                 $_SESSION["studentId"]=  $validation->getStudentId();
                 $_SESSION["careerId"]= $validation->getCareerId();
@@ -29,10 +29,10 @@
                 $_SESSION["phoneNumber"]= $validation->getPhoneNumber();
                 $_SESSION["active"]=  $validation->getActive();
 
-                require_once(VIEWS_PATH."student-menu.php");
+                require_once(VIEWS_PATH."student-showPersonalInfo.php");
             }
             else{
-                $message="No hay estudiantes registrados con ese Email";
+                $message="No hay usuarios registrados con ese Email";
                 require_once(VIEWS_PATH."logIn.php");
             }
 
@@ -52,6 +52,13 @@
                 }
             }
             return null;
+        }
+
+        public function LogOut()
+        {
+            session_destroy();
+            $message= "";
+            require_once(VIEWS_PATH."logIn.php");
         }
     }
     

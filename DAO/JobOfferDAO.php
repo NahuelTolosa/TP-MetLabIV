@@ -26,24 +26,24 @@ class JobOfferDAO{
 
 
     private function SaveData()
+    {
+        $arrayToEncode = array();
+
+        foreach($this->offersList as $offer)
         {
-            $arrayToEncode = array();
+            $valuesArray["idCompany"] = $offer->getIdCompany();
+            $valuesArray["creationDate"] = $offer->getCreationDate();
+            $valuesArray["description"] = $offer->getDescription();
+            $valuesArray["salary"] = $offer->getSalary();
+            $valuesArray["active"] = $offer->isActive();
 
-            foreach($this->offersList as $offer)
-            {
-                $valuesArray["idCompany"] = $offer->getIdCompany();
-                $valuesArray["creationDate"] = $offer->getCreationDate();
-                $valuesArray["description"] = $offer->getDescription();
-                $valuesArray["salary"] = $offer->getSalary();
-                $valuesArray["active"] = $offer->isActive();
-
-                array_push($arrayToEncode, $valuesArray);
-            }
-
-            $jsonContent = json_encode($arrayToEncode, JSON_PRETTY_PRINT);
-            
-            file_put_contents('Data/companies.json', $jsonContent);
+            array_push($arrayToEncode, $valuesArray);
         }
+
+        $jsonContent = json_encode($arrayToEncode, JSON_PRETTY_PRINT);
+        
+        file_put_contents('Data/companies.json', $jsonContent);
+    }
 
 
     private function RetrieveData()
@@ -82,6 +82,11 @@ class JobOfferDAO{
         }
 
         return $response;
+    }
+
+    public function getPostulations()
+    {
+        
     }
 }
 

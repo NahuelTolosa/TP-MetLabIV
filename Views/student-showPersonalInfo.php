@@ -1,5 +1,8 @@
 <?php
-    require_once('student-nav.php');
+
+use DAO\CompanyDAO;
+
+require_once('student-nav.php');
 ?>
 <main class="py-5">
     <section id="listado" class="mb-5">
@@ -17,8 +20,26 @@
                         <tr><td><strong>Fecha de nacimiento: </strong> <?php echo $_SESSION["birthDate"] ?></td><tr>
                         <tr><td><strong>Mail: </strong><?php echo $_SESSION["email"] ?></td><tr>
                         <tr><td><strong>Numero de telefono:</strong> <?php echo $_SESSION["phoneNumber"] ?></td><tr>
-                        <tr><td><strong>Carrera:</strong> <?php echo $_SESSION["careerId"] ?></td><tr><!--levantar carrera desde json-->
-                        <tr><td><strong>Estado:</strong> <?php echo $_SESSION["active"] ?></td><tr>
+                        <tr><td><strong>Carrera:</strong>
+                         <?php
+                              use DAO\CarreerDAO as CarreerDAO;
+                              $careerDAO = new CarreerDAO();
+
+                              echo $_SESSION["careerId"]." - ". $careerDAO->getCareerByID($_SESSION['careerId'])
+
+                         ?>
+                    </td><tr><!--levantar carrera desde json-->
+                        <tr><td><strong>Estado:</strong>
+                         <?php
+                              if($_SESSION["active"])
+                              {
+                                      echo "Activo";
+                              }
+                              else{
+                                      echo "Inactivo";
+                              } 
+                          ?>
+                    </td><tr>
                    </tbody>
               </table>
          </div>
