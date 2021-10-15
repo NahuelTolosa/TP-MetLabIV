@@ -20,9 +20,9 @@
 
         public function ShowListView()
         {
-            // $companyList = $this->companyDAO->GetAll();
+            $companyList = $this->companyDAO->GetAll();
 
-            // require_once(VIEWS_PATH."company-list.php");
+            require_once(VIEWS_PATH."company-list.php");
         }
 
         public function Add($name, $cuit, $phoneNumber, $email)

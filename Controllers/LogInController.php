@@ -9,7 +9,7 @@
         {
             $validation = $this->serchStudent($email);
 
-            if($email=ADMIN){
+            if($email==ADMIN){
 
                 $_SESSION["user"]="admin";
 

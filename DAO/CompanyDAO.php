@@ -73,7 +73,7 @@ class CompanyDAO implements IDAO{
 
                 $offerDAO = new JobOfferDAO();
 
-                $company->setJobOffers($offerDAO->getOffersByID($company->getIdCompany()));
+                //$company->setJobOffers($offerDAO->getOffersByID($company->getIdCompany()));
 
                 array_push($this->companyList, $company);
             }
