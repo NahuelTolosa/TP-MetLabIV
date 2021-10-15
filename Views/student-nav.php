@@ -8,9 +8,15 @@
           </li>
           <li class="nav-item">
                <a class="nav-link" href="<?php echo FRONT_ROOT ?>Student/ShowListView">Listar Alumnos</a>
+
+          </li>      
+               
+          </li>     
+          <li class="nav-item">
+               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Company/ShowListView">Lista de Compañias</a>
           </li>      
           <li class="nav-item">
                <a class="nav-link" style="color: rgb(238, 238, 238);" href="<?php echo FRONT_ROOT ?>LogIn/LogOut">| <strong> Cerrar sesion</strong></a>
-          </li>        
+          </li>   
      </ul>
 </nav>

@@ -4,11 +4,11 @@
     use DAO\IStudentDAO as IStudentDAO;
     use Models\Student as Student;
 
-    class StudentDAO implements IStudentDAO
+    class StudentDAO implements IDAO
     {
         private $studentList = array();
 
-        public function Add(Student $student)
+        public function Add($student)
         {
             $this->RetrieveData();
             
@@ -24,6 +24,16 @@
             return $this->studentList;
         }
 
+        public function Delete($object) //ToDO
+        {
+            
+        }
+    
+        public function Update($object) //ToDo
+        {
+            
+        }
+        
         private function SaveData()
         {
             $arrayToEncode = array();

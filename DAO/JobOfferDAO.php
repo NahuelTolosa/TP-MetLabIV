@@ -2,12 +2,12 @@
 
 use Models\JobOffer as JobOffer;
 
-class JobOfferDAO{
+class JobOfferDAO implements IDAO{
 
     private $offersList = array();
 
 
-    public function Add(JobOffer $offer)
+    public function Add($offer)
     {
         $this->RetrieveData();
             
@@ -24,7 +24,16 @@ class JobOfferDAO{
         return $this->offersList;
     }
 
+    public function Delete($object) //ToDO
+    {
+        
+    }
 
+    public function Update($object) //ToDo
+    {
+        
+    }
+    
     private function SaveData()
     {
         $arrayToEncode = array();
