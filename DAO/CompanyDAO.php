@@ -40,7 +40,20 @@ class CompanyDAO implements IDAO{
 
     public function Update($object) //ToDo
     {
+        $this->RetrieveData();
         
+        foreach($this->companyList as $company){
+            if($company->getIdCompany() == $object->getIdCompany()){
+                
+            
+            $company->setName($object->getName());
+            $company->setCuit($object->getCuit());
+            $company->setPhoneNumber($object->getPhoneNumber());
+            $company->setEmail($object->getEmail());
+            }
+        }
+
+        $this->SaveData();
     }
     
     private function SaveData()
@@ -91,6 +104,17 @@ class CompanyDAO implements IDAO{
                 //$company->setJobOffers($offerDAO->getOffersByID($company->getIdCompany()));
 
                 array_push($this->companyList, $company);
+            }
+        }
+    }
+
+    public function GetByID($companyID)
+    {
+        $this->RetrieveData();
+
+        foreach($this->companyList as $company){ // Se puede cambiar a un for para retornar el indice
+            if($company->getIdCompany() == $companyID){
+                return $company;
             }
         }
     }

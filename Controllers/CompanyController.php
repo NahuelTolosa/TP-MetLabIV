@@ -31,27 +31,28 @@
 
         public function Add($name, $cuit, $phoneNumber, $email)
         {
+            if($this->doesCompanyExist($name,$cuit)){
+                
+                $message = "<h4 style='color: crimson'>Compañia ya registrada en el sistema</h4>";
+                
+            }
+            else {
+                
+                $company = new Company();
+                $company->setName($name);
+                $company->setCuit($cuit);
+                $company->setPhoneNumber($phoneNumber);
+                $company->setEmail($email);
+            
+                $this->companyDAO->Add($company);
+                $message = "<h4 style='color: #072'>Compañía dada de alta con éxito</h4>";
 
-            // if(!$this->doesCompanyExist($name,$cuit)){
+            }
 
-            //     $company = new Company();
-            //     $company->setName($name);
-            //     $company->setCuit($cuit);
-            //     $company->setPhoneNumber($phoneNumber);
-            //     $company->setEmail($email);
 
-            //     $this->companyDAO->Add($company);
-
-            // }else{
-
-            //     $this->companyDAO->Update($name,$cuit);
-
-            // }
             
 
-            // $message = "<h4 style='color: #072'>Compañía dada de alta con éxito</h4>";
-
-            // $this->ShowListView($message);
+            $this->ShowListView($message);
         }
 
         public function DeleteCompany($companyID){
@@ -63,19 +64,39 @@
 
         public function doesCompanyExist($name,$cuit)
         {
-            // foreach($this->companyDAO->GetAll() as $localCompany)
-            // {
-
-            //     if(!$localCompany->getIsActive()){
-            //         if($localCompany->getName()==$name && 
-            //            $localCompany->getCuit()==$cuit)
-            //         {
-            //             return true;
-            //         }
-            //     }
-            // }
-            // return false;
+            foreach($this->companyDAO->GetAll() as $localCompany)
+            {
+                if($localCompany->getName()==$name && 
+                    $localCompany->getCuit()==$cuit)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
+        public function ShowModify($companyID)
+        {   
+            $company = $this->companyDAO->GetByID($companyID);
+            
+            require_once(VIEWS_PATH."company-modify.php");
+        }
+
+        public function Update($idCompany, $name, $cuit, $phoneNumber, $email)
+        {   
+            $company = new Company();
+            $company->setIdCompany($idCompany);
+            $company->setName($name);
+            $company->setCuit($cuit);
+            $company->setPhoneNumber($phoneNumber);
+            $company->setEmail($email);
+
+            
+            $this->companyDAO->Update($company);
+
+            $message = "<h4 style='color: #072'>Compañía modificada con éxito</h4>";
+            
+            $this->ShowListView($message);
+        }
     }
 ?>
