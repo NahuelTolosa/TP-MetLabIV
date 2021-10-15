@@ -1,32 +1,14 @@
 <?php
 namespace Controllers;
 
-use DAO\AdminDAO as AdminDAO;
+use Models\Company;
 use Models\Student as Student;
-
-    /*
-        A. Administrar la información de las empresas. Puede ingresar nuevas
-           empresas a la aplicación, modificarlas o eliminar una empresa.
-
-        B. Cargar nuevas propuestas laborales en la plataforma.
-
-        C. Ver el alumno propuesto para una oferta laboral.
-
-        D. Crear nuevos usuarios dentro de la aplicación.
-    */
 
     class AdminController
     {
-        private $adminDAO; 
 
         public function __construct()
         {
-            $this->adminDAO = new AdminDAO();
-        }
-
-        public function ShowAddOfferView()
-        {
-            // require_once(VIEWS_PATH."jobOffer-add.php");
         }
 
         public function ShowAddCompanyView()

@@ -8,11 +8,13 @@ class Company{
     private $phoneNumber;
     private $email;
     private $jobOffers = array();
+    private $isActive;
 
     function __construct()
     {
         //No es la forma mas óptima, pero sirve para esta primera entrega.
         $this->idCompany = rand(100000,999999);
+        $this->isActive = true;
     }
 
     public function getName()
@@ -83,6 +85,18 @@ class Company{
     public function setIdCompany($idCompany): self
     {
         $this->idCompany = $idCompany;
+
+        return $this;
+    }
+
+    public function getIsActive()
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
 
         return $this;
     }
