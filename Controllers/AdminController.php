@@ -4,29 +4,11 @@ namespace Controllers;
 use Models\Company;
 use Models\Student as Student;
 
-    /*
-        A. Administrar la información de las empresas. Puede ingresar nuevas
-           empresas a la aplicación, modificarlas o eliminar una empresa.
-
-        B. Cargar nuevas propuestas laborales en la plataforma.
-
-        C. Ver el alumno propuesto para una oferta laboral.
-
-        D. Crear nuevos usuarios dentro de la aplicación.
-    */
-
     class AdminController
     {
-        private $companyController;
 
         public function __construct()
         {
-            $companyController = new CompanyController();
-        }
-
-        public function ShowAddOfferView()
-        {
-            // require_once(VIEWS_PATH."jobOffer-add.php");
         }
 
         public function ShowAddCompanyView()
@@ -62,21 +44,6 @@ use Models\Student as Student;
 
         public function ShowPersonalInfo(){
             require_once(VIEWS_PATH."student-showPersonalInfo.php");
-        }
-
-        public function AddCompany(){
-            $name = $_POST["name"];
-            $cuit = $_POST["cuit"];
-            $phone = $_POST["phoneNumber"];
-            $email = $_POST["email"];
-
-            $this->companyController->Add($name, $cuit, $phone, $email);
-        }
-
-        public function DeleteCompany(){
-            $companiesDeleted = array();
-            $companyId = $_POST["companyId"];
-            $this->companyController->Delete($companyId);
         }
     }
 ?>

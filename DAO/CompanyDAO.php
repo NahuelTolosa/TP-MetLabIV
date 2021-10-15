@@ -23,52 +23,47 @@ class CompanyDAO implements IDAO{
         return $this->companyList;
     }
 
-    public function Delete($idObject) //actualizo json sin company, pero me queda una lista de companydeleted sin json
+    public function Delete($companyID)
     {
-        $companiesDeleted = array();
         $this->RetrieveData();
-        
+
         foreach($this->companyList as $company){
-            if($idObject == $company->getIdCompany()){
-                $company->setIsActive = false;
-                array_push($companiesDeleted, $company);
+            
+            if($company->getIdCompany() == $companyID){
+                $company->setIsActive(false);
             }
+
         }
-        $this->SaveData();        
+
+        $this->SaveData();
     }
 
-    public function Update($object) 
+    public function Update($object) //ToDo
     {
-        $companyList = array();
-        $this->RetrieveData();
         
-        foreach($this->companyList as $company){
-            if($company->getIdCompany() == $object->getIdCompany()){
-                $company = $object;
-            }                      
-            array_push($companyList, $company);                                            
-        }
-        $this->SaveData();
     }
     
     private function SaveData()
+    {
+        $arrayToEncode = array();
+
+        foreach($this->companyList as $company)
         {
-            $arrayToEncode = array();
-
-            foreach($this->companyList as $company)
-            {
-                $valuesArray["name"] = $company->getName();
-                $valuesArray["cuit"] = $company->getCuit();
-                $valuesArray["phoneNumber"] = $company->getPhoneNumber();
-                $valuesArray["email"] = $company->getEmail();
-
-                array_push($arrayToEncode, $valuesArray);
-            }
-
-            $jsonContent = json_encode($arrayToEncode, JSON_PRETTY_PRINT);
             
-            file_put_contents('Data/companies.json', $jsonContent);
+            $valuesArray["idCompany"] = $company->getIdCompany();
+            $valuesArray["name"] = $company->getName();
+            $valuesArray["cuit"] = $company->getCuit();
+            $valuesArray["phoneNumber"] = $company->getPhoneNumber();
+            $valuesArray["email"] = $company->getEmail();
+            $valuesArray["isActive"] = $company->getIsActive();
+
+            array_push($arrayToEncode, $valuesArray);
         }
+
+        $jsonContent = json_encode($arrayToEncode, JSON_PRETTY_PRINT);
+        
+        file_put_contents('Data/companies.json', $jsonContent);
+    }
 
 
     private function RetrieveData()
@@ -84,39 +79,23 @@ class CompanyDAO implements IDAO{
             foreach($arrayToDecode as $valuesArray)
             {
                 $company = new Company();
+                $company->setIdCompany($valuesArray["idCompany"]);
                 $company->setName($valuesArray["name"]);
                 $company->setCuit($valuesArray["cuit"]);
                 $company->setPhoneNumber($valuesArray["phoneNumber"]);
                 $company->setEmail($valuesArray["email"]);
+                $company->setIsActive($valuesArray["isActive"]);
 
                 $offerDAO = new JobOfferDAO();
 
-                $company->setJobOffers($offerDAO->getOffersByID($company->getIdCompany()));
+                //$company->setJobOffers($offerDAO->getOffersByID($company->getIdCompany()));
 
                 array_push($this->companyList, $company);
             }
         }
     }
 
-    public function idExist($idToValidate){
-        $companies = $this->GetAll();
-        foreach($companies as $company){
-            if($idToValidate == $company->getIdCompany()){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public function nameCompanyExist($name){
-        $companies = $this->GetAll();
-        foreach($companies as $company){
-            if($name == $company->getName()){
-                return true;
-            }
-        }
-        return false;
-    }
+    
 }
 
 ?>
