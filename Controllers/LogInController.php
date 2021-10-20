@@ -17,7 +17,7 @@
                 require_once(VIEWS_PATH."admin-menu.php");
             }
              if(!is_null($validation)){
-                
+                $_SESSION['user']="student";
                 $_SESSION["studentId"]=  $validation->getStudentId();
                 $_SESSION["careerId"]= $validation->getCareerId();
                 $_SESSION["firstName"]= $validation->getFirstName();

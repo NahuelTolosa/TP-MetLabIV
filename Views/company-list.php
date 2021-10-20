@@ -14,6 +14,16 @@ else
                          <th style="text-align: center;">Nombre</th>
                     </thead>
                     <tbody>
+                        <form action="<?php echo FRONT_ROOT ?>Company/ShowFiltered" method= "get" class="bg-light-alpha p-5">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="logInMail"><strong>Busqueda por nombre</strong></label>
+                                    <input type="text" name="filtro" value="" class="form-control">
+                                    <button type="submit" name="button" style="display: block;" class="btn btn-dark ml-auto d-block" >Mostrar</button>
+                                    
+                                </div>
+                            </div>
+                        </form>
                             <?php
                                 foreach($companyList as $company)
                                 {

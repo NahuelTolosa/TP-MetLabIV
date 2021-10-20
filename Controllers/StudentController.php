@@ -40,5 +40,7 @@
         public function ShowPersonalInfo(){
             require_once(VIEWS_PATH."student-showPersonalInfo.php");
         }
+
+        
     }
 ?>
