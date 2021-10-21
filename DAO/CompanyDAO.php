@@ -99,10 +99,6 @@ class CompanyDAO implements IDAO{
                 $company->setEmail($valuesArray["email"]);
                 $company->setIsActive($valuesArray["isActive"]);
 
-                $offerDAO = new JobOfferDAO();
-
-                //$company->setJobOffers($offerDAO->getOffersByID($company->getIdCompany()));
-
                 array_push($this->companyList, $company);
             }
         }

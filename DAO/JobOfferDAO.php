@@ -41,17 +41,20 @@ class JobOfferDAO implements IDAO{
         foreach($this->offersList as $offer)
         {
             $valuesArray["idCompany"] = $offer->getIdCompany();
-            $valuesArray["creationDate"] = $offer->getCreationDate();
+            $valuesArray["tittle"] = $offer->getTittle();
+            $valuesArray["date"] = $offer->getDate();
             $valuesArray["description"] = $offer->getDescription();
             $valuesArray["salary"] = $offer->getSalary();
-            $valuesArray["active"] = $offer->isActive();
+            $valuesArray["time"] = $offer->getTime();
+            $valuesArray["postulations"] = $offer->getPostulations();
+            $valuesArray["active"] = $offer->getActive();
 
             array_push($arrayToEncode, $valuesArray);
         }
 
         $jsonContent = json_encode($arrayToEncode, JSON_PRETTY_PRINT);
         
-        file_put_contents('Data/companies.json', $jsonContent);
+        file_put_contents('Data/jobOffers.json', $jsonContent);
     }
 
 
@@ -59,9 +62,9 @@ class JobOfferDAO implements IDAO{
     {
         $this->offersList = array();
 
-        if(file_exists('Data/companies.json'))
+        if(file_exists('Data/jobOffers.json'))
         {
-            $jsonContent = file_get_contents('Data/companies.json');
+            $jsonContent = file_get_contents('Data/jobOffers.json');
 
             $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
 
@@ -69,28 +72,17 @@ class JobOfferDAO implements IDAO{
             {
                 $offer = new JobOffer();
                 $offer->setIdCompany($valuesArray["idCompany"]);
-                $offer->setCreationDate($valuesArray["creationDate"]);
+                $offer->setTittle($valuesArray["tittle"]);
+                $offer->setDate($valuesArray["date"]);
                 $offer->setDescription($valuesArray["description"]);
                 $offer->setSalary($valuesArray["salary"]);
+                $offer->setTime($valuesArray["time"]);
+                $offer->setPostulations($valuesArray["postulations"]);
                 $offer->setActive($valuesArray["active"]);
+
+                array_push($this->offersList,$offer);
             }
         }
-    }
-
-    public function getOffersByID($idCompany)
-    {
-        $this->RetrieveData();
-
-        $response = array();
-
-        foreach($this->offersList as $offer){
-
-            if($offer['idCompany'] == $idCompany)
-                array_push($response,$offer);
-
-        }
-
-        return $response;
     }
 
     public function getPostulations()

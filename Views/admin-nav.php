@@ -9,5 +9,11 @@
           <li class="nav-item">
                <a class="nav-link" href="<?php echo FRONT_ROOT ?>Company/ShowListView">Baja y Modificación de Empresas</a>
           </li>
+          <li class="nav-item">
+               <a class="nav-link" href="<?php echo FRONT_ROOT ?>JobOffer/ShowAddView">Alta de Oferta de Trabajo</a>
+          </li>
+          <li class="nav-item">
+               <a class="nav-link" href="<?php echo FRONT_ROOT ?>JobOffer/ShowListView">Baja y Modificación de Oferta de Trabajo</a>
+          </li>
      </ul>
 </nav>

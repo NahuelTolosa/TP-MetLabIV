@@ -10,14 +10,16 @@
             $validation = $this->serchStudent($email);
 
 
-            if($email==ADMIN){
+            if($email==ADMIN)
+            {
 
                 $_SESSION["user"]="admin";
 
                 require_once(VIEWS_PATH."admin-menu.php");
             }
-             if(!is_null($validation)){
-                
+            elseif(!is_null($validation))
+            {
+                $_SESSION["user"]="student";
                 $_SESSION["studentId"]=  $validation->getStudentId();
                 $_SESSION["careerId"]= $validation->getCareerId();
                 $_SESSION["firstName"]= $validation->getFirstName();
@@ -32,7 +34,8 @@
 
                 require_once(VIEWS_PATH."student-showPersonalInfo.php");
             }
-            else{
+            else
+            {
                 $message="No hay usuarios registrados con ese Email";
                 require_once(VIEWS_PATH."logIn.php");
             }

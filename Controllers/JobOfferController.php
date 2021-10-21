@@ -2,8 +2,9 @@
     namespace Controllers;
 
     use DAO\JobOfferDAO as JobOfferDAO;
+use Models\JobOffer;
 
-    class JobOfferController
+class JobOfferController
     {
         private $jobOfferDAO;
 
@@ -14,7 +15,7 @@
     
 
         /**************************************************************/
-        public function ShowAddView()
+        public function ShowAddView($message="")
         {
             require_once(VIEWS_PATH."jobOffer-add.php");
         }
@@ -28,20 +29,32 @@
         /**************************************************************/
 
 
-        public function ValidateCompany()
+        public function Add($tittle,$company,$description,$salary)
         {
-            if(true/*Si la empresa existe*/){
-                $this->Add();
+            $companyController = new CompanyController();
+
+            $company = $companyController->getCompany($_POST['company']);
+
+            $message="";
+
+            if($company != null){
+
+                $joboffer = new JobOffer();
+                $joboffer->setTittle($tittle);
+                $joboffer->setIdCompany($company->getIdCompany());
+                $joboffer->setDescription($description);
+                $joboffer->setSalary($salary);
+                $joboffer->setTime('a');
+
+                ($this->jobOfferDAO)->Add($joboffer);
+                $message = "<h4 style='color: #072'>Oferta de trabajo dada de alta con éxito</h4>";
             }else{
-                /*Mostrar mensaje de que no existe*/
-                require_once(VIEWS_PATH."jobOffer-add.php");
+                
+                $message = "<p style='color: #f00'>La empresa ingresada no existe en el sistema</p>";
+
             }
             
-        }
-
-        public function Add()
-        {
-            /*Agregar la oferta laboral*/
+            $this->ShowAddView($message);
         }
     }
     

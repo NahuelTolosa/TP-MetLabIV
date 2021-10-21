@@ -44,13 +44,10 @@
                 $company->setPhoneNumber($phoneNumber);
                 $company->setEmail($email);
             
-                $this->companyDAO->Add($company);
+                ($this->companyDAO)->Add($company);
                 $message = "<h4 style='color: #072'>Compañía dada de alta con éxito</h4>";
 
             }
-
-
-            
 
             $this->ShowListView($message);
         }
@@ -73,6 +70,17 @@
                 }
             }
             return false;
+        }
+
+        public function getCompany($name){
+            foreach($this->companyDAO->GetAll() as $localCompany)
+            {
+                if($localCompany->getName()==$name)
+                {
+                    return $localCompany;
+                }
+            }
+            return null;
         }
 
         public function ShowModify($companyID)
