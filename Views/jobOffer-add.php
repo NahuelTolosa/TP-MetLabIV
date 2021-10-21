@@ -4,37 +4,37 @@
 <main class="py-5">
      <section id="listado" class="mb-5">
           <div class="container">
-               <h2 class="mb-4">Agregar una nueva empresa al sistema</h2>
+               <h2 class="mb-4">Agregar una nueva oferta de trabajo</h2>
                <form action="<?php echo FRONT_ROOT ?>Company/Add" method="post" class="bg-light-alpha p-5">
-                    <div class="row">                         
+                    <div class="row">
                          <div class="col-lg-4">
                               <div class="form-group">
-                                   <label for="">Razon Social</label>
-                                   <input type="text" name="name" value="" class="form-control" placeholder="" required>
+                                   <label for="tittle">Titulo</label>
+                                   <input type="text" name="tittle" value="" class="form-control" placeholder='"titulo"' required>
                               </div>
                          </div>
                          <div class="col-lg-4">
                               <div class="form-group">
-                                   <label for="">CUIT</label>
-                                   <input type="number" name="cuit" value="" class="form-control" placeholder="" required>
+                                    <label for="company">Compania</label><!-- Hacer validacion de que exista la empresa -->
+                                   <input type="text" name="company" value="" class="form-control" placeholder="'Compania'" required>
                               </div>
                          </div>
                          <div class="col-lg-4">
                               <div class="form-group">
-                                   <label for="">Telefono</label>
-                                   <input type="number" name="phoneNumber" value="" class="form-control" placeholder="" required>
+                                   <label for="date">Fecha</label>
+                                   <input type="date" name="date" value="" class="form-control" placeholder="01/01/2000" required>
                               </div>
                          </div>
                          <div class="col-lg-4">
                               <div class="form-group">
-                                   <label for="">Contacto</label>
-                                   <input type="email" name="email" value="" class="form-control" placeholder="" required>
+                                   <label for="offer">Propuesta</label>
+                                   <input type="text" name="offer" value="" class="form-control" placeholder='"Ingrese su texto aqui"' required>
                               </div>
                          </div>
                          <div class="col-lg-4">
                               <div class="form-group">
-                                   <label for="time">Carga horaria</label>
-                                   <!-- Opciones -->
+                                   <label for="salary">Salario</label>
+                                   <input type="text" name="salary" value="0" class="form-control" placeholder=''>
                               </div>
                          </div>
                     </div>
