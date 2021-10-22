@@ -24,9 +24,19 @@ class JobOfferDAO implements IDAO{
         return $this->offersList;
     }
 
-    public function Delete($object) //ToDO
+    public function Delete($offerID)
     {
-        
+        $this->RetrieveData();
+
+        foreach($this->offersList as $offer){
+            
+            if($offer->getOfferID() == $offerID){
+                $offer->setActive(false);
+            }
+
+        }
+
+        $this->SaveData();
     }
 
     public function Update($object) //ToDo
@@ -40,12 +50,13 @@ class JobOfferDAO implements IDAO{
 
         foreach($this->offersList as $offer)
         {
+            $valuesArray["offerID"] = $offer->getOfferID();
             $valuesArray["idCompany"] = $offer->getIdCompany();
             $valuesArray["tittle"] = $offer->getTittle();
             $valuesArray["date"] = $offer->getDate();
             $valuesArray["description"] = $offer->getDescription();
             $valuesArray["salary"] = $offer->getSalary();
-            $valuesArray["time"] = $offer->getTime();
+            $valuesArray["workDay"] = $offer->getWorkDay();
             $valuesArray["postulations"] = $offer->getPostulations();
             $valuesArray["active"] = $offer->getActive();
 
@@ -71,17 +82,28 @@ class JobOfferDAO implements IDAO{
             foreach($arrayToDecode as $valuesArray)
             {
                 $offer = new JobOffer();
+                $offer->setOfferID($valuesArray["offerID"]);
                 $offer->setIdCompany($valuesArray["idCompany"]);
                 $offer->setTittle($valuesArray["tittle"]);
                 $offer->setDate($valuesArray["date"]);
                 $offer->setDescription($valuesArray["description"]);
                 $offer->setSalary($valuesArray["salary"]);
-                $offer->setTime($valuesArray["time"]);
+                $offer->setWorkDay($valuesArray["workDay"]);
                 $offer->setPostulations($valuesArray["postulations"]);
                 $offer->setActive($valuesArray["active"]);
 
                 array_push($this->offersList,$offer);
             }
+        }
+    }
+
+    public function GetByID($offerID)
+    {
+        $this->RetrieveData();
+
+        foreach($this->offersList as $offer){
+            if($offer->getOfferID() == $offerID)
+                return $offer;
         }
     }
 

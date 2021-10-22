@@ -5,12 +5,13 @@
 
     class JobOffer
     {
+        private $offerID;
         private $tittle;
         private $idCompany;
         private $date;
         private $description;
         private $salary;
-        private $time;
+        private $workDay;
         private $active;
         private $postulations= array();
 
@@ -18,6 +19,12 @@
         {
                 $this->active=true;
                 $this->date=date("d-m-Y");
+                $this->offerID=$this->generateID();
+        }
+
+        private function generateID(){
+                $str = "JO";
+                $str = $str.rand(100000,999999).chr(rand(ord('A'),ord('Z')));
         }
 
         /**
@@ -52,24 +59,6 @@
         public function setActive($active): self
         {
                 $this->active = $active;
-
-                return $this;
-        }
-
-        /**
-         * Get the value of time
-         */
-        public function getTime()
-        {
-                return $this->time;
-        }
-
-        /**
-         * Set the value of time
-         */
-        public function setTime($time): self
-        {
-                $this->time = $time;
 
                 return $this;
         }
@@ -169,6 +158,42 @@
     
                 return $companyController->getCompanyById($this->idCompany);
             }
+
+        /**
+         * Get the value of offerID
+         */
+        public function getOfferID()
+        {
+                return $this->offerID;
+        }
+
+        /**
+         * Set the value of offerID
+         */
+        public function setOfferID($offerID): self
+        {
+                $this->offerID = $offerID;
+
+                return $this;
+        }
+
+        /**
+         * Get the value of workDay
+         */
+        public function getWorkDay()
+        {
+                return $this->workDay;
+        }
+
+        /**
+         * Set the value of workDay
+         */
+        public function setWorkDay($workDay): self
+        {
+                $this->workDay = $workDay;
+
+                return $this;
+        }
     }
 
 ?>

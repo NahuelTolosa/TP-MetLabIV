@@ -78,7 +78,6 @@ class CompanyDAO implements IDAO{
         file_put_contents('Data/companies.json', $jsonContent);
     }
 
-
     private function RetrieveData()
     {
         $this->companyList = array();

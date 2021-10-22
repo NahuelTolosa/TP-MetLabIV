@@ -25,10 +25,18 @@
             require_once(VIEWS_PATH."company-list.php");
         }
 
-        public function ShowDeleteView($companyName,$companyID){
+        public function ShowDeleteView($companyName,$companyID)
+        {
             require_once(VIEWS_PATH."company-delete.php");
         }
-
+        
+        public function ShowModify($companyID)
+        {   
+            $company = $this->companyDAO->GetByID($companyID);
+            
+            require_once(VIEWS_PATH."company-modify.php");
+        }
+        
         public function Add($name, $cuit, $phoneNumber, $email)
         {
             if($this->doesCompanyExist($name,$cuit)){
@@ -52,13 +60,13 @@
             $this->ShowListView($message);
         }
 
-        public function DeleteCompany($companyID){
+        public function DeleteCompany($companyID)
+        {
             $this->companyDAO->Delete($companyID);
             $message = "<h4 style='color: #072'>Compañía dada de baja con éxito</h4>";
             $this->ShowListView($message);
         }
     
-
         public function doesCompanyExist($name,$cuit)
         {
             foreach($this->companyDAO->GetAll() as $localCompany)
@@ -72,7 +80,8 @@
             return false;
         }
 
-        public function getCompany($name){
+        public function getCompany($name)
+        {
             foreach($this->companyDAO->GetAll() as $localCompany)
             {
                 if($localCompany->getName()==$name)
@@ -83,7 +92,8 @@
             return null;
         }
 
-        public function getCompanyById($id){
+        public function getCompanyById($id)
+        {
             foreach($this->companyDAO->GetAll() as $localCompany)
             {
                 if($localCompany->getIdCompany()==$id)
@@ -93,14 +103,7 @@
             }
             return null;
         }
-
-        public function ShowModify($companyID)
-        {   
-            $company = $this->companyDAO->GetByID($companyID);
-            
-            require_once(VIEWS_PATH."company-modify.php");
-        }
-
+        
         public function Update($idCompany, $name, $cuit, $phoneNumber, $email)
         {   
             $company = new Company();

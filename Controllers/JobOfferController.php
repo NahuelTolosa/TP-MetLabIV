@@ -26,10 +26,22 @@ class JobOfferController
 
             require_once(VIEWS_PATH."jobOffer-list.php");
         }
+
+        public function ShowDeleteView($tittle,$offerID){
+            require_once(VIEWS_PATH."jobOffer-delete.php");
+        }
+        
+        public function ShowModify($offerID)
+        {   
+            $jobOffer = ($this->jobOfferDAO)->GetByID($offerID);
+            
+            require_once(VIEWS_PATH."jobOffer-modify.php");
+        }
+
         /**************************************************************/
 
 
-        public function Add($tittle,$company,$description,$salary)
+        public function Add($tittle,$company,$description,$salary/*agregar workDay*/)
         {
             $companyController = new CompanyController();
 
@@ -44,7 +56,7 @@ class JobOfferController
                 $joboffer->setIdCompany($company->getIdCompany());
                 $joboffer->setDescription($description);
                 $joboffer->setSalary($salary);
-                $joboffer->setTime('a');
+                $joboffer->setWorkDay('a');
 
                 ($this->jobOfferDAO)->Add($joboffer);
                 $message = "<h4 style='color: #072'>Oferta de trabajo dada de alta con éxito</h4>";
@@ -55,6 +67,13 @@ class JobOfferController
             }
             
             $this->ShowAddView($message);
+        }
+
+        public function DeleteOffer($offerID)
+        {
+            $this->jobOfferDAO->Delete($offerID);
+            $message = "<h4 style='color: #072'>Oferta laboral dada de baja con éxito</h4>";
+            $this->ShowListView($message);
         }
 
     }
