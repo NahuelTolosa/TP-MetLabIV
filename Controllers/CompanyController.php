@@ -83,6 +83,17 @@
             return null;
         }
 
+        public function getCompanyById($id){
+            foreach($this->companyDAO->GetAll() as $localCompany)
+            {
+                if($localCompany->getIdCompany()==$id)
+                {
+                    return $localCompany;
+                }
+            }
+            return null;
+        }
+
         public function ShowModify($companyID)
         {   
             $company = $this->companyDAO->GetByID($companyID);

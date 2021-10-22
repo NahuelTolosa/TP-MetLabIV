@@ -22,7 +22,7 @@ class JobOfferController
 
         public function ShowListView($message="")
         {
-            $jobOfferList = $this->companyDAO->GetAll();
+            $jobOfferList = $this->jobOfferDAO->GetAll();
 
             require_once(VIEWS_PATH."jobOffer-list.php");
         }
@@ -56,6 +56,7 @@ class JobOfferController
             
             $this->ShowAddView($message);
         }
+
     }
     
 ?>

@@ -11,7 +11,7 @@ else
                <?php echo $message; ?>
                <table class="table bg-light-alpha">
                     <thead>
-                         <th style="text-align: center;">Nombre</th>
+                         <!-- <th style="text-align: center;">Nombre</th> -->
                     </thead>
                     <tbody>
                             <?php

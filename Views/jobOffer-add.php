@@ -14,25 +14,31 @@
                          <div class="col-lg-4">
                               <div class="form-group">
                                    <label for="tittle">Titulo</label>
-                                   <input type="text" name="tittle" value="" class="form-control" placeholder='"titulo"' required>
+                                   <input type="text" name="tittle" value="" class="form-control" placeholder='Titulo' required>
                               </div>
                          </div>
                          <div class="col-lg-4">
                               <div class="form-group">
                                     <label for="company">Compania</label>
-                                   <input type="text" name="company" value="" class="form-control" placeholder="'Compania'" required>
+                                   <input type="text" name="company" value="" class="form-control" placeholder='Compania' required>
                               </div>
                          </div>
                          <div class="col-lg-4">
                               <div class="form-group">
                                    <label for="description">Descripcion</label>
-                                   <input type="text" name="description" value="" class="form-control" placeholder='"Ingrese su texto aqui"' required>
+                                   <input type="text" name="description" value="" class="form-control" placeholder='Ingrese su texto aqui' required>
                               </div>
                          </div>
                          <div class="col-lg-4">
                               <div class="form-group">
                                    <label for="salary">Salario</label>
-                                   <input type="text" name="salary" value="0" class="form-control" placeholder=''>
+                                   <input type="number" name="salary" value="0" class="form-control" placeholder=''>
+                              </div>
+                         </div>
+                         <div class="col-lg-4">
+                              <div class="form-group">
+                                   <label for="time">Carga horaria</label>
+                                   <!-- Opciones -->
                               </div>
                          </div>
                     </div>

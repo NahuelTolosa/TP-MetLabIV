@@ -1,6 +1,8 @@
 <?php
     namespace Models;
 
+    use Controllers\CompanyController as CompanyController;
+
     class JobOffer
     {
         private $tittle;
@@ -161,6 +163,12 @@
 
                 return $this;
         }
+
+        public function getCompanyById(){
+                $companyController = new CompanyController();
+    
+                return $companyController->getCompanyById($this->idCompany);
+            }
     }
 
 ?>

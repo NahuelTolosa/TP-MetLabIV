@@ -11,28 +11,32 @@ else
                <?php echo $message; ?>
                <table class="table bg-light-alpha">
                     <thead>
-                         <th style="text-align: center;">Listado de ofertas</th>
+                         <!-- <th style="text-align: center;">Nombre</th> -->
                     </thead>
                     <tbody>
                             <?php
                                 foreach($jobOfferList as $jobOffer)
                                 {
-                                    if($jobOffer->getIsActive()){
+                                    if($jobOffer->getActive()){
                                     ?>
                                         <tr>
                                             <td style="text-align: center;">
                                                 <details>
                                                     <summary>
                                                         <?php
-                                                            // echo $jobOffer->getName();                                                            
+                                                            echo $jobOffer->getTittle();
+
+                                                            // if($_SESSION['user']=='admin'){
+                                                            //     echo "<a href='".FRONT_ROOT."Company/ShowModify/".$company->getIdCompany()."'> Modificar </a>";
+                                                            //     echo "<a href='".FRONT_ROOT."Company/ShowDeleteView/".$company->getName()."/".$company->getIdCompany()."'> Dar de baja </a>";
+                                                            // }
+                                                            
                                                         ?>
                                                     </summary><br>
-                                                        <p>Titulo:    <?php /*echo $jobOffer->*/?></p>
-                                                        <p>Compania:  <?php /*echo $jobOffer->*/?></p>
-                                                        <p>Fecha:     <?php /*echo $jobOffer->*/?></p>
-                                                        <p>Propuesta: <?php /*echo $jobOffer->*/?></p>
-                                                        <p>Salario:   <?php /*echo $jobOffer->*/?></p>
-                                                        <p>Tiempo:    <?php /*echo $jobOffer->*/?></p>
+                                                        <p>Empresa:     <?php echo ($jobOffer->getCompanyById())->getName()?></p>
+                                                        <p>Fecha:       <?php echo $jobOffer->getDate()?></p>
+                                                        <p>Descripcion: <?php echo $jobOffer->getDescription()?></p>
+                                                        <p>Salario:     <?php echo $jobOffer->getSalary()?></p>
                                                 </details>
                                             </td>
                                         </tr>
