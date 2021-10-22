@@ -38,7 +38,7 @@ class CompanyDAO implements IDAO{
         $this->SaveData();
     }
 
-    public function Update($object) //ToDo
+    public function Update($object)
     {
         $this->RetrieveData();
         

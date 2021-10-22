@@ -34,6 +34,15 @@
                                 class="form-control">
                         </div>
                     </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <p>Modalidad</p>
+                            <label><input type="radio" name="workDay" class="radioSize" value="Part-Time">
+                                Part-Time</label>
+                            <label><input type="radio" name="workDay" class="radioSize" value="Full-Time">
+                                Full-Time</label>
+                        </div>
+                    </div>
                 </div>
                 <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Agregar</button>
             </form>

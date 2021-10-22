@@ -39,9 +39,22 @@ class JobOfferDAO implements IDAO{
         $this->SaveData();
     }
 
-    public function Update($object) //ToDo
+    public function Update($object)
     {
+        $this->RetrieveData();
         
+        foreach($this->offersList as $offer){
+            if($offer->getOfferID() == $object->getOfferID()){
+                
+            
+            $offer->setTittle($object->getTittle());
+            $offer->setDescription($object->getDescription());
+            $offer->setSalary($object->getSalary());
+            $offer->setWorkDay($object->getWorkDay());
+            }
+        }
+
+        $this->SaveData();
     }
     
     private function SaveData()

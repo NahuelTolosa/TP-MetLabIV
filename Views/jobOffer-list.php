@@ -38,6 +38,7 @@ else
                                 <p>Empresa: <?php echo ($jobOffer->getCompanyById())->getName()?></p>
                                 <p>Fecha: <?php echo $jobOffer->getDate()?></p>
                                 <p>Descripcion: <?php echo $jobOffer->getDescription()?></p>
+                                <p>Disponibilidad: <?php echo $jobOffer->getWorkDay()?></p>
                                 <p>Salario: <?php echo $jobOffer->getSalary()?></p>
                             </details>
                         </td>
