@@ -5,7 +5,7 @@ use Models\Student as Student;
 use DataBase\Connection as Connection;
 use PDOException as PDOException;
 
-class StudentDAO{
+class StudentDAO implements IDAO{
     private $tableName = "STUDENTS";
     private $connection;
 

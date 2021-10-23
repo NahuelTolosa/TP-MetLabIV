@@ -5,7 +5,7 @@ use Models\Company as Company;
 use DataBase\Connection as Connection;
 use PDOException as PDOException;
 
-class CompanyDAO{  
+class CompanyDAO implements IDAO{  
     private $tableName = "COMPANIES";
     private $connection;
 

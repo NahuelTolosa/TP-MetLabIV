@@ -5,12 +5,13 @@ use Models\Career as Career;
 use DataBase\Connection as Connection;
 use PDOException as PDOException;
 
-class CareerDAO{  
+class CareerDAO implements IDAO{  
 
     private $tableName = "CAREERS";
     private $connection;
 
-    public function Add(Career $career){
+
+    public function Add($career){
         $response = null;
         try{
             $query = "INSERT INTO ".$this->tableName." (careerId,descriptionCareer,active)
@@ -67,7 +68,7 @@ class CareerDAO{
         }
     }
 
-    public function Update(Career $career){
+    public function Update($career){
         $response = null;
         try{
             $query = "UPDATE ".$this->tableName." SET descriptionCareer= :descriptionCareer, active= :active
