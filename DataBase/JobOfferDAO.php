@@ -18,11 +18,11 @@ class JobOfferDAO implements IDAO{
             $value['offerID'] = $jobOffer->getOfferID();
             $value['idCompany'] = $jobOffer->getIdCompany();
             $value['tittle'] = $jobOffer->getTittle();
-            $value['creationDate'] = $jobOffer->getCreationDate();
+            $value['creationDate'] = $jobOffer->getDate();
             $value['descriptionJob'] = $jobOffer->getDescription();
             $value['salary'] = $jobOffer->getSalary();
             $value['workDay'] = $jobOffer->getWorkDay();
-            $value['active'] = $jobOffer->isActive();
+            $value['active'] = $jobOffer->getActive();
             $value['postulations'] = $jobOffer->getPostulations();
 
             $this->connection = Connection::GetInstance();
@@ -47,11 +47,11 @@ class JobOfferDAO implements IDAO{
                 $jobOffer->getOfferID($value['offerID']);
                 $jobOffer->getIdCompany($value['idCompany']);
                 $jobOffer->getTittle($value['tittle']);
-                $jobOffer->getCreationDate($value['creationDate']);
+                $jobOffer->getDate($value['creationDate']);
                 $jobOffer->getDescription($value['descriptionJob']);
                 $jobOffer->getSalary($value['salary']);
                 $jobOffer->getWorkDay($value['workDay']);
-                $jobOffer->isActive($value['active']);
+                $jobOffer->getActive($value['active']);
                 $jobOffer->getPostulations($value['postulations']);
 
                 array_push($jobOfferList, $jobOffer);
@@ -88,11 +88,11 @@ class JobOfferDAO implements IDAO{
             $value['offerID'] = $jobOffer->getOfferID();
             $value['idCompany'] = $jobOffer->getIdCompany();
             $value['tittle']= $jobOffer->getTittle();
-            $value['creationDate'] = $jobOffer->getCreationDate();
+            $value['creationDate'] = $jobOffer->getDate();
             $value['descriptionJob'] = $jobOffer->getDescription();
             $value['salary'] = $jobOffer->getSalary();
             $value['workDay'] = $jobOffer->getWorkDay();
-            $value['active'] = $jobOffer->isActive();
+            $value['active'] = $jobOffer->getActive();
             $value['postulations'] = $jobOffer->getPostulations();
             $response = $this->connection->ExecuteNonQuery($query,$value); 
         }catch (PDOException $e){
