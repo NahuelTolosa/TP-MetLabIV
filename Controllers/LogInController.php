@@ -2,66 +2,60 @@
     namespace Controllers;
 
     use DAO\StudentDAO as StudentDAO;
+use Helpers\SessionHelper;
 
-    class LogInController
+class LogInController
     {
-        public function ValidateLogIn($email = "")
+        private $userLog;
+
+        public function __construct()
         {
-            $validation = $this->serchStudent($email);
-
-
-            if($email==ADMIN)
-            {
-
-                $_SESSION["user"]="admin";
-
-                require_once(VIEWS_PATH."admin-menu.php");
-            }
-            elseif(!is_null($validation))
-            {
-                $_SESSION["user"]="student";
-                $_SESSION["studentId"]=  $validation->getStudentId();
-                $_SESSION["careerId"]= $validation->getCareerId();
-                $_SESSION["firstName"]= $validation->getFirstName();
-                $_SESSION["lastName"]= $validation->getLastName();
-                $_SESSION["dni"]= $validation->getDni();
-                $_SESSION["fileNumber"]= $validation->getFileNumber();
-                $_SESSION["gender"]= $validation->getGender();
-                $_SESSION["birthDate"]= $validation->getBirthDate();
-                $_SESSION["email"]= $validation->getEmail();
-                $_SESSION["phoneNumber"]= $validation->getPhoneNumber();
-                $_SESSION["active"]=  $validation->getActive();
-
-                require_once(VIEWS_PATH."student-showPersonalInfo.php");
-            }
-            else
-            {
-                $message="No hay usuarios registrados con ese Email";
-                require_once(VIEWS_PATH."logIn.php");
-            }
-
-            
+            $this->userLog = new User();
         }
 
-        private function serchStudent($email = "")
-        {
-            $studentDAO = new StudentDAO();
-            $array = $studentDAO->GetAll();
-            
+        public function UserLogged($username, $password){
+            $isSession = $this->ValidateLogIn($username, $password);
+            $this->RedirectLogIn($isSession, 'loggedUser');  //response and session key
+        }
 
-
-            foreach($array as $localStudent){
-                if($localStudent->getEmail() == $email){
-                    return $localStudent;
-                }
+        public function ValidateLogIn($username, $password){
+            $isLogged = false;
+            $user = $this->UserExist($username);        //return username, pass and userIdDb
+            if(!empty($user)){
+                $response = $this->PasswordValidate($user, $password);
+                if($response) $isSession = SessionHelper::SetSessionUser($user);      //seteo user session
+                else $isSession = false;
+            }else{
+                $isSession = false;
             }
-            return null;
+            return $isSession;
+        }
+
+        public function UserExist($username){
+            $userDAO = new UserDAO();
+            return $userDAO->getByUsername($username); //getByUser return object or null
+        }
+
+        public function PasswordValidate($user, $password){
+           return ($user->getPassword == $password) ? true : false; 
+        }
+
+        public function RedirectLogIn($isSession, $sessionKey){
+            if($isSession && SessionHelper::GetValue($sessionKey) == $sessionKey){
+                $userCheck = new User();
+                if(substr($userCheck->getId(),0,2) == "ST") require_once(VIEWS_PATH."student-showPersonalInfo.php");
+                else if (substr($userCheck->getId(),0,2) == "AD") require_once(VIEWS_PATH."admin-showPersonalInfo.php"); //ToDo
+                else if (substr($userCheck->getId(),0,2) == "CM") require_once(VIEWS_PATH."company-showPersonalInfo.php");
+            }else{
+                $message = "Email o contraseña incorrecta";
+                require_once(VIEWS_PATH."logIn"); 
+            }
         }
 
         public function LogOut()
         {
-            session_destroy();
-            $message= "";
+            SessionHelper::DestroySession();
+            $message= "Chau mil besos, mil besitos, vuelva pronto, mil besosss";
             require_once(VIEWS_PATH."logIn.php");
         }
     }
