@@ -13,6 +13,17 @@
             $this->studentDAO = new StudentDAO();
         }
 
+        public function doesUserExist($email)
+        {
+
+            foreach (($this->studentDAO)->GetAll() as $student) {
+                if($student->getEmail() == $email)
+                    return $student;
+            }
+            
+            return null;
+        }
+
         public function ShowAddView()
         {
             require_once(VIEWS_PATH."student-add.php");

@@ -11,4 +11,9 @@ define("API_URL_CAREER", 'https://utn-students-api.herokuapp.com/api/Career');
 define("API_KEY", 'x-api-key: 4f3bceed-50ba-4461-a910-518598664c08');
 
 define("ADMIN", "admin@utn.com");
+
+define("DB_HOST" , "localhost");
+define("DB_NAME" , "DBUtn");
+define("DB_USER" , "root");
+define("DB_PASS" , "");
 ?>

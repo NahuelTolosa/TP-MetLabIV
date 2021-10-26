@@ -23,8 +23,7 @@
         }
 
         private function generateID(){
-                $str = "JO";
-                $str = $str.rand(100000,999999).chr(rand(ord('A'),ord('Z')));
+                return "JO".rand(100000,999999).chr(rand(ord('A'),ord('Z')));
         }
 
         /**
