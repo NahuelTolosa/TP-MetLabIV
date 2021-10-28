@@ -2,7 +2,7 @@
 
 use Models\Person as Person;
 
-class Admin extends Person{
+class Admin{
 
     private $id;
     private $user;
