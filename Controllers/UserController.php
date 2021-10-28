@@ -22,14 +22,14 @@ class UserController{
     {
         $studentController = new StudentController();
 
-        $student = $studentController->doesUserExist($email);
+        $studentID = $studentController->getByEmail($email);
 
-        if($student != null){
+        if($studentID != null){
             if($password != $passwordValidate)
                 $this->ShowSignInView("<h5 style='color: #f00;'>Las contraseñas ingresadas no coinciden.</h5>");
             else{
-                $this->userDAO = new UserDAO();
-                ($this->userDAO)->Add(new User($student->getStudentId(),$student->getEmail(),$password));
+                // $this->userDAO = new UserDAO();
+                // ($this->userDAO)->Add(new User($studentID,$email,$password));
                 $this->ShowLogInView("<h5 style='color: #072'>Ususario creado exitosamente.</h5>");
             }
         }else

@@ -13,12 +13,12 @@
             $this->studentDAO = new StudentDAO();
         }
 
-        public function doesUserExist($email)
+        public function getByEmail($email)
         {
 
             foreach (($this->studentDAO)->GetAll() as $student) {
                 if($student->getEmail() == $email)
-                    return $student;
+                    return $student->getStudentId();
             }
             
             return null;
