@@ -1,8 +1,8 @@
-<?php
-    namespace Controllers;
+<?php namespace Controllers;
 
-    use DAO\StudentDAO as StudentDAO;
-use Helpers\SessionHelper;
+use DAO\DAOdB\UserDAO as UserDAO;
+use Models\User as User;
+use Helpers\SessionHelper as SessionHelper;
 
 class LogInController
     {
@@ -19,14 +19,11 @@ class LogInController
         }
 
         public function ValidateLogIn($username, $password){
-            $isLogged = false;
+            $isSession = false;
             $user = $this->UserExist($username);        //return username, pass and userIdDb
             if(!empty($user)){
                 $response = $this->PasswordValidate($user, $password);
                 if($response) $isSession = SessionHelper::SetSessionUser($user);      //seteo user session
-                else $isSession = false;
-            }else{
-                $isSession = false;
             }
             return $isSession;
         }

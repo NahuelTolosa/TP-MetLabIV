@@ -1,7 +1,6 @@
-<?php
-    namespace Controllers;
+<?php namespace Controllers;
 
-    use DAO\JobOfferDAO as JobOfferDAO;
+use DAO\DAOdB\JobOfferDAO as JobOfferDAO;
 use Models\JobOffer;
 
 class JobOfferController
