@@ -29,7 +29,80 @@ class ResetPasswordDAO implements IDAOPW{
         }
     }
 
-    public function GetAll(){
+
+    public function Delete($token){
+        $response = null;
+        try{
+            $query = "DELETE FROM ".$this->tableName." WHERE token='".$token."';";;
+            $this->connection = Connection::GetInstance();
+            $response = $this->connection->ExecuteNonQuery($query);
+        }catch (PDOException $e){
+            $response = $e->getMessage();
+        }finally{
+            return $response;
+        }
+    }
+
+    public function GetByToken($token){
+        $response = null;
+        try{
+            $query = "SELECT * INTO ".$this->tableName." WHERE token='".$token."';";;
+            $this->connection = Connection::GetInstance();
+            $response = $this->connection->ExecuteNonQuery($query);
+        }catch (PDOException $e){
+            $response = $e->getMessage();
+        }finally{
+            return $response;
+        }
+    }
+
+    public function GetByEmail($email){
+        $userResetPassword = array();
+        $response = null;
+        try{
+            $query = "SELECT INTO ".$this->tableName." WHERE email='".$email."';";
+            $this->connection = Connection::GetInstance();
+            $response = $this->connection->ExecuteNonQuery($query); 
+
+                $resetPassword = new ResetPassword();
+                $resetPassword->getIdResetPw($response['idResetPw']);
+                $resetPassword->getEmail($response['email']);
+                $resetPassword->getPassword($response['password']);
+                $resetPassword->getRepeatPassword($response['repeatPassword']);
+                $resetPassword->getToken($response['token']);
+                array_push($userResetPassword, $resetPassword);
+                $response = $userResetPassword;
+        }catch (PDOException $e){
+            $response = $e->getMessage();
+        }finally{
+            return $response;
+        }
+    }
+    
+    
+  /*  public function Update(ResetPassword $emailToReset){
+        $response = null;
+        try{
+            $query = "UPDATE ".$this->tableName." SET idResetPw= :idResetPw, email= :email,password= :password
+            ,repeatPassword= :repeatPassword WHERE token='".$emailToReset->getToken()."';";;
+            $this->connection = Connection::GetInstance();
+            $value['idResetPw'] = $emailToReset->getIdResetPw();
+            $value['email'] = $emailToReset->getEmail();
+            $value['password'] = $emailToReset->getPassword();
+            $value['repeatPassword'] = $emailToReset->getRepeatPassword();
+            $value['token'] = $emailToReset->getToken();          
+
+            $response = $this->connection->ExecuteNonQuery($query,$value); 
+        }catch (PDOException $e){
+            $response = $e->getMessage();
+        }finally{
+            return $response;
+        }
+    }
+*/
+   /* 
+   
+    public function GetAll(){ 
         $resetPasswordList = array();
         $response = null;
         try{
@@ -53,75 +126,5 @@ class ResetPasswordDAO implements IDAOPW{
         }finally{
             return $response;
         }
-    }
-
-    public function Delete($token){
-        $response = null;
-        try{
-            $query = "DELETE FROM ".$this->tableName." WHERE token='".$token."';";;
-            $this->connection = Connection::GetInstance();
-            $response = $this->connection->ExecuteNonQuery($query);
-        }catch (PDOException $e){
-            $response = $e->getMessage();
-        }finally{
-            return $response;
-        }
-    }
-
-    public function Update(ResetPassword $emailToReset){
-        $response = null;
-        try{
-            $query = "UPDATE ".$this->tableName." SET idResetPw= :idResetPw, email= :email,password= :password
-            ,repeatPassword= :repeatPassword WHERE token='".$emailToReset->getToken()."';";;
-            $this->connection = Connection::GetInstance();
-            $value['idResetPw'] = $emailToReset->getIdResetPw();
-            $value['email'] = $emailToReset->getEmail();
-            $value['password'] = $emailToReset->getPassword();
-            $value['repeatPassword'] = $emailToReset->getRepeatPassword();
-            $value['token'] = $emailToReset->getToken();          
-
-            $response = $this->connection->ExecuteNonQuery($query,$value); 
-        }catch (PDOException $e){
-            $response = $e->getMessage();
-        }finally{
-            return $response;
-        }
-    }
-
-    public function GetByToken($token){
-        $response = null;
-        try{
-            $query = "SELECT * INTO ".$this->tableName." WHERE token='".$token."';";;
-            $this->connection = Connection::GetInstance();
-            $response = $this->connection->ExecuteNonQuery($query);
-        }catch (PDOException $e){
-            $response = $e->getMessage();
-        }finally{
-            return $response;
-        }
-    }
-    /*
-    public function GetByEmail($email){
-        $userResetPassword = array();
-        $response = null;
-        try{
-            $query = "SELECT INTO ".$this->tableName." WHERE email='".$email."';";
-            $this->connection = Connection::GetInstance();
-            $response = $this->connection->ExecuteNonQuery($query); //ME DEVUELVE FILAS AFECTADAS, TENGO QUE TRAER OBJECT
-
-                $resetPassword = new ResetPassword();
-                $resetPassword->getIdResetPw($value['idResetPw']);
-                $resetPassword->getEmail($value['email']);
-                $resetPassword->getPassword($value['password']);
-                $resetPassword->getRepeatPassword($value['repeatPassword']);
-                $resetPassword->getToken($value['token']);
-                array_push($userResetPassword, $resetPassword);
-                $response = $resetPassword;
-        }catch (PDOException $e){
-            $response = $e->getMessage();
-        }finally{
-            return $response;
-        }
-    }
-    */
+    }*/
 }

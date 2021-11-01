@@ -1,10 +1,9 @@
-<?php
-namespace Helpers;
+<?php namespace Helpers;
 
-use DAO\DAOdB\ResetPasswordDAO;
-use Exception;
-use Models\ResetPassword;
-use PHPMailer\PHPMailer\PHPMailer;
+use DAO\DAOdB\ResetPasswordDAO as ResetPasswordDAO;
+use PDOException as PDOException;
+use Models\ResetPassword as ResetPassword;
+use PHPMailer\PHPMailer\PHPMailer as PHPMailer;
 require_once 'vendor/autoload.php'; //libraries for use phpmailer
 
 class ResetPasswordHelper{
@@ -59,12 +58,12 @@ class ResetPasswordHelper{
 
     /**
      * parameters: token generated on EmailTo and email 
-     * 
+     * validate email and add into the database
      */
     public static function AddResetPasswordToDb($emailResetPassword, $token){
         $response = null;
         try{
-            $objectValidate = ResetPasswordHelper::EmailExistDb($emailResetPassword);
+            $objectValidate = ResetPasswordHelper::GetByEmailToDb($emailResetPassword);
             if(!$objectValidate) return false;            //email doesn't exists
             else{
                 $resetPasswordDb = new ResetPasswordDAO();
@@ -77,23 +76,20 @@ class ResetPasswordHelper{
         }
     }
 
-    public static function EmailExistDb(string $email){
+     public static function GetByEmailToDb($email){
         $resetPasswordDb = new ResetPasswordDAO();
-        $resetPasswordList = resetPasswordDb->GetAll();
+        $userResetPassword= resetPasswordDb->GetByEmail($email);
+        return $userResetPassword;
+    }
+
+    
+    /*public static function EmailExistDb(string $email){
+        $resetPasswordDb = new ResetPasswordDAO();
+        $resetPasswordList = resetPasswordDb->GetAll();             //not usefull get all, need getbyid on DAO
         foreach($resetPasswordList as $user){
             if($user->getEmail == $email) return $user;
             else return false;
         }
-    }
-
-
-    //change the logic on this function and ResetPasswordDAO
-
-   /* public static function GetByEmailToDb($email){
-        $resetPasswordDb = new ResetPasswordDAO();
-        $userResetPassword= resetPasswordDb->GetByEmail();
-        return $userResetPassword;
     }*/
-
    
 }

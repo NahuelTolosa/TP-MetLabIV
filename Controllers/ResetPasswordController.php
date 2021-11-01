@@ -2,16 +2,17 @@
 
 use Helpers\ResetPasswordHelper as ResetPasswordHelper;
 use DAO\DAOdB\ResetPasswordDAO as ResetPasswordDAO;
-use Models\ResetPassword;
+use DAO\DAOdB\UserDAO;
 use Models\User as User;
-use PDOException as PDOException;
 
 Class ResetPasswordController{
     private $resetPasswordDAO;
+    private $userDAO;
 
     public function __construct()
     {
         $this->resetPasswordDAO = new ResetPasswordDAO();
+        $this->userDAO = new UserDAO();
     }
 
     /**
@@ -34,17 +35,32 @@ Class ResetPasswordController{
 
             if ($validateToken) {
                 if ($newPassword == $repeatNewPassword) {
-                    $resetPasswordUser = new User();
-                    $resetPasswordUser->setEmail($email);
-                    $resetPasswordUser->setPassword($newPassword);
+                    $userByEmail = $this->resetPasswordDAO->GetByEmail($email);
+                    if ($userByEmail) {
+                        $resetPasswordUser = new User();
+                        $resetPasswordUser->setId($userByEmail->getId()); //check
+                        $resetPasswordUser->setUserName($email);
+                        $resetPasswordUser->setPassword($newPassword);
 
-                    $this->resetPasswordDAO->Delete($token); //clean table
-                    
-                    $message = "Contraseña modificada con exito";
+                        $this->userDAO->Update($resetPasswordUser); //update user table
+
+                        $this->resetPasswordDAO->Delete($token); //clean resetPassword table
+
+                        $message = "Contraseña modificada con exito";
+                    } else $message = "No se encontro el ID";
                 } else $message = "Las contraseñas no coinciden, vuelva a intentarlo.";
             } else $message = "Error validando token";
         } else $message = "Error 404";
 
-        require_once(VIEWS_PATH . "jobOffer-list");
+        require_once(VIEWS_PATH . "logIn");
     }
+
+   /* public function GetIdUserByEmail($email){
+        $userList = array();
+        $userList = $this->userDAO->GetAll();
+        foreach($userList as $user){ //??string ??
+           if($user->getUserName == $email) return $user->getId();
+       }
+       return false;
+    }*/
 }

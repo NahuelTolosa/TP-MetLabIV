@@ -1,7 +1,7 @@
 <?php
     namespace Controllers;
 
-    use DAO\StudentDAO as StudentDAO;
+    use DAO\DAOdB\StudentDAO as StudentDAO;
     use Models\Student as Student;
 
     class StudentController
@@ -11,6 +11,17 @@
         public function __construct()
         {
             $this->studentDAO = new StudentDAO();
+        }
+
+        public function getByEmail($email)
+        {
+
+            foreach (($this->studentDAO)->GetAll() as $student) {
+                if($student->getEmail() == $email)
+                    return $student->getStudentId();
+            }
+            
+            return null;
         }
 
         public function ShowAddView()
