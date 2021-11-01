@@ -2,7 +2,7 @@
 
 use DAO\DAOdB\ResetPasswordDAO as ResetPasswordDAO;
 use PDOException as PDOException;
-use Models\ResetPassword as ResetPassword;
+use Exception as Exception;
 use PHPMailer\PHPMailer\PHPMailer as PHPMailer;
 require_once 'vendor/autoload.php'; //libraries for use phpmailer
 
@@ -38,7 +38,7 @@ class ResetPasswordHelper{
                 $mail->FromName = 'your_name';
                 $mail->AddAddress('utn-noreply.mail.com', 'Information');
                 
-                $url = "http://" . $_SERVER["HTTP_HOST"] . dirname($_SERVER["PHP_SELF"]) . "/Views/resetPassword-show?token=$token";
+                $url = "http://" . $_SERVER["HTTP_HOST"] . dirname($_SERVER["PHP_SELF"]) . "/".VIEWS_PATH . "resetPassword-show?token=$token";
 
                 $mail->IsHTML(true); //format email to HTML
                 $mail->Subject = 'Solicitud de cambio de contraseña';
@@ -67,7 +67,7 @@ class ResetPasswordHelper{
             if(!$objectValidate) return false;            //email doesn't exists
             else{
                 $resetPasswordDb = new ResetPasswordDAO();
-                $response = $resetPasswordDb->Add($objectValidate)  //add new object
+                $response = $resetPasswordDb->Add($objectValidate);  //add new object
             }
         }catch (PDOException $e){
             $response = $e->getMessage();
@@ -78,8 +78,7 @@ class ResetPasswordHelper{
 
      public static function GetByEmailToDb($email){
         $resetPasswordDb = new ResetPasswordDAO();
-        $userResetPassword= resetPasswordDb->GetByEmail($email);
-        return $userResetPassword;
+        return $resetPasswordDb->GetByEmail($email);
     }
 
     

@@ -8,7 +8,7 @@ class ResetPasswordDAO implements IDAOPW{
     private $tableName = "RESETPASSWORDS";
     private $connection;
 
-    public function Add(ResetPassword $emailToReset){
+    public function Add($emailToReset){
         $response = null;
         try{
             $query = "INSERT INTO ".$this->tableName." (idResetPw,email,password,repeatPassword,token)
@@ -58,7 +58,7 @@ class ResetPasswordDAO implements IDAOPW{
 
     public function GetByEmail($email){
         $userResetPassword = array();
-        $response = null;
+      //  $response = array();
         try{
             $query = "SELECT INTO ".$this->tableName." WHERE email='".$email."';";
             $this->connection = Connection::GetInstance();
@@ -70,12 +70,9 @@ class ResetPasswordDAO implements IDAOPW{
                 $resetPassword->getPassword($response['password']);
                 $resetPassword->getRepeatPassword($response['repeatPassword']);
                 $resetPassword->getToken($response['token']);
-                array_push($userResetPassword, $resetPassword);
-                $response = $userResetPassword;
+              return $resetPassword;
         }catch (PDOException $e){
-            $response = $e->getMessage();
-        }finally{
-            return $response;
+            return $e->getMessage();
         }
     }
     

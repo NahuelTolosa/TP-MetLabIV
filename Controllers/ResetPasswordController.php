@@ -30,18 +30,16 @@ Class ResetPasswordController{
      */
     public function UpdatePassword($email, $newPassword, $repeatNewPassword, $token)
     {
+        $message = "";
         if ($token) {
             $validateToken = $this->resetPasswordDAO->GetByToken($token);
 
             if ($validateToken) {
                 if ($newPassword == $repeatNewPassword) {
-                    $userByEmail = $this->resetPasswordDAO->GetByEmail($email);
+                    $userByEmail = $this->resetPasswordDAO->GetByEmail($email); //traer id del usuario que solicita
                     if ($userByEmail) {
-                        $resetPasswordUser = new User();
-                        $resetPasswordUser->setId($userByEmail->getId()); //check
-                        $resetPasswordUser->setUserName($email);
+                       // $resetPasswordUser = new User();
                         $resetPasswordUser->setPassword($newPassword);
-
                         $this->userDAO->Update($resetPasswordUser); //update user table
 
                         $this->resetPasswordDAO->Delete($token); //clean resetPassword table

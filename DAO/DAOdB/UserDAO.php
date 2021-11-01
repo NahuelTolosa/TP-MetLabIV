@@ -14,12 +14,12 @@ class UserDAO{
     {
         $response = null;
         try{
-            $query = "INSERT INTO ".$this->tableName." (id,userName,password)
-                      VALUES(:id,:userName,:password);";
+            $query = "INSERT INTO ".$this->tableName." (id,userName,userPassword)
+                      VALUES(:id,:userName,:userPassword);";
 
             $value['id'] = $user->getId();
             $value['userName'] = $user->getUserName();
-            $value['password'] = $user->getPassword();
+            $value['userPassword'] = $user->getPassword();
 
             $this->connection = Connection::GetInstance();
             $response = $this->connection->ExecuteNonQuery($query, $value);
@@ -43,7 +43,7 @@ class UserDAO{
                 $user = new User();
                 $user->getId($value['id']);
                 $user->getUserName($value['userName']);
-                $user->getPassword($value['password']);
+                $user->getPassword($value['userPassword']);
 
                 array_push($userList, $user);
             }
@@ -74,11 +74,11 @@ class UserDAO{
     {
         $response = null;
         try{
-            $query = "UPDATE ".$this->tableName." SET userName= :userName, password= :password WHERE id = :id;";
+            $query = "UPDATE ".$this->tableName." SET userName= :userName, userPassword= :userPassword WHERE id = :id;";
             $this->connection = Connection::GetInstance();
             $value['id'] = $user->getId();
             $value['userName'] = $user->getUserName();
-            $value['password'] = $user->getPassword();
+            $value['userPassword'] = $user->getPassword();
 
             $response = $this->connection->ExecuteNonQuery($query,$value); 
         }catch (PDOException $e){
@@ -100,7 +100,7 @@ class UserDAO{
             $user = new User();
             $user->getId($response['id']);
             $user->getUserName($response['userName']);
-            $user->getPassword($response['password']);
+            $user->getPassword($response['userPassword']);
 
             array_push($userDAO, $response);
             $response = $userDAO;
