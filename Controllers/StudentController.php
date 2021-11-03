@@ -1,7 +1,7 @@
 <?php
     namespace Controllers;
 
-    use DAO\DAOdB\StudentDAO as StudentDAO;
+    use DAO\DAOJson\StudentDAO as StudentDAO;
     use Models\Student as Student;
 
     class StudentController

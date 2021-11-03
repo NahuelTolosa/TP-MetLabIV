@@ -1,6 +1,8 @@
 <?php namespace Controllers;
 
 use DAO\DAOdB\JobOfferDAO as JobOfferDAO;
+use DAO\DAOJson\JobPositionDAO as JobPositionDAO;
+
 use Models\JobOffer;
 
 class JobOfferController
@@ -16,6 +18,10 @@ class JobOfferController
         /**************************************************************/
         public function ShowAddView($message="")
         {
+            $jobPositionDAO= new JobPositionDAO();
+            $jobPositionDAO->GetAll();
+
+
             require_once(VIEWS_PATH."jobOffer-add.php");
         }
 
@@ -40,11 +46,11 @@ class JobOfferController
         /**************************************************************/
 
 
-        public function Add($tittle,$company,$description,$salary,$workDay)
+        public function Add($tittle,$company,$salary,$workDay,$reference,$description)
         {
             $companyController = new CompanyController();
 
-            $company = $companyController->getCompany($_POST['company']);
+            $company = $companyController->getCompany($_POST['company']);// trae la compania de la bdd
 
             $message="";
 
@@ -56,6 +62,7 @@ class JobOfferController
                 $joboffer->setDescription($description);
                 $joboffer->setSalary($salary);
                 $joboffer->setWorkDay($workDay);
+                $joboffer->setReference($reference);
 
                 ($this->jobOfferDAO)->Add($joboffer);
                 $message = "<h4 style='color: #072'>Oferta de trabajo dada de alta con éxito</h4>";
@@ -75,7 +82,7 @@ class JobOfferController
             $this->ShowListView($message);
         }
 
-        public function Update($offerID,$tittle, $description, $salary, $workDay)
+        public function Update($offerID,$tittle, $description, $salary, $workDay,$reference)
         {   
             $jobOffer = new JobOffer();
             $jobOffer->setOfferID($offerID);
@@ -83,7 +90,7 @@ class JobOfferController
             $jobOffer->setDescription($description);
             $jobOffer->setSalary($salary);
             $jobOffer->setWorkDay($workDay);
-
+            $jobOffer->setReference($reference);
             
             $this->jobOfferDAO->Update($jobOffer);
 

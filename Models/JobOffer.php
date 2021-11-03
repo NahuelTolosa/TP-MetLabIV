@@ -13,6 +13,7 @@
         private $salary;
         private $workDay;
         private $active;
+        private $reference;
         private $postulations= array();
 
         public function __construct()
@@ -190,6 +191,26 @@
         public function setWorkDay($workDay): self
         {
                 $this->workDay = $workDay;
+
+                return $this;
+        }
+
+        /**
+         * Get the value of reference
+         */ 
+        public function getReference()
+        {
+                return $this->reference;
+        }
+
+        /**
+         * Set the value of reference
+         *
+         * @return  self
+         */ 
+        public function setReference($reference)
+        {
+                $this->reference = $reference;
 
                 return $this;
         }

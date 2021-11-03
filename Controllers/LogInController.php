@@ -20,7 +20,8 @@ class LogInController
 
         public function ValidateLogIn($username, $password){
             $isSession = false;
-            $user = $this->UserExist($username);        //return username, pass and userIdDb
+            $user = $this->UserExists($username);        //return username, pass and userIdDb
+            
             if(!empty($user)){
                 $response = $this->PasswordValidate($user, $password);
                 if($response) $isSession = SessionHelper::SetSessionUser($user);      //seteo user session
@@ -28,13 +29,13 @@ class LogInController
             return $isSession;
         }
 
-        public function UserExist($username){
+        public function UserExists($username){
             $userDAO = new UserDAO();
-            return $userDAO->getByUsername($username); //getByUser return object or null
+            return $userDAO->GetByEmail2($username); //getByUser return object or null
         }
 
         public function PasswordValidate($user, $password){
-           return ($user->getPassword == $password) ? true : false; 
+           return ($user->getPassword() == $password) ? true : false; 
         }
 
         public function RedirectLogIn($isSession, $sessionKey){

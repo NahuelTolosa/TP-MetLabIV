@@ -25,13 +25,7 @@
                                 required>
                         </div>
                     </div>
-                    <div class="col-lg-4">
-                        <div class="form-group">
-                            <label for="description">Descripcion</label>
-                            <input type="text" name="description" value="" class="form-control"
-                                placeholder='Ingrese su texto aqui' required>
-                        </div>
-                    </div>
+                    
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label for="salary">Salario</label>
@@ -47,7 +41,30 @@
                                 Full-Time</label>
                         </div>
                     </div>
-                </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="salary">Puesto solicitado</label>
+                            <div class="form-group">
+                                <select id="reference" class="form-control" name="reference">
+                                    <?php foreach ($jobPositionDAO->GetAll() as $jobPosition) {?>
+                                        
+                                        <option value="<?php echo $jobPosition->getJobPositionId()?>">
+                                            <?php echo $jobPosition->getDescription()?>
+                                        </option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                  <div class="col-lg-4">
+                            <div class="form-group">
+                                <label for="description">Descripcion</label>
+                                <div class="form-group">
+                                    <textarea id="description" class="form-control" name="description" rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                 </div>
                 <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Agregar</button>
             </form>
         </div>

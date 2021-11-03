@@ -23,6 +23,7 @@ class JobOfferDAO implements IDAO{
             $value['salary'] = $jobOffer->getSalary();
             $value['workDay'] = $jobOffer->getWorkDay();
             $value['active'] = $jobOffer->getActive();
+            $value['reference'] = $jobOffer->getReference();
             $value['postulations'] = $jobOffer->getPostulations();
 
             $this->connection = Connection::GetInstance();

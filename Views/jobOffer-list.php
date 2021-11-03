@@ -1,8 +1,10 @@
 <?php
 if($_SESSION['user']=='admin')
     require_once('admin-nav.php');
-else
+else if($_SESSION['user']=='student')
     require_once('student-nav.php');
+else
+    require_once('login.php');
 ?>
 <main class="py-5">
     <section id="listado" class="mb-5">

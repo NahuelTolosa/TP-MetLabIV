@@ -3,7 +3,7 @@
 class User{
 
     private $userName;
-    private $password;
+    private $userPassword;
     private $id;
 
     function __construct()
@@ -25,7 +25,7 @@ class User{
 	{
 		$this->id = $this->generateID($id);
         $this->userName = $email;
-        $this->password = $password;
+        $this->userPassword = $password;
 	}
 
     private function generateID($id)
@@ -52,24 +52,6 @@ class User{
     }
 
     /**
-     * Get the value of password
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
-     * Set the value of password
-     */
-    public function setPassword($password): self
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    /**
      * Get the value of id
      */
     public function getId()
@@ -83,6 +65,26 @@ class User{
     public function setId($id): self
     {
         $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of userPassword
+     */ 
+    public function getUserPassword()
+    {
+        return $this->userPassword;
+    }
+
+    /**
+     * Set the value of userPassword
+     *
+     * @return  self
+     */ 
+    public function setUserPassword($userPassword)
+    {
+        $this->userPassword = $userPassword;
 
         return $this;
     }

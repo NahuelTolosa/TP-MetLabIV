@@ -3,6 +3,7 @@ namespace DAO\DAOdB;
 
 use \PDO as PDO;
 use DAO\DAOdB\QueryType as QueryType;
+use Exception;
 use PDOException as PDOException;
 
 class Connection{
@@ -39,10 +40,12 @@ class Connection{
         try{
             $this->Prepare($query);
             $this->BindParameters($parameters, $queryType);
+            
             $this->pdoStatement->execute();
             return $this->pdoStatement->rowCount();
         }catch(PDOException $e){
             return $e->getMessage();
+
         }
     }
 
@@ -61,10 +64,29 @@ class Connection{
         foreach($parameters as $parameterName => $value){
             $i++;
             if($queryType == QueryType::Query){
-                $this->pdoStatement->bindParam(":".$parameterName, $parameters[$parameterName], $value);
+                $this->pdoStatement->bindParam(":$parameterName", $parameters[$parameterName]); //falla aca
             }else{
+                //die(var_dump($parameterName));
                 $this->pdoStatement->bindParam($i,$parameters[$parameterName]);
             }
+        }
+    }
+
+    public function Exec($query, $parameters = array())
+    {
+        try{
+            $this->pdoStatement = $this->pdo->prepare($query);
+
+            foreach ($parameters as $key => $value) {
+                $this->pdoStatement->bindParam(":".$value, $key);
+            }
+
+            $this->pdoStatement->execute();
+
+            return $this->pdoStatement->fetchAll();
+        }
+        catch(Exception $ex){
+            throw $ex
         }
     }
 }

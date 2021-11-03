@@ -3,8 +3,8 @@
         <?php if(isset($message)) echo $message?>
         <div class="col-lg-4">
             <div class="form-group">
-                <label for="logInMail"><strong>Ingrese su mail</strong></label>
-                <input type="email" name="email" value="" class="form-control">
+                <label for="logInMail"><strong>Ingrese su usuario</strong></label>
+                <input type="mail" name="username" value="" class="form-control">
                 <label for="password"><strong>Ingrese su contraseña</strong></label>
                 <input type="password" name="password" value="" class="form-control">
                 <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Ingresar</button>

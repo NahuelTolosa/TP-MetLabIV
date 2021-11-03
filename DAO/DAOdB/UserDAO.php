@@ -12,6 +12,7 @@ class UserDAO{
 
     public function Add($user)
     {
+       // die(var_dump($user));
         $response = null;
         try{
             $query = "INSERT INTO ".$this->tableName." (id,userName,userPassword)
@@ -19,10 +20,12 @@ class UserDAO{
 
             $value['id'] = $user->getId();
             $value['userName'] = $user->getUserName();
-            $value['userPassword'] = $user->getPassword();
+            $value['userPassword'] = $user->getUserPassword();
 
             $this->connection = Connection::GetInstance();
+            //die(var_dump($this->connection));
             $response = $this->connection->ExecuteNonQuery($query, $value);
+
         }catch (PDOException $e){
             $response = $e->getMessage();
         }finally{
@@ -43,7 +46,7 @@ class UserDAO{
                 $user = new User();
                 $user->getId($value['id']);
                 $user->getUserName($value['userName']);
-                $user->getPassword($value['userPassword']);
+                $user->getUserPassword($value['userPassword']);
 
                 array_push($userList, $user);
             }
@@ -93,14 +96,15 @@ class UserDAO{
         $userDAO = array();
         $response = null;
         try {
-            $query = "SELECT INTO " . $this->tableName . " WHERE email='" . $email . "';";
+            $query = "SELECT * FROM " . $this->tableName . " WHERE userName='" . $email . "';";
             $this->connection = Connection::GetInstance();
             $response = $this->connection->ExecuteNonQuery($query);
 
+            //die(var_dump($response));
             $user = new User();
             $user->getId($response['id']);
             $user->getUserName($response['userName']);
-            $user->getPassword($response['userPassword']);
+            $user->getUserPassword($response['userPassword']);
 
             array_push($userDAO, $response);
             $response = $userDAO;
@@ -110,6 +114,37 @@ class UserDAO{
             return $response;
         }
     }
+    public function GetByEmail2($email)
+    {
+        $userDAO = array();
+        $parameters = array();
+        $response = null;
+        
+        $query = "SELECT * FROM " . $this->tableName . " WHERE userName='" . $email . "';";
+        
+        $parameters['userName'] = $email;
+
+        try {
+            
+            $this->connection = Connection::GetInstance();
+
+            $response = $this->connection->Exec($query, $parameters);
+
+            $user = new User();
+            $user->getId($response['id']);
+            $user->getUserName($response['userName']);
+            $user->getUserPassword($response['userPassword']);
+
+            array_push($userDAO, $response);
+            $response = $userDAO;
+        } catch (PDOException $e) {
+            $response = $e->getMessage();
+        } finally {
+            return $response;
+        }
+    }
+
+    
 }
 
 ?>

@@ -1,7 +1,7 @@
 <?php
     namespace Controllers;
 
-    use DAO\CompanyDAO as CompanyDAO;
+    use DAO\DAOJson\CompanyDAO as CompanyDAO;
     use Models\Company as Company;
 
     class CompanyController
