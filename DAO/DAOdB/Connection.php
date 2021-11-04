@@ -83,10 +83,10 @@ class Connection{
 
             $this->pdoStatement->execute();
 
-            return $this->pdoStatement->fetchAll();
+            return $this->pdoStatement->fetchAll(PDO::FETCH_ASSOC);
         }
         catch(Exception $ex){
-            throw $ex
+            throw $ex;
         }
     }
 }

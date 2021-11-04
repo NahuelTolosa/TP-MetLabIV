@@ -14,7 +14,7 @@ class SessionHelper{
      * check key and return session value or false
      */
     public static function GetValue($key){
-        return (isset($_SESSION[$key])) ? $_SESSION[$key] : false;
+        return (!is_null($_SESSION['loggedUser'])) ? true : false;
     }
 
     public static function DestroySession(){
@@ -25,6 +25,7 @@ class SessionHelper{
      * set session with value and key 
      */
     public static function SetSession($key, $value){
+        
         $_SESSION[$key] = $value;
     }
 

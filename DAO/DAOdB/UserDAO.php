@@ -5,10 +5,8 @@ use DAO\DAOdB\Connection as Connection;
 use PDOException as PDOException;
 
 class UserDAO{
-    private $tableName = "USERS";
+    private $tableName = "users";
     private $connection;
-
-    private $usersList;
 
     public function Add($user)
     {
@@ -116,31 +114,29 @@ class UserDAO{
     }
     public function GetByEmail2($email)
     {
-        $userDAO = array();
         $parameters = array();
         $response = null;
         
         $query = "SELECT * FROM " . $this->tableName . " WHERE userName='" . $email . "';";
         
-        $parameters['userName'] = $email;
-
+        //$parameters['userName'] = $email;
+        
         try {
             
             $this->connection = Connection::GetInstance();
-
+            
             $response = $this->connection->Exec($query, $parameters);
-
+           
             $user = new User();
-            $user->getId($response['id']);
-            $user->getUserName($response['userName']);
-            $user->getUserPassword($response['userPassword']);
-
-            array_push($userDAO, $response);
-            $response = $userDAO;
+            $user->setId($response[0]['id']);
+            $user->setUserName($response[0]['userName']);
+            $user->setUserPassword($response[0]['userPassword']);
+            //  die(var_dump($user));
+     
+            return $user;
         } catch (PDOException $e) {
-            $response = $e->getMessage();
-        } finally {
-            return $response;
+            die(var_dump($e->getMessage()));
+            return $e->getMessage();
         }
     }
 

@@ -44,7 +44,7 @@ class User{
     /**
      * Set the value of userName
      */
-    public function setUserName($userName): self
+    public function setUserName($userName)
     {
         $this->userName = $userName;
 
