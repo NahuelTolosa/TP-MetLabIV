@@ -13,31 +13,19 @@ require_once('student-nav.php');
                        <!--que metemos aca???-->
                    </thead>
                    <tbody>
-                        <tr><td><strong>Nombre:</strong> <?php echo $_SESSION["firstName"] ?></td><tr>
-                        <tr><td><strong>Apellido:</strong><?php echo $_SESSION["lastName"] ?></td><tr>
-                        <tr><td><strong>DNI:</strong> <?php echo $_SESSION["dni"] ?></td><tr>
-                        <tr><td><strong>Genero:</strong> <?php echo $_SESSION["gender"] ?></td><tr>
-                        <tr><td><strong>Fecha de nacimiento: </strong> <?php echo $_SESSION["birthDate"] ?></td><tr>
-                        <tr><td><strong>Mail: </strong><?php echo $_SESSION["email"] ?></td><tr>
-                        <tr><td><strong>Numero de telefono:</strong> <?php echo $_SESSION["phoneNumber"] ?></td><tr>
-                        <tr><td><strong>Carrera:</strong>
-                         <?php
-                              use DAO\CarreerDAO as CarreerDAO;
-                              $careerDAO = new CarreerDAO();
-
-                              echo $_SESSION["careerId"]." - ". $careerDAO->getCareerByID($_SESSION['careerId'])
-
-                         ?>
+                        <tr><td><strong>Nombre:</strong> <?php echo $student->getFirstName() ?></td><tr>
+               <tr><td><strong>Apellido:</strong><?php echo $student->getLastName()  ?></td><tr>
+                        <tr><td><strong>DNI:</strong> <?php echo $student->getDni() ?></td><tr>
+                        <tr><td><strong>Genero:</strong> <?php echo $student->getGender()     ?></td><tr>
+                        <tr><td><strong>Fecha de nacimiento: </strong> <?php echo $student->getBirthDate()     ?></td><tr>
+                        <tr><td><strong>Mail: </strong><?php echo $student->getEmail()     ?></td><tr>
+                        <tr><td><strong>Numero de telefono:</strong> <?php echo $student->getPhoneNumber()?></td><tr>
+                        <tr><td><strong>Carrera:</strong><?php echo $careerDAO->getCareerByID($student->getCareerId())?></td><tr>
+                         
                     </td><tr><!--levantar carrera desde json-->
                         <tr><td><strong>Estado:</strong>
                          <?php
-                              if($_SESSION["active"])
-                              {
-                                      echo "Activo";
-                              }
-                              else{
-                                      echo "Inactivo";
-                              } 
+                              echo $student->isActive();
                           ?>
                     </td><tr>
                    </tbody>

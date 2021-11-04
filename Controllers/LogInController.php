@@ -1,6 +1,8 @@
 <?php namespace Controllers;
 
 use DAO\DAOdB\UserDAO as UserDAO;
+use DAO\DAOJson\CarreerDAO;
+use DAO\DAOJson\StudentDAO;
 use Models\User as User;
 use Helpers\SessionHelper as SessionHelper;
 
@@ -15,20 +17,21 @@ class LogInController
 
         public function UserLogged($username, $password){
             $isSession = $this->ValidateLogIn($username, $password);
-            die(var_dump($isSession));
+            // die(var_dump($isSession));
             
         }
         
         public function ValidateLogIn($username, $password){
             $isSession = false;
+
             $user = $this->UserExists($username);        //return username, pass and userIdDb
-            if(!empty($user)){
+            if(!is_null($user)){
                 
                 $response = $this->PasswordValidate($user, $password);
                 
                 if($response) $isSession = SessionHelper::SetSessionUser($user);      //seteo user session
-                $this->RedirectLogIn($isSession, $user);  //response and session key
             }
+            $this->RedirectLogIn($isSession, $user);  //response and session key
             return $isSession;
         }
 
@@ -42,13 +45,17 @@ class LogInController
         }
 
         public function RedirectLogIn($isSession, $sessionKey){
-            // die(var_dump($_SESSION));
             if($isSession && SessionHelper::GetValue($sessionKey) == $sessionKey){
                 $userCheck = $_SESSION['loggedUser'];
+
                 if(substr($userCheck->getId(),0,2) == "ST"){
+                    $studentDAO=new StudentDAO();
+                    $student= $studentDAO->GetByEmail($_SESSION['loggedUser']->getUserName());
+                    $careerDAO= new CarreerDAO();
+                    
                     require_once(VIEWS_PATH."student-showPersonalInfo.php");
                 }
-                else if (substr($userCheck->getId(),0,2) == "AD") require_once(VIEWS_PATH."admin-showPersonalInfo.php"); //ToDo
+                else if (substr($userCheck->getId(),0,2) == "AD") require_once(VIEWS_PATH."admin-menu.php"); //ToDo
                 else if (substr($userCheck->getId(),0,2) == "CM") require_once(VIEWS_PATH."company-showPersonalInfo.php");
             }else{
                 $message = "Email o contraseña incorrecta";

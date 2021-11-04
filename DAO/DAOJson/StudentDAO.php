@@ -81,5 +81,15 @@
             }
             
         }
+
+        public function GetByEmail($email)
+        {
+            
+            foreach ($this->GetAll() as $student) {
+                if($student->getEmail() == $email){
+                    return $student;
+                }
+            }
+        }
     }
 ?>

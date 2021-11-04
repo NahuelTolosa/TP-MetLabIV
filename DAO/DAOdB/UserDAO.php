@@ -116,6 +116,7 @@ class UserDAO{
     {
         $parameters = array();
         $response = null;
+        $user = null;
         
         $query = "SELECT * FROM " . $this->tableName . " WHERE userName='" . $email . "';";
         
@@ -126,11 +127,15 @@ class UserDAO{
             $this->connection = Connection::GetInstance();
             
             $response = $this->connection->Exec($query, $parameters);
-           
+            
+            
             $user = new User();
-            $user->setId($response[0]['id']);
-            $user->setUserName($response[0]['userName']);
-            $user->setUserPassword($response[0]['userPassword']);
+            if(!empty($response)){
+
+                $user->setId($response[0]['id']);
+                $user->setUserName($response[0]['userName']);
+                $user->setUserPassword($response[0]['userPassword']);
+            }
             //  die(var_dump($user));
      
             return $user;

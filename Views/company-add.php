@@ -1,5 +1,13 @@
 <?php
-    require_once('admin-nav.php');
+    
+    if (!isset($_SESSION['loggedUser']))
+    require_once('logIn.php');
+else {
+
+    if(substr($_SESSION['loggedUser']->getId(),0,2) == "AD")
+        require_once('admin-nav.php');
+
+ 
 ?>
 <main class="py-5">
      <section id="listado" class="mb-5">
@@ -38,3 +46,4 @@
           </div>
      </section>
 </main>
+<?php } ?>

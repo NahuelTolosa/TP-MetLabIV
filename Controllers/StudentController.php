@@ -3,6 +3,7 @@
 
     use DAO\DAOJson\StudentDAO as StudentDAO;
     use Models\Student as Student;
+    use DAO\DAOJson\CarreerDAO;
 
     class StudentController
     {
@@ -32,23 +33,28 @@
         public function ShowListView()
         {
             $studentList = $this->studentDAO->GetAll();
-
+            
+            
             require_once(VIEWS_PATH."student-list.php");
         }
-
+        
         public function Add($recordId, $firstName, $lastName)
         {
             $student = new Student();
             $student->setStudentId($recordId);
             $student->setfirstName($firstName);
             $student->setLastName($lastName);
-
+            
             $this->studentDAO->Add($student);
-
+            
             $this->ShowAddView();
         }
-
+        
         public function ShowPersonalInfo(){
+            $studentDAO=new StudentDAO();
+            $student= $studentDAO->GetByEmail($_SESSION['loggedUser']->getUserName());
+            $careerDAO= new CarreerDAO();
+            
             require_once(VIEWS_PATH."student-showPersonalInfo.php");
         }
     }

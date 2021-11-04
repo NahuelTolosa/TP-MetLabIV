@@ -2,8 +2,8 @@
     {
         "idCompany": 123456,
         "name": "Company 1",
-        "cuit": 13245678910,
-        "phoneNumber": 2235111111,
+        "cuit": "13245678910",
+        "phoneNumber": "2235111111",
         "email": "company1@meail.com",
         "isActive": true
     },

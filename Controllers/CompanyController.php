@@ -21,6 +21,7 @@
         public function ShowListView($message="")
         {
             $companyList = $this->companyDAO->GetAll();
+            
 
             require_once(VIEWS_PATH."company-list.php");
         }
