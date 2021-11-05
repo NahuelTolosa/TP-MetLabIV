@@ -81,11 +81,11 @@
             return false;
         }
 
-        public function getCompany($name)
+        public function getCompany($id)
         {
             foreach($this->companyDAO->GetAll() as $localCompany)
             {
-                if($localCompany->getName()==$name)
+                if($localCompany->getIdCompany()==$id)
                 {
                     return $localCompany;
                 }

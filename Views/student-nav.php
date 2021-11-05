@@ -7,7 +7,7 @@
                <a class="nav-link" href="<?php echo FRONT_ROOT ?>Student/ShowPersonalInfo">Informacion Personal</a>
           </li>
           <li class="nav-item">
-               <a class="nav-link" href="<?php echo FRONT_ROOT ?>JobOffers/ShowListView">Ver Ofertas laborales</a>
+               <a class="nav-link" href="<?php echo FRONT_ROOT ?>JobOffer/ShowListView">Ver Ofertas laborales</a>
 
           </li>      
                  

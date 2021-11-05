@@ -52,6 +52,7 @@ class Connection{
     public function Prepare($query){
         try{
             $this->pdoStatement = $this->pdo->prepare($query);
+
         }catch(PDOException $e){
             return $e->getMessage();
         }

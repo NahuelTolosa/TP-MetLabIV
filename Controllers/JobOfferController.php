@@ -28,9 +28,19 @@ class JobOfferController
             require_once(VIEWS_PATH."jobOffer-add.php");
         }
 
-        public function ShowListView($message="")
+        public function ShowListView($message="", $filter="null")
         {
-            $jobOfferList = $this->jobOfferDAO->GetAll();
+            $jobOfferDAO = (isset ($this->jobOfferDAO))? $this->jobOfferDAO : new JobOfferDAO();
+            $jobPositionDAO = new JobPositionDAO();
+
+            if($filter == "null"){
+                
+                $jobOfferList = $this->jobOfferDAO->GetAll();
+                
+            }
+            else{
+                $jobOfferList = $this->jobOfferDAO->GetFiltered($filter);
+            }
 
             require_once(VIEWS_PATH."jobOffer-list.php");
         }
@@ -41,8 +51,9 @@ class JobOfferController
         
         public function ShowModify($offerID)
         {   
+            $jobOfferDAO = (isset ($this->jobOfferDAO))? $this->jobOfferDAO : new JobOfferDAO();
             $jobOffer = ($this->jobOfferDAO)->GetByID($offerID);
-            
+            // die(var_dump($jobOffer));
             require_once(VIEWS_PATH."jobOffer-modify.php");
         }
 
@@ -52,7 +63,7 @@ class JobOfferController
         public function Add($tittle,$company,$salary,$workDay,$reference,$description)
         {
             $companyController = new CompanyController();
-
+            // die(var_dump($_POST['company']));
             $company = $companyController->getCompany($_POST['company']);// trae la compania de la api
 
             $message="";
@@ -66,6 +77,8 @@ class JobOfferController
                 $joboffer->setSalary($salary);
                 $joboffer->setWorkDay($workDay);
                 $joboffer->setReference($reference);
+
+                
 
                 ($this->jobOfferDAO)->Add($joboffer);
                 $message = "<h4 style='color: #072'>Oferta de trabajo dada de alta con éxito</h4>";
@@ -85,11 +98,12 @@ class JobOfferController
             $this->ShowListView($message);
         }
 
-        public function Update($offerID,$tittle, $description, $salary, $workDay,$reference)
+        public function Update($offerID,  $tittle, $description, $salary, $workDay,$companyID,$reference=0)
         {   
             $jobOffer = new JobOffer();
             $jobOffer->setOfferID($offerID);
             $jobOffer->setTittle($tittle);
+            $jobOffer->setIdCompany($companyID);
             $jobOffer->setDescription($description);
             $jobOffer->setSalary($salary);
             $jobOffer->setWorkDay($workDay);

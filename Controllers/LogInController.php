@@ -52,8 +52,10 @@ class LogInController
                     $studentDAO=new StudentDAO();
                     $student= $studentDAO->GetByEmail($_SESSION['loggedUser']->getUserName());
                     $careerDAO= new CarreerDAO();
-                    
-                    require_once(VIEWS_PATH."student-showPersonalInfo.php");
+                    $studentC = new StudentController();
+    
+                    // aunque no se deba lo hicimos de esta forma para forzar la carga de daos necesarios para mostrar informacion del student
+                    $studentC->ShowPersonalInfo();
                 }
                 else if (substr($userCheck->getId(),0,2) == "AD") require_once(VIEWS_PATH."admin-menu.php"); //ToDo
                 else if (substr($userCheck->getId(),0,2) == "CM") require_once(VIEWS_PATH."company-showPersonalInfo.php");

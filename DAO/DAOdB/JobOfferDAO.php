@@ -6,26 +6,25 @@ use DAO\DAOdB\Connection as Connection;
 use PDOException as PDOException;
 
 class JobOfferDAO implements IDAO{  
-    private $tableName = "JOBOFFERS";
+    private $tableName = "joboffers";
     private $connection;
 
     public function Add($jobOffer){
         $response = null;
         try{
-            $query = "INSERT INTO ".$this->tableName." (offerID, idCompany,tittle,creationDate,descriptionJob,salary,workDay,active,postulations)
-                      VALUES(:offerID,:idCompany,:tittle,:creationDate,:descriptionJob,:salary,:workDay,:active,:postulations);";
+            $query = "INSERT INTO ".$this->tableName." (offerID, tittle,idCompany,creationDate,description,salary,workDay,active,reference)
+                      VALUES(:offerID,:tittle,:idCompany,:creationDate,:description,:salary,:workDay,:active,:reference);";
 
             $value['offerID'] = $jobOffer->getOfferID();
-            $value['idCompany'] = $jobOffer->getIdCompany();
             $value['tittle'] = $jobOffer->getTittle();
+            $value['idCompany'] = $jobOffer->getIdCompany();
             $value['creationDate'] = $jobOffer->getDate();
-            $value['descriptionJob'] = $jobOffer->getDescription();
+            $value['description'] = $jobOffer->getDescription();
             $value['salary'] = $jobOffer->getSalary();
             $value['workDay'] = $jobOffer->getWorkDay();
             $value['active'] = $jobOffer->getActive();
             $value['reference'] = $jobOffer->getReference();
-            $value['postulations'] = $jobOffer->getPostulations();
-
+            // die(var_dump($value));
             $this->connection = Connection::GetInstance();
             $response = $this->connection->ExecuteNonQuery($query, $value);
         }catch (PDOException $e){
@@ -42,22 +41,76 @@ class JobOfferDAO implements IDAO{
             $query = "SELECT * FROM ".$this->tableName;
             $this->connection = Connection::GetInstance();
             $result = $this->connection->Execute($query);
-
             foreach($result as $value){
-                $jobOffer = new JobOffer();
-                $jobOffer->getOfferID($value['offerID']);
-                $jobOffer->getIdCompany($value['idCompany']);
-                $jobOffer->getTittle($value['tittle']);
-                $jobOffer->getDate($value['creationDate']);
-                $jobOffer->getDescription($value['descriptionJob']);
-                $jobOffer->getSalary($value['salary']);
-                $jobOffer->getWorkDay($value['workDay']);
-                $jobOffer->getActive($value['active']);
-                $jobOffer->getPostulations($value['postulations']);
 
+                
+                $jobOffer = new JobOffer();
+                $jobOffer->setOfferID($value['offerID']);
+                $jobOffer->setTittle($value['tittle']);
+                $jobOffer->setIdCompany($value['idCompany']);
+                $jobOffer->setDate($value['creationDate']);
+                $jobOffer->setDescription($value['description']);
+                $jobOffer->setSalary($value['salary']);
+                $jobOffer->setWorkDay($value['workDay']);
+                $jobOffer->setActive($value['active']);
+                $jobOffer->setReference($value['reference']);
+                $jobOffer->setPostulations($this->GetEmailsByOfferID($value['offerID']));
+                
                 array_push($jobOfferList, $jobOffer);
             }
         $response = $jobOfferList;
+        }catch (PDOException $e){
+            $response = $e->getMessage();
+        }finally{
+            return $response;
+        }
+    }
+
+    public function GetFiltered($filter){
+        $jobOfferList = array();
+        $response = null;
+        try{
+            $query = "SELECT * FROM ".$this->tableName;
+            $this->connection = Connection::GetInstance();
+            $result = $this->connection->Execute($query);
+            foreach($result as $value){
+
+                if($value['reference'] == $filter){
+
+                    $jobOffer = new JobOffer();
+                    $jobOffer->setOfferID($value['offerID']);
+                    $jobOffer->setTittle($value['tittle']);
+                    $jobOffer->setIdCompany($value['idCompany']);
+                    $jobOffer->setDate($value['creationDate']);
+                    $jobOffer->setDescription($value['description']);
+                    $jobOffer->setSalary($value['salary']);
+                    $jobOffer->setWorkDay($value['workDay']);
+                    $jobOffer->setActive($value['active']);
+                    $jobOffer->setReference($value['reference']);
+                    $jobOffer->setPostulations($this->GetEmailsByOfferID($value['offerID']));
+                    
+                    array_push($jobOfferList, $jobOffer);
+                }
+            }
+        $response = $jobOfferList;
+        }catch (PDOException $e){
+            $response = $e->getMessage();
+        }finally{
+            return $response;
+        }
+    }
+
+    private function GetEmailsByOfferID($offerID){
+
+        $response = null;
+
+        try{
+            $query = "select users.userName from postulations p inner join users on p.idUser = users.id where idJobOffer =".$offerID;
+            $this->connection = Connection::GetInstance();
+            $result = $this->connection->Execute($query);
+
+            $response = $result[0];
+
         }catch (PDOException $e){
             $response = $e->getMessage();
         }finally{
@@ -82,23 +135,24 @@ class JobOfferDAO implements IDAO{
     public function Update($jobOffer){
         $response = null;
         try{
-            $query = "UPDATE ".$this->tableName." SET idCompany= :idCompany, tittle= :tittle, creationDate= :creationDate,
-                     descriptionJob= :descriptionJob,salary= :salary, workDay= :workDay, active= :active,postulations= :postulations
+            $query = "UPDATE ".$this->tableName." SET   idCompany= :idCompany, tittle= :tittle, creationDate= :creationDate,
+                     description= :description, salary= :salary, workDay= :workDay, active= :active, reference= :reference
                      WHERE offerID= :offerID;"; 
             $this->connection = Connection::GetInstance();
             $value['offerID'] = $jobOffer->getOfferID();
             $value['idCompany'] = $jobOffer->getIdCompany();
             $value['tittle']= $jobOffer->getTittle();
             $value['creationDate'] = $jobOffer->getDate();
-            $value['descriptionJob'] = $jobOffer->getDescription();
+            $value['description'] = $jobOffer->getDescription();
             $value['salary'] = $jobOffer->getSalary();
             $value['workDay'] = $jobOffer->getWorkDay();
-            $value['active'] = $jobOffer->getActive();
-            $value['postulations'] = $jobOffer->getPostulations();
+            $value['active'] = true;
+            $value['reference'] = 0;
             $response = $this->connection->ExecuteNonQuery($query,$value); 
         }catch (PDOException $e){
             $response = $e->getMessage();
         }finally{
+            
             return $response;
         }
     }
@@ -115,33 +169,38 @@ class JobOfferDAO implements IDAO{
         try {
             
             $this->connection = Connection::GetInstance();
+            $jobOffer=new JobOffer();
             
-            $response = $this->connection->Exec($query, $parameters);
-            
-            
-            $offer = new JobOffer();
-            if(!empty($response) && $response[0]['active']){ //revisar
+            $value = $this->connection->Exec($query, $parameters);
 
-                $offer->setOfferID($response[0]['id']);
-                $offer->setTittle($response[0]['userName']);
-                $offer->setIdCompany($response[0]['userPassword']);
-                $offer->setDate($response[0]['creationDate']);
-                $offer->setDescription($response[0]['description']);
-                $offer->setSalary($response[0]['salary']);
-                $offer->setWorkDay($response[0]['workDay']);
-                $offer->setActive($response[0]['active']);
-                $offer->setReference($response[0]['reference']);
-                $offer->setPostulations($response[0]['']);  //revisar
-            }else if(!$response[0]['active']){
-                return 'La oferta ha sido dada de baja';    //revisar
+            $value[0]['active'] = $this->ActiveToBoolean($value[0]['active']);
+
+            
+            if($value[0]['active']){ 
+                
+                $jobOffer->setOfferID($value[0]['offerID']);
+                $jobOffer->setTittle($value[0]['tittle']);
+                $jobOffer->setIdCompany($value[0]['idCompany']);
+                $jobOffer->setDate($value[0]['creationDate']);
+                $jobOffer->setDescription($value[0]['description']);
+                $jobOffer->setSalary($value[0]['salary']);
+                $jobOffer->setWorkDay($value[0]['workDay']);
+                $jobOffer->setActive($value[0]['active']);
+                $jobOffer->setReference($value[0]['reference']);
+                
+            }else if(!$value[0]['active']){
+                return null;    
             }
-            //  die(var_dump($user));
      
-            return $offer;
+            return $jobOffer;
         } catch (PDOException $e) {
             
             return $e->getMessage();
         }
+    }
+
+    private function ActiveToBoolean($str){
+        return ($str=='1') ? true : false;
     }
 }
 ?>

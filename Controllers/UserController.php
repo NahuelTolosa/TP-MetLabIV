@@ -36,7 +36,7 @@ class UserController{
                 $this->ShowLogInView("<h5 style='color: #072'>Ususario creado exitosamente.</h5>");
             }
         }else
-            $this->ShowSignInView("<h5 style='color: #f00;'>No existe un estudiante registrado con ese email en el sistema.</h5>");
+            $this->ShowSignInView("<h5 style='color: #f00; width:50%; margin: auto;'>El usuario con ese mail no existe o se encuentra inactivo en el sistema.</h5>");
         
     }
 

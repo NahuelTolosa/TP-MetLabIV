@@ -10,7 +10,6 @@ class UserDAO{
 
     public function Add($user)
     {
-       // die(var_dump($user));
         $response = null;
         try{
             $query = "INSERT INTO ".$this->tableName." (id,userName,userPassword)
@@ -21,7 +20,6 @@ class UserDAO{
             $value['userPassword'] = $user->getUserPassword();
 
             $this->connection = Connection::GetInstance();
-            //die(var_dump($this->connection));
             $response = $this->connection->ExecuteNonQuery($query, $value);
 
         }catch (PDOException $e){
@@ -60,7 +58,7 @@ class UserDAO{
     {
         $response = null;
         try{
-            $query = "UPDATE ".$this->tableName." SET active = 0 WHERE id = :id;"; //estaria bueno hacer un join con una tabla de deleted
+            $query = "UPDATE ".$this->tableName." SET active = 0 WHERE id = :id;"; 
             $this->connection = Connection::GetInstance();
             $value['id'] = $id;
             $response = $this->connection->ExecuteNonQuery($query,$value); //devuelvo filas afectadas

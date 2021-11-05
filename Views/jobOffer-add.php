@@ -28,12 +28,16 @@
                             <label for="company">Compania</label>
                             <select name="company" id="company">
                                 <?php
-                                    foreach($companyDAO->GetAll() as $company){?>
+                                    foreach($companyDAO->GetAll() as $company){
+                                        if($company->getIsActive()){
                                         
+                                        ?>
+                                        
+
                                         <option value="<?php echo $company->getIdCompany()?>">
                                             <?php echo $company->getName()?>
                                         </option>
-                                    <?php } ?>
+                                    <?php } } ?>
                             </select>
                         </div>
                     </div>

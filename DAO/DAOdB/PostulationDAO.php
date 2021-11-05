@@ -8,24 +8,24 @@ class PostulationDAO{
     private $tableName = "postulations"; //revisar
     private $connection;
 
-    public function Add($idPostulation, $idUser)
+    public function Add($idJobOffer, $idUser)
     {
        // die(var_dump($user));
         $response = null;
         try{
-            $query = "INSERT INTO ".$this->tableName." (idPostulation, idUser)
-                      VALUES(:idPostulation,:idUser);";
+            $query = "INSERT INTO ".$this->tableName." (idUser, idJobOffer)
+                      VALUES(:idUser, :idJobOffer);";
 
-            $value['idPostulation'] = $idPostulation;
             $value['idUser'] = $idUser;
+            $value['idJobOffer'] = $idJobOffer;
 
             $this->connection = Connection::GetInstance();
-            //die(var_dump($this->connection));
             $response = $this->connection->ExecuteNonQuery($query, $value);
-
+            
         }catch (PDOException $e){
             $response = $e->getMessage();
         }finally{
+            
             return $response;
         }
     }
@@ -56,14 +56,14 @@ class PostulationDAO{
         }
     }
     
-    public function Delete($id)
+    public function Delete($idUser)
     {
         $response = null;
         try{
-            $query = "UPDATE ".$this->tableName." SET active = 0 WHERE id = :id;"; //estaria bueno hacer un join con una tabla de deleted
+            $query = "DELETE FROM ".$this->tableName." WHERE idUser = :".$idUser.";";
             $this->connection = Connection::GetInstance();
-            $value['id'] = $id;
-            $response = $this->connection->ExecuteNonQuery($query,$value); //devuelvo filas afectadas
+            //$value['idUser'] = $idUser;
+            $response = $this->connection->Exec($query,array($idUser));
         }catch (PDOException $e){
             $response = $e->getMessage();
         }finally{
@@ -95,18 +95,13 @@ class PostulationDAO{
         $parameters = array();
         $response = null;
         $postulation = null;
-        
         $query = "SELECT * FROM " . $this->tableName . " WHERE idUser='" . $idUser . "';";
-        
-        //$parameters['userName'] = $email;
-        
         try {
             
             $this->connection = Connection::GetInstance();
             
             $response = $this->connection->Exec($query, $parameters);
-            
-            
+
             $postulation = new Postulation();
             if(!empty($response)){
 
@@ -114,11 +109,9 @@ class PostulationDAO{
                 $postulation->setIdUser($response[0]['idUser']);
                 $postulation->setIdJobOffer($response[0]['idJobOffer']);
             }
-            //  die(var_dump($user));
-     
             return $postulation;
         } catch (PDOException $e) {
-            die(var_dump($e->getMessage()));
+            
             return $e->getMessage();
         }
     

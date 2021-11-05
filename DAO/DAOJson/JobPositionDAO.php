@@ -59,6 +59,18 @@
             }
             
         }
+
+        public function GetNameById($id){
+
+            $this->RetrieveData();
+
+            foreach($this->jobPositions as $jobPosition){
+                if($jobPosition->getJobPositionId() == $id){
+                    return $jobPosition->getDescription();
+                }
+            }
+            return null;
+        }
     }
     
 

@@ -54,5 +54,13 @@
         "phoneNumber": "2235777777",
         "email": "company7@mail.com",
         "isActive": true
+    },
+    {
+        "idCompany": 319838,
+        "name": "Tomas Aldinio",
+        "cuit": "777777777",
+        "phoneNumber": "4654654156",
+        "email": "prirulp@mail.com",
+        "isActive": false
     }
 ]

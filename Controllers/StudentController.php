@@ -6,7 +6,8 @@
     use DAO\DAOJson\CarreerDAO;
     use DAO\DAOdB\PostulationDAO;
     use DAO\DAOdB\JobOfferDAO;
-use DAO\DAOJson\CompanyDAO;
+    use DAO\DAOJson\CompanyDAO;
+use DAO\DAOJson\JobPositionDAO;
 use Models\JobOffer;
 
 class StudentController
@@ -23,7 +24,7 @@ class StudentController
         {
 
             foreach (($this->studentDAO)->GetAll() as $student) {
-                if($student->getEmail() == $email)
+                if($student->getEmail() == $email && $student->getActive())
                     return $student->getStudentId();
             }
             
@@ -60,8 +61,10 @@ class StudentController
             $careerDAO= new CarreerDAO();
             $offerDAO = new JobOfferDAO();
             $companyDAO = new CompanyDAO();
+            $jobPositionDAO = new JobPositionDAO();
             
             $student= $this -> studentDAO->GetByEmail($_SESSION['loggedUser']->getUserName());
+
             $postulation = $this-> postulationDAO->GetByUserID($_SESSION['loggedUser']->getId());
             $offer = $offerDAO->GetById($postulation->getIdJobOffer());
 
