@@ -33,6 +33,7 @@
                                         <option value="<?php echo $company->getIdCompany()?>">
                                             <?php echo $company->getName()?>
                                         </option>
+                                    <?php } ?>
                             </select>
                         </div>
                     </div>
