@@ -1,6 +1,7 @@
 <?php namespace Controllers;
 
 use DAO\DAOdB\JobOfferDAO as JobOfferDAO;
+use DAO\DAOJson\CompanyDAO;
 use DAO\DAOJson\JobPositionDAO as JobPositionDAO;
 
 use Models\JobOffer;
@@ -20,6 +21,8 @@ class JobOfferController
         {
             $jobPositionDAO= new JobPositionDAO();
             $jobPositionDAO->GetAll();
+            $companyDAO = new CompanyDAO();
+            
 
 
             require_once(VIEWS_PATH."jobOffer-add.php");

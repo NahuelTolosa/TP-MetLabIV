@@ -26,8 +26,14 @@
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label for="company">Compania</label>
-                            <input type="text" name="company" value="" class="form-control" placeholder='Compania'
-                                required>
+                            <select name="company" id="company">
+                                <?php
+                                    foreach($companyDAO->GetAll() as $company){?>
+                                        
+                                        <option value="<?php echo $company->getIdCompany()?>">
+                                            <?php echo $company->getName()?>
+                                        </option>
+                            </select>
                         </div>
                     </div>
                     
