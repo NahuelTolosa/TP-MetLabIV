@@ -1,24 +1,23 @@
 <?php namespace DAO\DAOdB;
 
-use Models\User as User;
+use Models\Postulation;
 use DAO\DAOdB\Connection as Connection;
 use PDOException as PDOException;
 
-class UserDAO{
-    private $tableName = "users";
+class PostulationDAO{
+    private $tableName = "postulations"; //revisar
     private $connection;
 
-    public function Add($user)
+    public function Add($idPostulation, $idUser)
     {
        // die(var_dump($user));
         $response = null;
         try{
-            $query = "INSERT INTO ".$this->tableName." (id,userName,userPassword)
-                      VALUES(:id,:userName,:userPassword);";
+            $query = "INSERT INTO ".$this->tableName." (idPostulation, idUser)
+                      VALUES(:idPostulation,:idUser);";
 
-            $value['id'] = $user->getId();
-            $value['userName'] = $user->getUserName();
-            $value['userPassword'] = $user->getUserPassword();
+            $value['idPostulation'] = $idPostulation;
+            $value['idUser'] = $idUser;
 
             $this->connection = Connection::GetInstance();
             //die(var_dump($this->connection));
@@ -33,24 +32,25 @@ class UserDAO{
 
     public function GetAll()
     {
-        $userList = array();
+        $postulationsList = array();
         $response = null;
         try{
             $query = "SELECT * FROM ".$this->tableName;
             $this->connection = Connection::GetInstance();
-            $result = $this->connection->Execute($query);
+            $result = $this->connection->Execute($query); //probar con Exec($query)
 
             foreach($result as $value){
-                $user = new User();
-                $user->getId($value['id']);
-                $user->getUserName($value['userName']);
-                $user->getUserPassword($value['userPassword']);
+                $postulation = new Postulation();
+                $postulation->getIdPostulation($value['idPostulations']);
+                $postulation->getIdUser($value['idUser']);
+                $postulation->getIdJobOffer($value['idJobOffer']);
 
-                array_push($userList, $user);
+                array_push($postulationsList, $postulation);
             }
-        $response = $userList;
+        $response = $postulationsList;
         }catch (PDOException $e){
             $response = $e->getMessage();
+            // validar si el usuario ya esta postulado reportar mensaje pertinente
         }finally{
             return $response;
         }
@@ -89,36 +89,14 @@ class UserDAO{
         }
     }
 
-    public function GetByEmail($email)
+    public function GetByUserID($idUser)
     {
-        $userDAO = array();
-        $response = null;
-        try {
-            $query = "SELECT * FROM " . $this->tableName . " WHERE userName='" . $email . "';";
-            $this->connection = Connection::GetInstance();
-            $response = $this->connection->ExecuteNonQuery($query);
-
-            //die(var_dump($response));
-            $user = new User();
-            $user->getId($response['id']);
-            $user->getUserName($response['userName']);
-            $user->getUserPassword($response['userPassword']);
-
-            array_push($userDAO, $response);
-            $response = $userDAO;
-        } catch (PDOException $e) {
-            $response = $e->getMessage();
-        } finally {
-            return $response;
-        }
-    }
-    public function GetByEmail2($email)
-    {
+        
         $parameters = array();
         $response = null;
-        $user = null;
+        $postulation = null;
         
-        $query = "SELECT * FROM " . $this->tableName . " WHERE userName='" . $email . "';";
+        $query = "SELECT * FROM " . $this->tableName . " WHERE idUser='" . $idUser . "';";
         
         //$parameters['userName'] = $email;
         
@@ -129,23 +107,20 @@ class UserDAO{
             $response = $this->connection->Exec($query, $parameters);
             
             
-            $user = new User();
+            $postulation = new Postulation();
             if(!empty($response)){
 
-                $user->setId($response[0]['id']);
-                $user->setUserName($response[0]['userName']);
-                $user->setUserPassword($response[0]['userPassword']);
+                $postulation->setIdPostulation($response[0]['idPostulations']);
+                $postulation->setIdUser($response[0]['idUser']);
+                $postulation->setIdJobOffer($response[0]['idJobOffer']);
             }
             //  die(var_dump($user));
      
-            return $user;
+            return $postulation;
         } catch (PDOException $e) {
-            
+            die(var_dump($e->getMessage()));
             return $e->getMessage();
         }
-    }
-
     
+    }
 }
-
-?>

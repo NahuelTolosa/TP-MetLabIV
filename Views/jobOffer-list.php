@@ -32,15 +32,19 @@ else if(substr($_SESSION['loggedUser']->getId(),0,2) == "AD")
                                     <?php
                                         echo $jobOffer->getTittle();
 
-                                        if($_SESSION['user']=='admin')
+                                        if(substr($_SESSION['loggedUser']->getId(),0,2) == "AD")
                                         {
                                             echo "<a href='".FRONT_ROOT."JobOffer/ShowModify/".$jobOffer->getOfferID()."'> Modificar </a>";
                                             echo "<a href='".FRONT_ROOT."JobOffer/ShowDeleteView/".$jobOffer->getTittle()."/".$jobOffer->getOfferID()."'> Dar de baja </a>";
                                         }
-                                        
+                                        if(substr($_SESSION['loggedUser']->getId(),0,2) == "ST")
+                                        {
+                                            echo "<a href='".FRONT_ROOT."Postulation/ApplyOffer/".$jobOffer->getOfferID().$_SESSION['loggedUser']->getId()."'> Postularse </a>";
+                                            
+                                        }
                                     ?>
                                 </summary><br>
-                                <p>Empresa: <?php echo ($jobOffer->getCompanyById())->getName()?></p>
+                                <p>Empresa: <?php echo $jobOffer->getName()?></p>
                                 <p>Fecha: <?php echo $jobOffer->getDate()?></p>
                                 <p>Descripcion: <?php echo $jobOffer->getDescription()?></p>
                                 <p>Disponibilidad: <?php echo $jobOffer->getWorkDay()?></p>

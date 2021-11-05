@@ -4,14 +4,19 @@
     use DAO\DAOJson\StudentDAO as StudentDAO;
     use Models\Student as Student;
     use DAO\DAOJson\CarreerDAO;
+    use DAO\DAOdB\PostulationDAO;
+    use DAO\DAOdB\JobOfferDAO;
+use DAO\DAOJson\CompanyDAO;
+use Models\JobOffer;
 
-    class StudentController
+class StudentController
     {
         private $studentDAO;
 
         public function __construct()
         {
             $this->studentDAO = new StudentDAO();
+            $this->postulationDAO = new PostulationDAO();
         }
 
         public function getByEmail($email)
@@ -51,10 +56,15 @@
         }
         
         public function ShowPersonalInfo(){
-            $studentDAO=new StudentDAO();
-            $student= $studentDAO->GetByEmail($_SESSION['loggedUser']->getUserName());
+        
             $careerDAO= new CarreerDAO();
+            $offerDAO = new JobOfferDAO();
+            $companyDAO = new CompanyDAO();
             
+            $student= $this -> studentDAO->GetByEmail($_SESSION['loggedUser']->getUserName());
+            $postulation = $this-> postulationDAO->GetByUserID($_SESSION['loggedUser']->getId());
+            $offer = $offerDAO->GetById($postulation->getIdJobOffer());
+
             require_once(VIEWS_PATH."student-showPersonalInfo.php");
         }
     }

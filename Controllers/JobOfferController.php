@@ -53,7 +53,7 @@ class JobOfferController
         {
             $companyController = new CompanyController();
 
-            $company = $companyController->getCompany($_POST['company']);// trae la compania de la bdd
+            $company = $companyController->getCompany($_POST['company']);// trae la compania de la api
 
             $message="";
 

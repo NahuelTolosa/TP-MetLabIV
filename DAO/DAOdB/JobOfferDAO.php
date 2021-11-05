@@ -102,5 +102,46 @@ class JobOfferDAO implements IDAO{
             return $response;
         }
     }
+
+    public function GetById($idJobOffer){
+        $parameters = array();
+        $response = null;
+        $user = null;
+        
+        $query = "SELECT * FROM " . $this->tableName . " WHERE offerID='" . $idJobOffer . "';";
+        
+        //$parameters['userName'] = $email;
+        
+        try {
+            
+            $this->connection = Connection::GetInstance();
+            
+            $response = $this->connection->Exec($query, $parameters);
+            
+            
+            $offer = new JobOffer();
+            if(!empty($response) && $response[0]['active']){ //revisar
+
+                $offer->setOfferID($response[0]['id']);
+                $offer->setTittle($response[0]['userName']);
+                $offer->setIdCompany($response[0]['userPassword']);
+                $offer->setDate($response[0]['creationDate']);
+                $offer->setDescription($response[0]['description']);
+                $offer->setSalary($response[0]['salary']);
+                $offer->setWorkDay($response[0]['workDay']);
+                $offer->setActive($response[0]['active']);
+                $offer->setReference($response[0]['reference']);
+                $offer->setPostulations($response[0]['']);  //revisar
+            }else if(!$response[0]['active']){
+                return 'La oferta ha sido dada de baja';    //revisar
+            }
+            //  die(var_dump($user));
+     
+            return $offer;
+        } catch (PDOException $e) {
+            
+            return $e->getMessage();
+        }
+    }
 }
 ?>
