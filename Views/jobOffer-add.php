@@ -32,20 +32,20 @@
                                         if($company->getIsActive()){
                                         
                                         ?>
-                                        
 
-                                        <option value="<?php echo $company->getIdCompany()?>">
-                                            <?php echo $company->getName()?>
-                                        </option>
-                                    <?php } } ?>
+
+                                <option value="<?php echo $company->getIdCompany()?>">
+                                    <?php echo $company->getName()?>
+                                </option>
+                                <?php } } ?>
                             </select>
                         </div>
                     </div>
-                    
+
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label for="salary">Salario</label>
-                            <input type="number" name="salary" value="0" class="form-control" placeholder=''>
+                            <input type="number" name="salary" value="0" class="form-control" min="0" placeholder=''>
                         </div>
                     </div>
                     <div class="col-lg-4">
@@ -63,24 +63,24 @@
                             <div class="form-group">
                                 <select id="reference" class="form-control" name="reference">
                                     <?php foreach ($jobPositionDAO->GetAll() as $jobPosition) {?>
-                                        
-                                        <option value="<?php echo $jobPosition->getJobPositionId()?>">
-                                            <?php echo $jobPosition->getDescription()?>
-                                        </option>
+
+                                    <option value="<?php echo $jobPosition->getJobPositionId()?>">
+                                        <?php echo $jobPosition->getDescription()?>
+                                    </option>
                                     <?php } ?>
                                 </select>
                             </div>
                         </div>
                     </div>
-                  <div class="col-lg-4">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="description">Descripcion</label>
                             <div class="form-group">
-                                <label for="description">Descripcion</label>
-                                <div class="form-group">
-                                    <textarea id="description" class="form-control" name="description" rows="3"></textarea>
-                                </div>
+                                <textarea id="description" class="form-control" name="description" rows="3"></textarea>
                             </div>
                         </div>
-                 </div>
+                    </div>
+                </div>
                 <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Agregar</button>
             </form>
         </div>
