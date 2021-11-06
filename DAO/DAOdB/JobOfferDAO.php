@@ -123,22 +123,7 @@ class JobOfferDAO implements IDAO{
         }
     }
 
-    public function GetOfferByID($userID){
-        $response = null;
-
-        try{
-            $query = "select postulations.idJobOffer from postulations p where idUser =".$userID;
-            $this->connection = Connection::GetInstance();
-            $result = $this->connection->Execute($query);
-
-            $response = $result[0];
-
-        }catch (PDOException $e){
-            $response = $e->getMessage();
-        }finally{
-            return $response;
-        }
-    }
+    
 
     public function Delete($jobOfferID){
         $response = null;
@@ -194,26 +179,28 @@ class JobOfferDAO implements IDAO{
             $jobOffer=new JobOffer();
             
             $value = $this->connection->Exec($query, $parameters);
-
-            $value[0]['active'] = $this->ActiveToBoolean($value[0]['active']);
-
             
-            if($value[0]['active']){ 
+            if(!empty($value)){
+
+                $value[0]['active'] = $this->ActiveToBoolean($value[0]['active']);
                 
-                $jobOffer->setOfferID($value[0]['offerID']);
-                $jobOffer->setTittle($value[0]['tittle']);
-                $jobOffer->setIdCompany($value[0]['idCompany']);
-                $jobOffer->setDate($value[0]['creationDate']);
-                $jobOffer->setDescription($value[0]['description']);
-                $jobOffer->setSalary($value[0]['salary']);
-                $jobOffer->setWorkDay($value[0]['workDay']);
-                $jobOffer->setActive($value[0]['active']);
-                $jobOffer->setReference($value[0]['reference']);
                 
-            }else if(!$value[0]['active']){
-                return null;    
-            }
-     
+                if($value[0]['active']){ 
+                    
+                    $jobOffer->setOfferID($value[0]['offerID']);
+                    $jobOffer->setTittle($value[0]['tittle']);
+                    $jobOffer->setIdCompany($value[0]['idCompany']);
+                    $jobOffer->setDate($value[0]['creationDate']);
+                    $jobOffer->setDescription($value[0]['description']);
+                    $jobOffer->setSalary($value[0]['salary']);
+                    $jobOffer->setWorkDay($value[0]['workDay']);
+                    $jobOffer->setActive($value[0]['active']);
+                    $jobOffer->setReference($value[0]['reference']);
+                    
+                }
+            }else
+            return null;    
+                
             return $jobOffer;
         } catch (PDOException $e) {
             

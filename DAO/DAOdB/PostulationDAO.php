@@ -117,4 +117,22 @@ class PostulationDAO{
         }
     
     }
+
+    public function GetOfferByID($userID){
+        $response = null;
+
+        try{
+            $query = "select idJobOffer from $this->tableName where idUser = '".$userID."';";
+            $this->connection = Connection::GetInstance();
+            $result = $this->connection->Execute($query);
+            
+            if(!empty($result))
+            $response = $result[0];
+
+        }catch (PDOException $e){
+            $response = $e->getMessage();
+        }finally{
+            return $response;
+        }
+    }
 }

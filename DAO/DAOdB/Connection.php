@@ -62,6 +62,7 @@ class Connection{
     /**TENGO DUDAS CON TODA ESTA FN */
     public function BindParameters($parameters = array(), $queryType = QueryType::Query){
         $i = 0;
+        
         foreach($parameters as $parameterName => $value){
             $i++;
             if($queryType == QueryType::Query){

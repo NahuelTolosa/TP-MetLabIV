@@ -1,10 +1,12 @@
 <?php namespace Controllers;
 
 use DAO\DAOdB\JobOfferDAO as JobOfferDAO;
+use DAO\DAOdB\PostulationDAO;
 use DAO\DAOJson\CompanyDAO;
 use DAO\DAOJson\JobPositionDAO as JobPositionDAO;
 
 use Models\JobOffer;
+use Models\Postulation;
 
 class JobOfferController
     {
@@ -35,9 +37,10 @@ class JobOfferController
         {
             $jobPositionDAO = new jobPositionDAO();
             $jobOfferDAO = JobOfferDAO::GetInstance();
+            $postulationDAO= new PostulationDAO();
             $hasApplied =  false;
             
-            if(substr($_SESSION['loggedUser']->getId(),0,2) == "ST"  && !empty($jobOfferDAO->GetOfferByID( $_SESSION['loggedUser']->getId()))){
+            if(substr($_SESSION['loggedUser']->getId(),0,2) == "ST"  && !empty($postulationDAO->GetOfferByID( $_SESSION['loggedUser']->getId()))){
                 $hasApplied =  true;
             }
             

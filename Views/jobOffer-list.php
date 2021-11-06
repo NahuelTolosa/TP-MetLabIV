@@ -13,18 +13,13 @@ else if(substr($_SESSION['loggedUser']->getId(),0,2) == "AD")
     <section id="listado" class="mb-5">
         <div class="container">
             <h2 class="mb-4">Listado de Ofertas Laborales</h2>
-            <?php 
-            if(isset($message))
-                echo $message;
-            ?>
-            
+                        
             <form method="get" action="<?php echo FRONT_ROOT ?>JobOffer/ShowListView">
                 <select id="reference" class="form-control" name="reference">
                     <?php foreach ($jobPositionDAO->GetAll() as $jobPosition) {?>
                     
                         <option value="<?php echo $jobPosition->getJobPositionId()?>">
-                            <?php 
-                             echo $jobPosition->getDescription()?>
+                            <?php echo $jobPosition->getDescription()?>
                         </option>
 
                     <?php } ?>
@@ -58,7 +53,7 @@ else if(substr($_SESSION['loggedUser']->getId(),0,2) == "AD")
                                             echo "<a href='".FRONT_ROOT."JobOffer/ShowModify/".$jobOffer->getOfferID()."'> Modificar </a>";
                                             echo "<a href='".FRONT_ROOT."JobOffer/ShowDeleteView/".$jobOffer->getTittle()."/".$jobOffer->getOfferID()."'> Dar de baja </a>";
                                         }
-                                        if(substr($_SESSION['loggedUser']->getId(),0,2) == "ST" && $hasApplied == false )
+                                        if(substr($_SESSION['loggedUser']->getId(),0,2) == "ST" && $hasApplied==false )
                                         {
                                             echo "<a href='".FRONT_ROOT."Postulation/ApplyOffer/".$jobOffer->getOfferID()."/".$_SESSION['loggedUser']->getId()."'> Postularse </a>";
                                             
