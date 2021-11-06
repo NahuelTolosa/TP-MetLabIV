@@ -9,11 +9,14 @@ use Models\JobOffer;
 class JobOfferController
     {
         private $jobOfferDAO;
+        
 
         public function __construct()
         {
             $this->jobOfferDAO = new JobOfferDAO();
         }
+
+        
     
 
         /**************************************************************/
@@ -30,18 +33,24 @@ class JobOfferController
 
         public function ShowListView($message="", $filter="null")
         {
-            $jobOfferDAO = (isset ($this->jobOfferDAO))? $this->jobOfferDAO : new JobOfferDAO();
-            $jobPositionDAO = new JobPositionDAO();
-
+            $jobPositionDAO = new jobPositionDAO();
+            $jobOfferDAO = JobOfferDAO::GetInstance();
+            $hasApplied =  false;
+            
+            if(substr($_SESSION['loggedUser']->getId(),0,2) == "ST"  && !empty($jobOfferDAO->GetOfferByID( $_SESSION['loggedUser']->getId()))){
+                $hasApplied =  true;
+            }
+            
+            
             if($filter == "null"){
-                
-                $jobOfferList = $this->jobOfferDAO->GetAll();
-                
+                $jobOffers = $this->jobOfferDAO->GetAll();
+                $jobOfferList = $jobOffers;
             }
             else{
                 $jobOfferList = $this->jobOfferDAO->GetFiltered($filter);
             }
-
+            
+            
             require_once(VIEWS_PATH."jobOffer-list.php");
         }
 

@@ -10,7 +10,6 @@
                <a class="nav-link" href="<?php echo FRONT_ROOT ?>JobOffer/ShowListView">Ver Ofertas laborales</a>
 
           </li>      
-                 
           <li class="nav-item">
                <a class="nav-link" href="<?php echo FRONT_ROOT ?>Company/ShowListView">Lista de Compañias</a>
           </li>      

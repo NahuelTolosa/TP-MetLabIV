@@ -8,6 +8,11 @@ use PDOException as PDOException;
 class JobOfferDAO implements IDAO{  
     private $tableName = "joboffers";
     private $connection;
+    private static $joDAO = null;
+
+    public static function GetInstance(){
+        return ((self::$joDAO == null) ? self::$joDAO = new JobOfferDAO() : self::$joDAO);
+    }
 
     public function Add($jobOffer){
         $response = null;
@@ -106,6 +111,23 @@ class JobOfferDAO implements IDAO{
 
         try{
             $query = "select users.userName from postulations p inner join users on p.idUser = users.id where idJobOffer =".$offerID;
+            $this->connection = Connection::GetInstance();
+            $result = $this->connection->Execute($query);
+
+            $response = $result[0];
+
+        }catch (PDOException $e){
+            $response = $e->getMessage();
+        }finally{
+            return $response;
+        }
+    }
+
+    public function GetOfferByID($userID){
+        $response = null;
+
+        try{
+            $query = "select postulations.idJobOffer from postulations p where idUser =".$userID;
             $this->connection = Connection::GetInstance();
             $result = $this->connection->Execute($query);
 

@@ -67,7 +67,7 @@ class PostulationDAO{
         }catch (PDOException $e){
             $response = $e->getMessage();
         }finally{
-            die(var_dump($response));
+            
             return $response;
         }
     }
