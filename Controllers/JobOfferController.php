@@ -35,6 +35,7 @@ class JobOfferController
 
         public function ShowListView($message="", $filter="null")
         {
+
             $jobPositionDAO = new jobPositionDAO();
             $jobOfferDAO = JobOfferDAO::GetInstance();
             $postulationDAO= new PostulationDAO();
@@ -49,6 +50,7 @@ class JobOfferController
             if($message == ""){
                 $jobOffers = $this->jobOfferDAO->GetAll();
                 $jobOfferList = $jobOffers;
+
             }
             else{
                 $jobOfferList = $this->jobOfferDAO->GetFiltered($message);
@@ -63,8 +65,7 @@ class JobOfferController
             require_once(VIEWS_PATH."jobOffer-delete.php");
         }
         
-        public function ShowModify($offerID)
-        {   
+        public function ShowModify($offerID){
             $jobOfferDAO = (isset ($this->jobOfferDAO))? $this->jobOfferDAO : new JobOfferDAO();
             $jobOffer = ($this->jobOfferDAO)->GetByID($offerID);
             // die(var_dump($jobOffer));

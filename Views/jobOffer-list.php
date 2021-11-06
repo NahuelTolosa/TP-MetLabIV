@@ -55,14 +55,19 @@ else if(substr($_SESSION['loggedUser']->getId(),0,2) == "AD")
                                             echo "<a href='".FRONT_ROOT."JobOffer/ShowModify/".$jobOffer->getOfferID()."'> Modificar </a>";
                                             echo "<a href='".FRONT_ROOT."JobOffer/ShowDeleteView/".$jobOffer->getTittle()."/".$jobOffer->getOfferID()."'> Dar de baja </a>";
                                         }
+
                                         if(substr($_SESSION['loggedUser']->getId(),0,2) == "ST" && $hasApplied==false )
-                                        {
-                                            echo "<a href='".FRONT_ROOT."Postulation/ApplyOffer/".$jobOffer->getOfferID()."/".$_SESSION['loggedUser']->getId()."'> Postularse </a>";
-                                            
-                                        }
-                                    ?>
+                                        {?>
+                                            <form action="<?php echo FRONT_ROOT ?>Postulation/ApplyOffer" method="POST">
+                                                <input type="text" name="idPostulation" value="<?php echo $jobOffer->getOfferID()?>" class="" hidden>
+                                                <input type="text" name="idUser" value="<?php echo $_SESSION['loggedUser']->getId()?>" class="" hidden>
+                                                <button type="submit" name="button" value="" class="btn btn-dark">Postularse</button>
+                                            </form>
+
+                                       <?php } ?>
+                                    
                                 </summary><br>
-                                <p>Empresa: <?php echo $jobOffer->getTittle()?></p>
+                                <p>Empresa: <?php echo $jobOffer->getTittle()?></p><!--Esto está mal-->
                                 <p>Fecha: <?php echo $jobOffer->getDate()?></p>
                                 <p>Descripcion: <?php echo $jobOffer->getDescription()?></p>
                                 <p>Disponibilidad: <?php echo $jobOffer->getWorkDay()?></p>

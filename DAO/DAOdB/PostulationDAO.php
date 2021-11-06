@@ -58,6 +58,7 @@ class PostulationDAO{
     
     public function Delete($idUser)
     {
+        $parameters = array();
         $response = null;
         try{
             $query = "DELETE FROM ".$this->tableName." WHERE idUser = :idUser;";

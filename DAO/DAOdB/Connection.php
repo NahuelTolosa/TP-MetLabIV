@@ -42,6 +42,7 @@ class Connection{
             $this->BindParameters($parameters, $queryType);
             
             $this->pdoStatement->execute();
+            
             return $this->pdoStatement->rowCount();
         }catch(PDOException $e){
             return $e->getMessage();

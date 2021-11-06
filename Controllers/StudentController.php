@@ -65,7 +65,7 @@ class StudentController
             
             $student= $this -> studentDAO->GetByEmail($_SESSION['loggedUser']->getUserName());
 
-            $postulation = $this-> postulationDAO->GetByUserID($_SESSION['loggedUser']->getId());
+            $postulation = $this->postulationDAO->GetByUserID($_SESSION['loggedUser']->getId());
             $offer = $offerDAO->GetById($postulation->getIdJobOffer());
 
             require_once(VIEWS_PATH."student-showPersonalInfo.php");

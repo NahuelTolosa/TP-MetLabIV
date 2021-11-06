@@ -165,22 +165,19 @@ class JobOfferDAO implements IDAO{
     }
 
     public function GetById($idJobOffer){
-        $parameters = array();
-        $response = null;
-        $user = null;
-        
-        $query = "SELECT * FROM " . $this->tableName . " WHERE offerID='" . $idJobOffer . "';";
-        
-        //$parameters['userName'] = $email;
-        
-        try {
+
+        if($idJobOffer != null){
+            $parameters = array();
+            $response = null;
+            $user = null;
             
-            $this->connection = Connection::GetInstance();
-            $jobOffer=new JobOffer();
+            $query = "SELECT * FROM " . $this->tableName . " WHERE offerID='" . $idJobOffer . "';";
             
+            try{
             $value = $this->connection->Exec($query, $parameters);
             
             if(!empty($value)){
+                $jobOffer = new JobOffer();
 
                 $value[0]['active'] = $this->ActiveToBoolean($value[0]['active']);
                 
@@ -205,7 +202,10 @@ class JobOfferDAO implements IDAO{
         } catch (PDOException $e) {
             
             return $e->getMessage();
+
         }
+        }
+        
     }
 
     private function ActiveToBoolean($str){
