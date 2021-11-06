@@ -45,13 +45,15 @@ class JobOfferController
             }
             
             
-            if($filter == "null"){
+            // die(var_dump($message));
+            if($message == ""){
                 $jobOffers = $this->jobOfferDAO->GetAll();
                 $jobOfferList = $jobOffers;
             }
             else{
-                $jobOfferList = $this->jobOfferDAO->GetFiltered($filter);
+                $jobOfferList = $this->jobOfferDAO->GetFiltered($message);
             }
+            // die(var_dump($jobOfferList));
             
             
             require_once(VIEWS_PATH."jobOffer-list.php");

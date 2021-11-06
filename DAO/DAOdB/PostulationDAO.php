@@ -60,14 +60,15 @@ class PostulationDAO{
     {
         $response = null;
         try{
-            $query = "DELETE FROM ".$this->tableName." WHERE idUser = :idUser";
+            $query = "DELETE FROM ".$this->tableName." WHERE idUser = :idUser;";
             $this->connection = Connection::GetInstance();
             $value['idUser'] = $idUser;
-            $response = $this->connection->Exec($query, $value);
+
+            $response = $this->connection->ExecuteNonQuery($query, $value);
+
         }catch (PDOException $e){
             $response = $e->getMessage();
         }finally{
-            
             return $response;
         }
     }

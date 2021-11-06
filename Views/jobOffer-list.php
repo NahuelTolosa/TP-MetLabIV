@@ -15,7 +15,8 @@ else if(substr($_SESSION['loggedUser']->getId(),0,2) == "AD")
             <h2 class="mb-4">Listado de Ofertas Laborales</h2>
                         
             <form method="get" action="<?php echo FRONT_ROOT ?>JobOffer/ShowListView">
-                <select id="reference" class="form-control" name="reference">
+                <select id="reference" class="form-control-sm" name="reference">
+                    <option value="<?php null ?>">--</option>
                     <?php foreach ($jobPositionDAO->GetAll() as $jobPosition) {?>
                     
                         <option value="<?php echo $jobPosition->getJobPositionId()?>">
@@ -24,8 +25,9 @@ else if(substr($_SESSION['loggedUser']->getId(),0,2) == "AD")
 
                     <?php } ?>
                 </select>
-                <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Buscar</button>
-                <button type="submit" name="button" class="btn btn-dark ml-auto d-block" value="null">Vaciar</button>
+                <button type="submit" name="button" class="btn btn-dark ml-auto d-inline-block">Buscar</button>
+                <button type="submit" name="clear" class="btn btn-dark ml-auto d-inline-block" value="<?php echo "<input type='reset' name='reset'  value='reset'>" ?>">Vaciar</button>
+                
             </form>
 
 
