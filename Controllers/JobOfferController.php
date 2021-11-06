@@ -86,9 +86,13 @@ class JobOfferController
         public function DeleteOffer($offerID)
         {
             $row = $this->jobOfferDAO->Delete($offerID);
+            $message= "";
             if($row){
                 $usersPostulation = $this->jobOfferDAO->GetEmailsByOfferID($offerID);  //get all email postulations 
-                ThanksMailHelper::SendEmail($usersPostulation);
+                $response = ThanksMailHelper::SendEmail($usersPostulation);
+
+                die(var_dump($response));
+
                 $message = "<h4 style='color: #072'>Oferta laboral dada de baja con éxito</h4>";
             }
             $this->ShowListView($message);

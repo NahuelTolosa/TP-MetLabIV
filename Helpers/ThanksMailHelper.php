@@ -1,4 +1,5 @@
-<?php namespace Helpers;
+<?php 
+namespace Helpers;
 
 use Exception as Exception;
 use PHPMailer\PHPMailer\PHPMailer as PHPMailer;
