@@ -58,7 +58,6 @@ class PostulationDAO{
     
     public function Delete($idUser)
     {
-        $parameters = array();
         $response = null;
         try{
             $query = "DELETE FROM ".$this->tableName." WHERE idUser = :idUser;";
@@ -111,8 +110,12 @@ class PostulationDAO{
                 $postulation->setIdPostulation($response[0]['idPostulations']);
                 $postulation->setIdUser($response[0]['idUser']);
                 $postulation->setIdJobOffer($response[0]['idJobOffer']);
+
+                return $postulation;
             }
-            return $postulation;
+
+            return null;
+            
         } catch (PDOException $e) {
             
             return $e->getMessage();
@@ -127,7 +130,7 @@ class PostulationDAO{
             $query = "select idJobOffer from $this->tableName where idUser = '".$userID."';";
             $this->connection = Connection::GetInstance();
             $result = $this->connection->Execute($query);
-            
+
             if(!empty($result))
             $response = $result[0];
 

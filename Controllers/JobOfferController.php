@@ -35,29 +35,27 @@ class JobOfferController
 
         public function ShowListView($message="", $filter="null")
         {
-
             $jobPositionDAO = new jobPositionDAO();
             $jobOfferDAO = JobOfferDAO::GetInstance();
             $postulationDAO= new PostulationDAO();
             $hasApplied =  false;
-            
+
             if(substr($_SESSION['loggedUser']->getId(),0,2) == "ST"  && !empty($postulationDAO->GetOfferByID( $_SESSION['loggedUser']->getId()))){
                 $hasApplied =  true;
             }
-            
-            
+
+
             // die(var_dump($message));
             if($message == ""){
                 $jobOffers = $this->jobOfferDAO->GetAll();
                 $jobOfferList = $jobOffers;
-
             }
             else{
                 $jobOfferList = $this->jobOfferDAO->GetFiltered($message);
             }
             // die(var_dump($jobOfferList));
-            
-            
+
+
             require_once(VIEWS_PATH."jobOffer-list.php");
         }
 
