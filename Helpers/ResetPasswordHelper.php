@@ -2,9 +2,12 @@
 
 use DAO\DAOdB\ResetPasswordDAO as ResetPasswordDAO;
 use PDOException as PDOException;
-use Exception as Exception;
 use PHPMailer\PHPMailer\PHPMailer as PHPMailer;
-require_once 'vendor/autoload.php'; //libraries for use phpmailer
+use PHPMailer\PHPMailer\Exception as Exception;
+
+require 'PhpMailer/Exception.php';
+require 'PhpMailer/PHPMailer.php';
+require 'PhpMailer/SMTP.php';
 
 class ResetPasswordHelper{
     
@@ -19,24 +22,23 @@ class ResetPasswordHelper{
            
             if(!$rows) return false;
 
-            require_once('phpmail/PHPMailerAutoload.php');
             $mail = new PHPMailer(true);
             $mail->CharSet =  "UTF-8";
             $mail->IsSMTP();
                 // enable SMTP authentication
             $mail->SMTPAuth = true;
-            $mail->SMTPSecure = "ssl";
+            $mail->SMTPSecure = "tls";
                 // sets GMAIL as the SMTP server
             $mail->Host = "smtp.gmail.com";
                 // set the SMTP port for the GMAIL server
-            $mail->Port = "465"; 
+            $mail->Port = "587"; 
 
             $mail->Username = MAIL_USERNAME;
             $mail->Password = MAIL_PASSWORD;
             $mail->From = MAIL_USERNAME;
             $mail->FromName = 'Universidad Tecnológica Nacional';
 
-            $mail->AddAddress($email, 'Information');
+            $mail->AddAddress($email);
                 
             $url = "http://" . $_SERVER["HTTP_HOST"] . dirname($_SERVER["PHP_SELF"]) . "/".VIEWS_PATH . "resetPassword-show?token=$token";
 
@@ -78,14 +80,4 @@ class ResetPasswordHelper{
         return $resetPasswordDb->GetByEmail($email);
     }
 
-    
-    /*public static function EmailExistDb(string $email){
-        $resetPasswordDb = new ResetPasswordDAO();
-        $resetPasswordList = resetPasswordDb->GetAll();             //not usefull get all, need getbyid on DAO
-        foreach($resetPasswordList as $user){
-            if($user->getEmail == $email) return $user;
-            else return false;
-        }
-    }*/
-   
 }

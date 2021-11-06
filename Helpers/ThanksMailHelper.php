@@ -1,9 +1,10 @@
-<?php 
-namespace Helpers;
-
-use Exception as Exception;
+<?php namespace Helpers;
 use PHPMailer\PHPMailer\PHPMailer as PHPMailer;
-require_once 'vendor/autoload.php'; //libraries for use phpmailer
+use PHPMailer\PHPMailer\Exception as Exception;
+
+require 'PhpMailer/Exception.php';
+require 'PhpMailer/PHPMailer.php';
+require 'PhpMailer/SMTP.php';
 
 class ThanksMailHelper{
     /**
@@ -13,14 +14,13 @@ class ThanksMailHelper{
         try{
             if(empty($usersEmail)) return false;
                 
-            require_once('phpmail/PHPMailerAutoload.php');
             $mail = new PHPMailer(true);
             $mail->CharSet = "UTF-8";
             $mail->IsSMTP();
             $mail->SMTPAuth = true;
-            $mail->SMTPSecure = "ssl";
+            $mail->SMTPSecure = "tls";
             $mail->Host = "smtp.gmail.com";
-            $mail->Port = "465"; //or 587
+            $mail->Port = "587"; //or 465
 
             $mail->Username = MAIL_USERNAME;
             $mail->Password = MAIL_PASSWORD;
@@ -42,7 +42,12 @@ class ThanksMailHelper{
                                 <h4>Un grato saludo,</h4>
                                 <h4>Universidad Tecnológica Nacional.</h4>";
 
-            return ($mail->send()) ? true : false;
+            //return ($mail->send()) ? true : false;
+            if ($mail->send()){
+                echo "esssssito";
+            }else{
+                echo "F";
+            }
         }catch (Exception $e) {
             throw $e;
         }
