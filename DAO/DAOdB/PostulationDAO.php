@@ -58,12 +58,14 @@ class PostulationDAO{
     
     public function Delete($idUser)
     {
+        $parameters = array();
         $response = null;
         try{
-            $query = "DELETE FROM ".$this->tableName." WHERE idUser = :".$idUser.";";
+            $query = "DELETE FROM ".$this->tableName." WHERE idUser = '".$idUser."';";
             $this->connection = Connection::GetInstance();
-            //$value['idUser'] = $idUser;
-            $response = $this->connection->Exec($query,array($idUser));
+            $parameters['idUser'] = $idUser;
+            $response = $this->connection->ExecuteNonQuery($query,$parameters);
+            die(var_dump($response));
         }catch (PDOException $e){
             $response = $e->getMessage();
         }finally{

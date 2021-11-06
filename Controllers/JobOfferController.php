@@ -1,6 +1,7 @@
 <?php namespace Controllers;
 
 use DAO\DAOdB\JobOfferDAO as JobOfferDAO;
+use DAO\DAOdB\PostulationDAO;
 use DAO\DAOJson\CompanyDAO;
 use DAO\DAOJson\JobPositionDAO as JobPositionDAO;
 
@@ -32,6 +33,9 @@ class JobOfferController
         {
             $jobOfferDAO = (isset ($this->jobOfferDAO))? $this->jobOfferDAO : new JobOfferDAO();
             $jobPositionDAO = new JobPositionDAO();
+            $postulationDAO = new PostulationDAO();
+
+            $postulation = $this->postulationDAO->GetByUserID($_SESSION['loggedUser']->getId());
 
             if($filter == "null"){
                 
@@ -49,8 +53,7 @@ class JobOfferController
             require_once(VIEWS_PATH."jobOffer-delete.php");
         }
         
-        public function ShowModify($offerID)
-        {   
+        public function ShowModify($offerID){
             $jobOfferDAO = (isset ($this->jobOfferDAO))? $this->jobOfferDAO : new JobOfferDAO();
             $jobOffer = ($this->jobOfferDAO)->GetByID($offerID);
             // die(var_dump($jobOffer));

@@ -1,5 +1,4 @@
 <?php
-     session_start();
      require_once('student-nav.php');
 ?>
 <main class="py-5">
@@ -59,10 +58,6 @@
                          echo $dropMessage; 
                ?>
                 <h2 class="mb-4">Postulacion vigente</h2>
-
-                <form action="<?php echo FRONT_ROOT ?>Postulation/DropOffer<?php echo $_SESSION['loggedUser']->getI()?>" method="POST">
-                    <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Darse de baja</button>
-                </form>
             </div>
 
 
@@ -95,9 +90,13 @@
                     <tr>
                         <td><strong>Descripcion del puesto:</strong> <?php echo $offer->getDescription()  ?></td>
                     <tr>
-                        <?php } ?>
                 </tbody>
             </table>
+                <form action="<?php echo FRONT_ROOT ?>Postulation/DropOffer" method="POST">
+                    <input type="text" name="idUser" value="<?php echo $_SESSION['loggedUser']->getId()?>" class="form-control" hidden>
+                    <button type="submit" name="button" value="" class="btn btn-dark ml-auto d-block">Darse de baja</button>
+                </form>
+            <?php } ?>
         </div>
     </section>
 </main>

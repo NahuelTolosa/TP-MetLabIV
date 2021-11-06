@@ -8,6 +8,7 @@ use DAO\DAOdB\UserDAO as UserDAO;
 use DAO\DAOJson\CarreerDAO;
 use DAO\DAOdB\JobOfferDAO;
 use DAO\DAOJson\CompanyDAO;
+use DAO\DAOJson\JobPositionDAO;
 
 
 class PostulationController
@@ -37,6 +38,8 @@ class PostulationController
 
         $message = $this->setMessage($result);
         
+        $jobPositionDAO = new JobPositionDAO();
+        
         require_once(VIEWS_PATH."student-showPersonalInfo.php");
         
     }
@@ -58,6 +61,7 @@ class PostulationController
         $offerDAO = new JobOfferDAO();
         $companyDAO = new CompanyDAO();
         $studentDAO = new StudentDAO();
+        $jobPositionDAO = new JobPositionDAO();
 
         $student=  $studentDAO->GetByEmail($_SESSION['loggedUser']->getUserName());
 
