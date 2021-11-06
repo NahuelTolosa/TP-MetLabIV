@@ -1,10 +1,10 @@
 <?php namespace Controllers;
 
 use DAO\DAOdB\JobOfferDAO as JobOfferDAO;
-use DAO\DAOJson\CompanyDAO;
+use DAO\DAOJson\CompanyDAO as CompanyDAO;
 use DAO\DAOJson\JobPositionDAO as JobPositionDAO;
-
-use Models\JobOffer;
+use Helpers\ThanksMailHelper as ThanksMailHelper;
+use Models\JobOffer as JobOffer;
 
 class JobOfferController
     {
@@ -30,7 +30,7 @@ class JobOfferController
 
         public function ShowListView($message="", $filter="null")
         {
-            $jobOfferDAO = (isset ($this->jobOfferDAO))? $this->jobOfferDAO : new JobOfferDAO();
+            $jobOfferDAO = (isset ($this->jobOfferDAO)) ? $this->jobOfferDAO : new JobOfferDAO();
             $jobPositionDAO = new JobPositionDAO();
 
             if($filter == "null"){
@@ -63,13 +63,10 @@ class JobOfferController
         public function Add($tittle,$company,$salary,$workDay,$reference,$description)
         {
             $companyController = new CompanyController();
-            // die(var_dump($_POST['company']));
             $company = $companyController->getCompany($_POST['company']);// trae la compania de la api
-
             $message="";
 
             if($company != null){
-
                 $joboffer = new JobOffer();
                 $joboffer->setTittle($tittle);
                 $joboffer->setIdCompany($company->getIdCompany());
@@ -78,23 +75,22 @@ class JobOfferController
                 $joboffer->setWorkDay($workDay);
                 $joboffer->setReference($reference);
 
-                
-
                 ($this->jobOfferDAO)->Add($joboffer);
                 $message = "<h4 style='color: #072'>Oferta de trabajo dada de alta con éxito</h4>";
             }else{
-                
                 $message = "<p style='color: #f00'>La empresa ingresada no existe en el sistema</p>";
-
             }
-            
             $this->ShowAddView($message);
         }
 
         public function DeleteOffer($offerID)
         {
-            $this->jobOfferDAO->Delete($offerID);
-            $message = "<h4 style='color: #072'>Oferta laboral dada de baja con éxito</h4>";
+            $row = $this->jobOfferDAO->Delete($offerID);
+            if($row){
+                $usersPostulation = $this->jobOfferDAO->GetEmailsByOfferID($offerID);  //get all email postulations 
+                ThanksMailHelper::SendEmail($usersPostulation);
+                $message = "<h4 style='color: #072'>Oferta laboral dada de baja con éxito</h4>";
+            }
             $this->ShowListView($message);
         }
 
