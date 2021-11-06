@@ -29,22 +29,28 @@ class JobOfferController
             require_once(VIEWS_PATH."jobOffer-add.php");
         }
 
-        public function ShowListView($message="", $filter="null")
+       public function ShowListView($message="", $filter="null")
         {
-            $jobOfferDAO = (isset ($this->jobOfferDAO))? $this->jobOfferDAO : new JobOfferDAO();
-            $jobPositionDAO = new JobPositionDAO();
-            $postulationDAO = new PostulationDAO();
+            $jobPositionDAO = new jobPositionDAO();
+            $jobOfferDAO = JobOfferDAO::GetInstance();
+            $postulationDAO= new PostulationDAO();
+            $hasApplied =  false;
 
-            $postulation = $this->postulationDAO->GetByUserID($_SESSION['loggedUser']->getId());
+            if(substr($_SESSION['loggedUser']->getId(),0,2) == "ST"  && !empty($postulationDAO->GetOfferByID( $_SESSION['loggedUser']->getId()))){
+                $hasApplied =  true;
+            }
 
-            if($filter == "null"){
-                
-                $jobOfferList = $this->jobOfferDAO->GetAll();
-                
+
+            // die(var_dump($message));
+            if($message == ""){
+                $jobOffers = $this->jobOfferDAO->GetAll();
+                $jobOfferList = $jobOffers;
             }
             else{
-                $jobOfferList = $this->jobOfferDAO->GetFiltered($filter);
+                $jobOfferList = $this->jobOfferDAO->GetFiltered($message);
             }
+            // die(var_dump($jobOfferList));
+
 
             require_once(VIEWS_PATH."jobOffer-list.php");
         }

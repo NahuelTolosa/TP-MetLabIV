@@ -58,14 +58,14 @@ class PostulationDAO{
     
     public function Delete($idUser)
     {
-        $parameters = array();
         $response = null;
         try{
-            $query = "DELETE FROM ".$this->tableName." WHERE idUser = '".$idUser."';";
+            $query = "DELETE FROM ".$this->tableName." WHERE idUser = :idUser;";
             $this->connection = Connection::GetInstance();
-            $parameters['idUser'] = $idUser;
-            $response = $this->connection->ExecuteNonQuery($query,$parameters);
-            die(var_dump($response));
+            $value['idUser'] = $idUser;
+
+            $response = $this->connection->ExecuteNonQuery($query, $value);
+
         }catch (PDOException $e){
             $response = $e->getMessage();
         }finally{
@@ -110,12 +110,34 @@ class PostulationDAO{
                 $postulation->setIdPostulation($response[0]['idPostulations']);
                 $postulation->setIdUser($response[0]['idUser']);
                 $postulation->setIdJobOffer($response[0]['idJobOffer']);
+
+                return $postulation;
             }
-            return $postulation;
+
+            return null;
+            
         } catch (PDOException $e) {
             
             return $e->getMessage();
         }
     
+    }
+
+    public function GetOfferByID($userID){
+        $response = null;
+
+        try{
+            $query = "select idJobOffer from $this->tableName where idUser = '".$userID."';";
+            $this->connection = Connection::GetInstance();
+            $result = $this->connection->Execute($query);
+
+            if(!empty($result))
+            $response = $result[0];
+
+        }catch (PDOException $e){
+            $response = $e->getMessage();
+        }finally{
+            return $response;
+        }
     }
 }

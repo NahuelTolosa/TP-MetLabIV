@@ -8,6 +8,11 @@ use PDOException as PDOException;
 class JobOfferDAO implements IDAO{  
     private $tableName = "joboffers";
     private $connection;
+    private static $joDAO = null;
+
+    public static function GetInstance(){
+        return ((self::$joDAO == null) ? self::$joDAO = new JobOfferDAO() : self::$joDAO);
+    }
 
     public function Add($jobOffer){
         $response = null;
@@ -202,6 +207,7 @@ class JobOfferDAO implements IDAO{
         }
         
     }
+
 
     private function ActiveToBoolean($str){
         return ($str=='1') ? true : false;
