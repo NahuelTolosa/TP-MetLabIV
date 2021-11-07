@@ -2,8 +2,7 @@
 
 use Helpers\ResetPasswordHelper as ResetPasswordHelper;
 use DAO\DAOdB\ResetPasswordDAO as ResetPasswordDAO;
-use DAO\DAOdB\UserDAO;
-use Models\User as User;
+use DAO\DAOdB\UserDAO as UserDAO;
 
 Class ResetPasswordController{
     private $resetPasswordDAO;
@@ -22,7 +21,7 @@ Class ResetPasswordController{
         $response = ResetPasswordHelper::EmailTo($email);
         if(!$response) $message = "El email ingresado es inexistente";
         else $message = "Checkea tu mail e ingresa al link para cambiar la contraseña";
-        require_once(VIEWS_PATH."logIn");
+        require_once(VIEWS_PATH."logIn.php");
     }
 
     /**
@@ -36,11 +35,10 @@ Class ResetPasswordController{
 
             if ($validateToken) {
                 if ($newPassword == $repeatNewPassword) {
-                    $userByEmail = $this->resetPasswordDAO->GetByEmail($email); //traer id del usuario que solicita
-                    if ($userByEmail) {
-                       // $resetPasswordUser = new User();
-                        $resetPasswordUser->setPassword($newPassword);
-                        $this->userDAO->Update($resetPasswordUser); //update user table
+                    $userUpdate = $this->userDAO->GetByEmail($email);
+                    if ($userUpdate) {
+                        $userUpdate->setUserPassword($newPassword);
+                        $this->userDAO->Update($userUpdate); //update user table
 
                         $this->resetPasswordDAO->Delete($token); //clean resetPassword table
 
@@ -50,15 +48,12 @@ Class ResetPasswordController{
             } else $message = "Error validando token";
         } else $message = "Error 404";
 
-        require_once(VIEWS_PATH . "logIn");
+        require_once(VIEWS_PATH . "logIn.php");
     }
 
-   /* public function GetIdUserByEmail($email){
-        $userList = array();
-        $userList = $this->userDAO->GetAll();
-        foreach($userList as $user){ //??string ??
-           if($user->getUserName == $email) return $user->getId();
-       }
-       return false;
-    }*/
+    public function ResetView()
+    {
+        require_once(VIEWS_PATH . "reset-password.php");
+    }
+
 }

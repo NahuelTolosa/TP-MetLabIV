@@ -105,12 +105,12 @@ class JobOfferDAO implements IDAO{
         }
     }
 
-    private function GetEmailsByOfferID($offerID){
+    public function GetEmailsByOfferID($offerID){
 
         $response = null;
 
         try{
-            $query = "select users.userName from postulations p inner join users on p.idUser = users.id where idJobOffer =".$offerID;
+            $query = "select users.userName from postulations as p inner join users on p.idUser = users.id where idJobOffer =".$offerID;
             $this->connection = Connection::GetInstance();
             $result = $this->connection->Execute($query);
 

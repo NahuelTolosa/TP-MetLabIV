@@ -5,12 +5,11 @@ use DAO\DAOdB\Connection as Connection;
 use PDOException as PDOException;
 
 class PostulationDAO{
-    private $tableName = "postulations"; //revisar
+    private $tableName = "postulations";
     private $connection;
 
     public function Add($idJobOffer, $idUser)
     {
-       // die(var_dump($user));
         $response = null;
         try{
             $query = "INSERT INTO ".$this->tableName." (idUser, idJobOffer)
@@ -63,9 +62,7 @@ class PostulationDAO{
             $query = "DELETE FROM ".$this->tableName." WHERE idUser = :idUser;";
             $this->connection = Connection::GetInstance();
             $value['idUser'] = $idUser;
-
             $response = $this->connection->ExecuteNonQuery($query, $value);
-
         }catch (PDOException $e){
             $response = $e->getMessage();
         }finally{

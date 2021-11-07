@@ -59,17 +59,14 @@ class Connection{
         }
     }
 
-
-    /**TENGO DUDAS CON TODA ESTA FN */
     public function BindParameters($parameters = array(), $queryType = QueryType::Query){
         $i = 0;
         
         foreach($parameters as $parameterName => $value){
             $i++;
             if($queryType == QueryType::Query){
-                $this->pdoStatement->bindParam(":".$parameterName, $parameters[$parameterName]); //falla aca
+                $this->pdoStatement->bindParam(":".$parameterName, $parameters[$parameterName]); 
             }else{
-                //die(var_dump($parameterName));
                 $this->pdoStatement->bindParam($i,$parameters[$parameterName]);
             }
         }

@@ -14,12 +14,6 @@ class LogInController
         {
             $this->userLog = new User();
         }
-
-        public function UserLogged($username, $password){
-            $isSession = $this->ValidateLogIn($username, $password);
-            // die(var_dump($isSession));
-            
-        }
         
         public function ValidateLogIn($username, $password){
             $isSession = false;
@@ -37,7 +31,7 @@ class LogInController
 
         public function UserExists($username){
             $userDAO = new UserDAO();
-            return $userDAO->GetByEmail2($username); //getByUser return object or null
+            return $userDAO->GetByEmail($username); //getByUser return object or null
         }
 
         public function PasswordValidate($user, $password){
