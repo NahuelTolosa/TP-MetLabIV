@@ -2,14 +2,18 @@
 namespace DAO\DAOdB;
 
 use Models\Career as Career;
-use DataBase\Connection as Connection;
+use DAO\DAOdB\Connection;
 use PDOException as PDOException;
 
 class CareerDAO implements IDAO{  
 
     private $tableName = "CAREERS";
     private $connection;
+    private static $caDAO = null;
 
+    public static function GetInstance(){
+        return ((self::$caDAO == null) ? self::$caDAO = new CareerDAO() : self::$caDAO);
+    }
 
     public function Add($career){
         $response = null;

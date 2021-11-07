@@ -6,6 +6,11 @@
     class StudentDAO implements IDAO
     {
         private $studentList = array();
+        private static $stuDAO = null;
+
+        public static function GetInstance(){
+            return ((self::$stuDAO == null) ? self::$stuDAO = new StudentDAO() : self::$stuDAO);
+        }
 
         public function Add($student)
         {

@@ -7,7 +7,11 @@ class CarreerDAO{
 
 
     private $careerList = array();
+    private static $caDAO = null;
 
+    public static function GetInstance(){
+        return ((self::$caDAO == null) ? self::$caDAO = new CarreerDAO() : self::$caDAO);
+    }
 
     public function Add(Career $carreer)
     {

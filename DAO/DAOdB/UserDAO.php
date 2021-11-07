@@ -7,6 +7,11 @@ use PDOException as PDOException;
 class UserDAO{
     private $tableName = "users";
     private $connection;
+    private static $userDAO = null;
+
+    public static function GetInstance(){
+        return ((self::$userDAO == null) ? self::$userDAO = new UserDAO() : self::$userDAO);
+    }
 
     public function Add($user)
     {

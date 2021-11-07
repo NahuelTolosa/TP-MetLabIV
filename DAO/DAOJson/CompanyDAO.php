@@ -6,7 +6,12 @@ use DAO\DAOJson\JobOfferDAO as JobOfferDAO;
 class CompanyDAO implements IDAO{
 
     private $companyList = array();
+    private static $compDAO = null;
 
+    public static function GetInstance(){
+        return ((self::$compDAO == null) ? self::$compDAO = new CompanyDAO() : self::$compDAO);
+    }
+    
     public function Add($company)
     {
         $this->RetrieveData();

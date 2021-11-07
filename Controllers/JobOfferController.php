@@ -19,7 +19,7 @@ class JobOfferController
         /**************************************************************/
         public function ShowAddView($message="")
         {
-            $jobPositionDAO= new JobPositionDAO();
+            $jobPositionDAO= JobPositionDAO::GetInstance();
             $jobPositionDAO->GetAll();
             $companyDAO = new CompanyDAO();
             require_once(VIEWS_PATH."jobOffer-add.php");
@@ -27,7 +27,7 @@ class JobOfferController
 
         public function ShowListView($message="", $filter="null")
         {
-            $jobPositionDAO = new jobPositionDAO();
+            $jobPositionDAO = JobPositionDAO::GetInstance();
             $jobOfferDAO = JobOfferDAO::GetInstance();
             $postulationDAO= new PostulationDAO();
             

@@ -8,6 +8,11 @@
     {
 
         private $jobPositions=array();
+        private static $posDAO = null;
+
+        public static function GetInstance(){
+            return ((self::$posDAO == null) ? self::$posDAO = new JobPositionDAO() : self::$posDAO);
+        }
 
 
         public function Add($student)

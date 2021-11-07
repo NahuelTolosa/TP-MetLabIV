@@ -7,6 +7,11 @@ use PDOException as PDOException;
 class PostulationDAO{
     private $tableName = "postulations";
     private $connection;
+    private static $posDAO = null;
+
+    public static function GetInstance(){
+        return ((self::$posDAO == null) ? self::$posDAO = new PostulationDAO() : self::$posDAO);
+    }
 
     public function Add($idJobOffer, $idUser)
     {

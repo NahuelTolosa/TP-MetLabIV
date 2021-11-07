@@ -8,6 +8,11 @@ use PDOException as PDOException;
 class CompanyDAO implements IDAO{  
     private $tableName = "COMPANIES";
     private $connection;
+    private static $compDAO = null;
+
+    public static function GetInstance(){
+        return ((self::$compDAO == null) ? self::$compDAO = new CompanyDAO() : self::$compDAO);
+    }
 
     public function Add($company){
         $response = null;
