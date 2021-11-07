@@ -75,7 +75,7 @@ class JobOfferDAO implements IDAO{
         $jobOfferList = array();
         $response = null;
         try{
-            $query = "SELECT * FROM ".$this->tableName;
+            $query = "SELECT * FROM ".$this->tableName." WHERE active=1;";
             $this->connection = Connection::GetInstance();
             $result = $this->connection->Execute($query);
             foreach($result as $value){
@@ -168,6 +168,7 @@ class JobOfferDAO implements IDAO{
 
         if($idJobOffer != null){
             $parameters = array();
+            $this->connection = Connection::GetInstance();
             $response = null;
             $user = null;
             
@@ -210,6 +211,38 @@ class JobOfferDAO implements IDAO{
 
     private function ActiveToBoolean($str){
         return ($str=='1') ? true : false;
+    }
+
+    public function GetAllViable(){
+        $jobOfferList = array();
+        $response = null;
+        try{
+            $query = "Select * from ".$this->tableName." where active = 1 and offerID not in (Select postulations.idJobOffer from postulations);";
+            $this->connection = Connection::GetInstance();
+            $result = $this->connection->Execute($query);
+            foreach($result as $value){
+
+                
+                $jobOffer = new JobOffer();
+                $jobOffer->setOfferID($value['offerID']);
+                $jobOffer->setTittle($value['tittle']);
+                $jobOffer->setIdCompany($value['idCompany']);
+                $jobOffer->setDate($value['creationDate']);
+                $jobOffer->setDescription($value['description']);
+                $jobOffer->setSalary($value['salary']);
+                $jobOffer->setWorkDay($value['workDay']);
+                $jobOffer->setActive($value['active']);
+                $jobOffer->setReference($value['reference']);
+                $jobOffer->setPostulations($this->GetEmailsByOfferID($value['offerID']));
+                
+                array_push($jobOfferList, $jobOffer);
+            }
+        $response = $jobOfferList;
+        }catch (PDOException $e){
+            $response = $e->getMessage();
+        }finally{
+            return $response;
+        }
     }
 }
 ?>
