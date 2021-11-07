@@ -58,10 +58,10 @@ class StudentController
         
         public function ShowPersonalInfo(){
         
-            $careerDAO= new CarreerDAO();
-            $offerDAO = new JobOfferDAO();
-            $companyDAO = new CompanyDAO();
-            $jobPositionDAO = new JobPositionDAO();
+            $careerDAO= CarreerDAO::GetInstance();
+            $offerDAO = JobOfferDAO::GetInstance();
+            $companyDAO = CompanyDAO::GetInstance();
+            $jobPositionDAO = JobPositionDAO::GetInstance();
             
             $student= $this -> studentDAO->GetByEmail($_SESSION['loggedUser']->getUserName());
 

@@ -64,13 +64,20 @@ class CarreerDAO{
 
     public function getCareerByID($careerId){
 
-        $this->RetrieveData();
+        $apiCareer = curl_init();
 
-        foreach($this->careerList as $career){
-            if($career->getCareerId()==$careerId){
-                return $career->getDescription();
+        curl_setopt($apiCareer, CURLOPT_URL, API_URL_CAREER);
+        curl_setopt($apiCareer, CURLOPT_HTTPHEADER, array(API_KEY));
+        curl_setopt($apiCareer, CURLOPT_RETURNTRANSFER, true);
+        
+        $arrayToDecode =json_decode(curl_exec($apiCareer), true);
+
+            foreach($arrayToDecode as $valuesArray)
+            {
+                if($careerId == $valuesArray["careerId"]);
+                    return $valuesArray["description"];
+                
             }
-        }
     }
     
 }
