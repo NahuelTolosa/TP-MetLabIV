@@ -218,6 +218,7 @@ class JobOfferDAO implements IDAO{
         $response = null;
         try{
             $query = "Select * from ".$this->tableName." where active = 1 and offerID not in (Select postulations.idJobOffer from postulations);";
+            // $query = "Select * from ".$this->tableName." where active = 1 ;"; // descomentar para que hayan mas de 1 postulacion por oferta
             $this->connection = Connection::GetInstance();
             $result = $this->connection->Execute($query);
             foreach($result as $value){
