@@ -1,8 +1,8 @@
 <?php
      require_once('student-nav.php');
 ?>
-<main class="py-5">
-    <section id="listado" class="mb-5">
+<main class="main-container">
+    <section id="listado" class="mb-5 section">
         <div class="container">
             <h2 class="mb-4">Informacion Personal</h2>
             <table class="table bg-light-alpha">

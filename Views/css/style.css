@@ -7,9 +7,21 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
 }
+
+/*****************************NAV*******************************/
+.nav-item{
+    margin: 0 10px 0 10px;
+}
+.link-style{
+    transition: all 300ms;
+}
+.link-style:hover{
+    transform: scale(1.05);
+}
+/*****************************NAV*******************************/
 
 /*****************************LOG IN*******************************/
 .log-in{
@@ -56,8 +68,7 @@
 }
 .button{
     color:black;
-    margin-top: 20px;
-    padding: 7px;
+    padding: 5px;
     border: 0px;
     border-radius: 5px;
     transition: all 200ms;
@@ -76,3 +87,69 @@
 }
 
 /*****************************LOG IN*******************************/
+
+/*************************POSTULACIONES****************************/
+
+/*-----------------------------FILTRO-----------------------------*/
+.form-filter{
+    width: 100%;
+    margin: 15px 0 15px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.select-filter{
+    border: 0px;
+    width: 80%;
+}
+.buttons-filter{
+    display: flex;
+    justify-content: space-evenly;
+    width: 20%;
+}
+.buttons-filter .button{
+    position: relative;
+    left: 30px;
+}
+/*-----------------------------FILTRO-----------------------------*/
+
+.summary{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.summary .tittle{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+}
+.summary .tittle p{
+    margin-left: 10px;
+    color: rgba(66, 66, 66, 0.493);
+}
+.summary-description{
+    width:max-content;
+    margin-top:15px;
+    margin:auto;
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+}
+.summary-description .company-image{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.summary-description .summary-info{
+    padding: 10px;
+}
+.summary-description div p{
+    padding: 5px;
+    text-align: justify;
+    margin: 5px 0 5px 0;
+}
+.summary-description div{
+    margin: 15px;
+    border: 1px solid black;
+}
+/*************************POSTULACIONES****************************/
