@@ -63,6 +63,7 @@ class JobOfferController
     public function ShowAllUserOfferView($tittle, $offerID)
     {
         $postulationDAO = PostulationDAO::GetInstance();
+        $userList = $this->jobOfferDAO->GetEmailsByOfferID($offerID);
         require_once(VIEWS_PATH . "jobOffer-userPostulation.php");
     }
 
