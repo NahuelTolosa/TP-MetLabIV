@@ -64,11 +64,13 @@ class JobOfferController
     {
         $postulationDAO = PostulationDAO::GetInstance();
         $userList = $this->jobOfferDAO->GetEmailsByOfferID($offerID);
+        
         require_once(VIEWS_PATH . "jobOffer-userPostulation.php");
     }
 
-    public function ShowDropOfferUserView($userName, $offerID)
+    public function ShowDropOfferUserView($user, $offerID)
     {
+        die(var_dump($user, $offerID));
         require_once(VIEWS_PATH . "jobOffer-dropUserPostulation.php");
     }
 

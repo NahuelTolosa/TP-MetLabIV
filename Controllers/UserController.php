@@ -42,8 +42,11 @@ class UserController{
     public function doesStudentExistOnJSON($email)
     {
         $studentDAO = new StudentDAO();
+
         foreach (($studentDAO)->GetAll() as $student) {
+
             if($student->getEmail() == $email && $student->getActive()) return $student->getStudentId();
+            
         }
         return null;
     }
@@ -51,7 +54,9 @@ class UserController{
     public function doesCompanyExistOnDB($email)
     {
         $companyDAO = new CompanyDAO();
+
         $companyList = $companyDAO->GetAll();
+
         foreach($companyList as $company)
         {
             if($company->getEmail() == $email) return $company->getIdCompany();
