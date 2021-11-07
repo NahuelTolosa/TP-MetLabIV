@@ -59,7 +59,7 @@ class JobOfferDAO implements IDAO{
                 $jobOffer->setWorkDay($value['workDay']);
                 $jobOffer->setActive($value['active']);
                 $jobOffer->setReference($value['reference']);
-                $jobOffer->setPostulations($this->GetEmailsByOfferID($value['offerID']));
+                $jobOffer->setPostulations($this->GetEmailByOfferID($value['offerID']));
                 
                 array_push($jobOfferList, $jobOffer);
             }
@@ -92,7 +92,7 @@ class JobOfferDAO implements IDAO{
                     $jobOffer->setWorkDay($value['workDay']);
                     $jobOffer->setActive($value['active']);
                     $jobOffer->setReference($value['reference']);
-                    $jobOffer->setPostulations($this->GetEmailsByOfferID($value['offerID']));
+                    $jobOffer->setPostulations($this->GetEmailByOfferID($value['offerID']));
                     
                     array_push($jobOfferList, $jobOffer);
                 }
@@ -105,7 +105,7 @@ class JobOfferDAO implements IDAO{
         }
     }
 
-    public function GetEmailsByOfferID($offerID){
+    public function GetEmailByOfferID($offerID){
 
         $response = null;
 
@@ -123,7 +123,25 @@ class JobOfferDAO implements IDAO{
         }
     }
 
-    
+    public function GetEmailsByOfferID($offerID){
+        $response = null;
+        $arrayUser = array();
+        try{
+            $query = "select users.userName from postulations as p inner join users on p.idUser = users.id where idJobOffer =".$offerID;
+            $this->connection = Connection::GetInstance();
+            $result = $this->connection->Execute($query);
+
+            foreach($result as $user){
+                array_push($arrayUser, $user['userName']);
+            }
+
+           $response = $arrayUser;
+        }catch (PDOException $e){
+            $response = $e->getMessage();
+        }finally{
+            return $response;
+        }
+    }
 
     public function Delete($jobOfferID){
         $response = null;

@@ -12,12 +12,12 @@
             <h2 class="mb-4">Postulaciones activas "<?php echo $tittle?>"?</h2>
             <form action="<?php echo FRONT_ROOT ?>JobOffer/DropOfferUser" method="get" class="bg-light-alpha p-5">
                         <table class="table bg-light-alpha">
-                <?php foreach ($postulationDAO->GetAllByOffer($offerID) as $user) {?>
+                <?php foreach ($userList as $user) {?>
                     <tbody>
                     <tr>
-                        <td><strong>Usuario Postulado:</strong> <?php echo $user->getUserName() ?></td>
+                        <td><strong>Usuario Postulado:</strong> <?php echo $user ?></td>
                     <tr>
-                    <?php echo "<a href='".FRONT_ROOT."JobOffer/ShowDropOfferUserView/".$user->getUserName()."/".$jobOffer->getOfferID()."'> Dar de baja </a>";?>
+                    <?php echo "<a href='".FRONT_ROOT."JobOffer/ShowDropOfferUserView/".$user."/".$offerID."'> Dar de baja </a>";?>
                            
                 <?php } ?>
 
