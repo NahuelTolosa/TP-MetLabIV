@@ -114,7 +114,7 @@ class JobOfferDAO implements IDAO{
             $this->connection = Connection::GetInstance();
             $result = $this->connection->Execute($query);
 
-            $response = $result[0];
+            $response = $result[0]['userName'];
 
         }catch (PDOException $e){
             $response = $e->getMessage();

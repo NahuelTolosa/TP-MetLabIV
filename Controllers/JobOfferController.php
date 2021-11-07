@@ -57,12 +57,12 @@ class JobOfferController
     {
         $jobOfferDAO = (isset($this->jobOfferDAO)) ? $this->jobOfferDAO : new JobOfferDAO();
         $jobOffer = ($this->jobOfferDAO)->GetByID($offerID);
-        // die(var_dump($jobOffer));
         require_once(VIEWS_PATH . "jobOffer-modify.php");
     }
 
     public function ShowAllUserOfferView($tittle, $offerID)
     {
+        $postulationDAO = PostulationDAO::GetInstance();
         require_once(VIEWS_PATH . "jobOffer-userPostulation.php");
     }
 

@@ -21,7 +21,7 @@ class User{
 
 	}
 
-    function __construct3($id,$email,$password, $type)
+    function __construct4($id,$email,$password, $type)
 	{
 		$this->id = $this->generateID($id, $type);
         $this->userName = $email;
