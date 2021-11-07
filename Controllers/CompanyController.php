@@ -41,12 +41,9 @@
         public function Add($name, $cuit, $phoneNumber, $email)
         {
             if($this->doesCompanyExist($name,$cuit)){
-                
                 $message = "<h4 style='color: crimson'>Compañia ya registrada en el sistema</h4>";
-                
             }
             else {
-                
                 $company = new Company();
                 $company->setName($name);
                 $company->setCuit($cuit);
@@ -55,9 +52,7 @@
             
                 ($this->companyDAO)->Add($company);
                 $message = "<h4 style='color: #072'>Compañía dada de alta con éxito</h4>";
-
             }
-
             $this->ShowListView($message);
         }
 

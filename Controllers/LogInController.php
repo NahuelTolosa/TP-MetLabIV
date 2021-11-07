@@ -52,7 +52,7 @@ class LogInController
                     $studentC->ShowPersonalInfo();
                 }
                 else if (substr($userCheck->getId(),0,2) == "AD") require_once(VIEWS_PATH."admin-menu.php"); //ToDo
-                else if (substr($userCheck->getId(),0,2) == "CM") require_once(VIEWS_PATH."company-showPersonalInfo.php");
+                else if (substr($userCheck->getId(),0,2) == "CO") require_once(VIEWS_PATH."company-showPersonalInfo.php");
             }else{
                 $message = "Email o contraseña incorrecta";
                 require_once(VIEWS_PATH."logIn.php"); 
