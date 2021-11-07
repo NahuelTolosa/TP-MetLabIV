@@ -110,6 +110,29 @@ class UserDAO{
         }
     }
 
+    public function GetByOffer($email)
+    {
+        $parameters = array();
+        $response = null;
+        $user = null;
+        $query = "SELECT * FROM " . $this->tableName . " WHERE userName='" . $email . "';";
+        //$parameters['userName'] = $email;
+        
+        try {
+            $this->connection = Connection::GetInstance();
+            $response = $this->connection->Exec($query, $parameters);
+            $user = new User();
+            if(!empty($response)){
+                $user->setId($response[0]['id']);
+                $user->setUserName($response[0]['userName']);
+                $user->setUserPassword($response[0]['userPassword']);
+            }
+            return $user;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
     
 }
 

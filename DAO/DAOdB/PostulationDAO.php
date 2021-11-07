@@ -125,7 +125,8 @@ class PostulationDAO{
         $parameters = array();
         $response = null;
         $postulation = null;
-        $query = "SELECT * FROM " . $this->tableName . " WHERE idJobOffer='". $idJobOffer ."';";
+        $query = "SELECT users.userName FROM " . $this->tableName . " WHERE idJobOffer='". $idJobOffer ."'
+                    AND ;";
         try {
             $this->connection = Connection::GetInstance();
             $response = $this->connection->Exec($query, $parameters);

@@ -30,8 +30,7 @@ class User{
 
     private function generateID($id, $type)
     {
-        if($type == "ST") return "ST".$id.chr(rand(ord('A'),ord('Z')));
-        if($type == "CO") return "CO".$id.chr(rand(ord('A'),ord('Z')));
+       return $type.$id.chr(rand(ord('A'),ord('Z')));
     }
 
     /**
