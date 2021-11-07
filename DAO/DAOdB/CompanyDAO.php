@@ -52,11 +52,11 @@ class CompanyDAO implements IDAO{
 
                 array_push($companyList, $company);
             }
-        $response = $companyList;
+
+            $response = $companyList;
+            return $response;
         }catch (PDOException $e){
             $response = $e->getMessage();
-        }finally{
-            return $response;
         }
     }
 
