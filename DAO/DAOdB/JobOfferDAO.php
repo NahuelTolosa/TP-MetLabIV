@@ -127,7 +127,8 @@ class JobOfferDAO implements IDAO{
         $response = null;
         $arrayUser = array();
         try{
-            $query = "select users.userName from postulations as p inner join users on p.idUser = users.id where idJobOffer =".$offerID;
+            $query = "select users.userName from postulations as p inner join users on p.idUser = users.id where idJobOffer = '".$offerID."';";
+            // die(var_dump($query));
             $this->connection = Connection::GetInstance();
             $result = $this->connection->Execute($query);
 
@@ -271,6 +272,37 @@ class JobOfferDAO implements IDAO{
             $response = $e->getMessage();
         }finally{
             return $response;
+        }
+    }
+
+    public function GetByCompanyID($idCompany){
+        $offersList = array();
+        $company = null;
+        try{
+            $query = "SELECT * FROM ".$this->tableName." WHERE idCompany = '".$idCompany."';";
+            $this->connection = Connection::GetInstance();
+
+            $result = $this->connection->Execute($query);
+
+            foreach($result as $value){
+                
+                $jobOffer = new JobOffer();
+
+                $jobOffer->setIdCompany($value['idCompany']);
+                $jobOffer->setOfferID($value['offerID']);
+                $jobOffer->setTittle($value['tittle']);
+                $jobOffer->setDate($value['creationDate']);
+                $jobOffer->setDescription($value['description']);
+                $jobOffer->setSalary($value['salary']);
+                $jobOffer->setWorkDay($value['workDay']);
+                $jobOffer->setActive($value['active']);
+                $jobOffer->setReference($value['reference']);
+                
+                array_push($offersList, $jobOffer);
+            }
+            return $offersList;
+        }catch (PDOException $e){
+            return $e->getMessage();
         }
     }
 }

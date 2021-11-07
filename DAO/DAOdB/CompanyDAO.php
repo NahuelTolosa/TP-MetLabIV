@@ -96,6 +96,30 @@ class CompanyDAO implements IDAO{
         }
     }
 
+    public function GetByID($id){
+        $userList = array();
+        $company = null;
+        try{
+            $query = "SELECT * FROM ".$this->tableName." WHERE idCompany = '".$id."';";
+            $this->connection = Connection::GetInstance();
+            $result = $this->connection->Execute($query);
 
+            foreach($result as $value){
+                
+                $company = new Company();
+                $company->setIdCompany($value['idCompany']);
+                $company->setName($value['name']);
+                $company->setCuit($value['cuit']);
+                $company->setPhoneNumber($value['phoneNumber']);
+                $company->setEmail($value['email']);
+                $company->setIsActive($value['isActive']);
+
+                array_push($userList, $company);
+            }
+            return $company;
+        }catch (PDOException $e){
+            return $e->getMessage();
+        }
+    }
 }
 ?>

@@ -43,6 +43,7 @@ else if(substr($_SESSION['loggedUser']->getId(),0,2) == "AD")
                         
                         foreach($jobOfferList as $jobOffer)
                         {
+                            if($jobOffer->getActive()){
                             
                     ?>
                     <tr>
@@ -96,7 +97,7 @@ else if(substr($_SESSION['loggedUser']->getId(),0,2) == "AD")
                         </td>
                     </tr>
                     <?php
-                            
+                            } 
                         }
                     ?>
                     </tr>

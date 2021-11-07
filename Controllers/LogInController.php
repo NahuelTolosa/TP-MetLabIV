@@ -1,7 +1,10 @@
 <?php namespace Controllers;
 
+use DAO\DAOdB\CompanyDAO;
+use DAO\DAOdB\JobOfferDAO;
 use DAO\DAOdB\UserDAO as UserDAO;
 use DAO\DAOJson\CarreerDAO;
+use DAO\DAOJson\JobPositionDAO;
 use DAO\DAOJson\StudentDAO;
 use Models\User as User;
 use Helpers\SessionHelper as SessionHelper;
@@ -42,7 +45,10 @@ class LogInController
             if($isSession && SessionHelper::GetValue($sessionKey) == $sessionKey){
                 $userCheck = $_SESSION['loggedUser'];
 
-                if(substr($userCheck->getId(),0,2) == "ST"){
+                if (substr($userCheck->getId(),0,2) == "AD"){
+                    require_once(VIEWS_PATH."admin-menu.php");
+                } 
+                elseif(substr($userCheck->getId(),0,2) == "ST"){
                     $studentDAO=new StudentDAO();
                     $student= $studentDAO->GetByEmail($_SESSION['loggedUser']->getUserName());
                     $careerDAO= new CarreerDAO();
@@ -51,8 +57,17 @@ class LogInController
                     // aunque no se deba lo hicimos de esta forma para forzar la carga de daos necesarios para mostrar informacion del student
                     $studentC->ShowPersonalInfo();
                 }
-                else if (substr($userCheck->getId(),0,2) == "AD") require_once(VIEWS_PATH."admin-menu.php"); //ToDo
-                else if (substr($userCheck->getId(),0,2) == "CO") require_once(VIEWS_PATH."company-showPersonalInfo.php");
+                elseif (substr($userCheck->getId(),0,2) == "CO"){
+                    $companyDAO = new CompanyDAO();
+                    $jobOfferDAO = new JobOfferDAO();
+                    $jobPositionDAO = new JobPositionDAO();
+
+                    $company = $companyDAO->GetByID($_SESSION['loggedUser']->GetNumerID());
+                    $company->setJoboffers($jobOfferDAO->GetByCompanyID($_SESSION['loggedUser']->GetNumerID()));
+                    
+                    require_once(VIEWS_PATH."company-showPersonalInfo.php");
+                }
+                 
             }else{
                 $message = "Email o contraseña incorrecta";
                 require_once(VIEWS_PATH."logIn.php"); 
