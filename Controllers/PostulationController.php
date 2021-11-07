@@ -70,6 +70,7 @@ class PostulationController
 
         require_once(VIEWS_PATH."student-showPersonalInfo.php");
     }
+    
 }
 
 

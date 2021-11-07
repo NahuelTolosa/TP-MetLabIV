@@ -61,6 +61,7 @@ else if(substr($_SESSION['loggedUser']->getId(),0,2) == "AD")
                                             {
                                                 echo "<a href='".FRONT_ROOT."JobOffer/ShowModify/".$jobOffer->getOfferID()."'> Modificar </a>";
                                                 echo "<a href='".FRONT_ROOT."JobOffer/ShowDeleteView/".$jobOffer->getTittle()."/".$jobOffer->getOfferID()."'> Dar de baja </a>";
+                                                echo "<a href='".FRONT_ROOT."JobOffer/ShowAllUserOfferView/".$jobOffer->getTittle()."/".$jobOffer->getOfferID()."'> Postulaciones </a>";
                                             }
                                             if(substr($_SESSION['loggedUser']->getId(),0,2) == "ST" && $hasApplied==false)
                                             {?>

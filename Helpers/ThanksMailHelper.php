@@ -10,7 +10,7 @@ class ThanksMailHelper{
     /**
      * function that configures and send email
      */
-    public static function SendEmail($usersEmail){
+    public static function SendEmail($body, $subject, $usersEmail){
         try{
             if(empty($usersEmail)) return false;
                 
@@ -34,13 +34,8 @@ class ThanksMailHelper{
             }else $mail->addAddress($usersEmail);
                
             $mail->IsHTML(true);                    //format email to HTML
-            $mail->Subject = 'Fin de oferta laboral';
-            $mail->Body = "<h2>Muchas gracias por haberte postulado en la oferta de trabajo</h2>
-                                <h4>Te comentamos que la oferta finalizó y estarán en proceso de evaluación 
-                                aquellas personas que hayan aplicado.</h4> 
-                                <h4>Muchas gracias por tenernos en cuenta.</h4>
-                                <h4>Un grato saludo,</h4>
-                                <h4>Universidad Tecnológica Nacional.</h4>";
+            $mail->Subject = $subject;
+            $mail->Body = $body;
 
             //return ($mail->send()) ? true : false;
             if ($mail->send()){
