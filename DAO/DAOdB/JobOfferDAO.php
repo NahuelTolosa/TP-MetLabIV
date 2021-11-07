@@ -105,12 +105,12 @@ class JobOfferDAO implements IDAO{
         }
     }
 
-    private function GetEmailsByOfferID($offerID){
+    public function GetEmailsByOfferID($offerID){
 
         $response = null;
 
         try{
-            $query = "select users.userName from postulations p inner join users on p.idUser = users.id where idJobOffer =".$offerID;
+            $query = "select users.userName from postulations as p inner join users on p.idUser = users.id where idJobOffer =".$offerID;
             $this->connection = Connection::GetInstance();
             $result = $this->connection->Execute($query);
 
@@ -165,6 +165,17 @@ class JobOfferDAO implements IDAO{
     }
 
     public function GetById($idJobOffer){
+        $parameters = array();
+        $response = null;
+        $user = null;
+
+        $query = "SELECT * FROM " . $this->tableName . " WHERE offerID='" . $idJobOffer . "';";
+
+        //$parameters['userName'] = $email;
+
+        
+
+        $jobOffer=new JobOffer();
 
         if($idJobOffer != null){
             $parameters = array();
@@ -175,39 +186,38 @@ class JobOfferDAO implements IDAO{
             $query = "SELECT * FROM " . $this->tableName . " WHERE offerID='" . $idJobOffer . "';";
             
             try{
-            $value = $this->connection->Exec($query, $parameters);
-            
-            if(!empty($value)){
-                $jobOffer = new JobOffer();
 
-                $value[0]['active'] = $this->ActiveToBoolean($value[0]['active']);
-                
-                
-                if($value[0]['active']){ 
-                    
-                    $jobOffer->setOfferID($value[0]['offerID']);
-                    $jobOffer->setTittle($value[0]['tittle']);
-                    $jobOffer->setIdCompany($value[0]['idCompany']);
-                    $jobOffer->setDate($value[0]['creationDate']);
-                    $jobOffer->setDescription($value[0]['description']);
-                    $jobOffer->setSalary($value[0]['salary']);
-                    $jobOffer->setWorkDay($value[0]['workDay']);
-                    $jobOffer->setActive($value[0]['active']);
-                    $jobOffer->setReference($value[0]['reference']);
-                    
-                }
-            }else
-            return null;    
-                
+            $value = $this->connection->Exec($query, $parameters);
+
+            $value[0]['active'] = $this->ActiveToBoolean($value[0]['active']);
+
+
+            if($value[0]['active']){ 
+
+                $jobOffer->setOfferID($value[0]['offerID']);
+                $jobOffer->setTittle($value[0]['tittle']);
+                $jobOffer->setIdCompany($value[0]['idCompany']);
+                $jobOffer->setDate($value[0]['creationDate']);
+                $jobOffer->setDescription($value[0]['description']);
+                $jobOffer->setSalary($value[0]['salary']);
+                $jobOffer->setWorkDay($value[0]['workDay']);
+                $jobOffer->setActive($value[0]['active']);
+                $jobOffer->setReference($value[0]['reference']);
+
+            }else if(!$value[0]['active']){
+                return null;
+            }
+
             return $jobOffer;
         } catch (PDOException $e) {
-            
-            return $e->getMessage();
 
-        }
+            return $e->getMessage();
         }
         
+        }
     }
+
+
 
     private function ActiveToBoolean($str){
         return ($str=='1') ? true : false;

@@ -5,12 +5,11 @@ use DAO\DAOdB\Connection as Connection;
 use PDOException as PDOException;
 
 class PostulationDAO{
-    private $tableName = "postulations"; //revisar
+    private $tableName = "postulations";
     private $connection;
 
     public function Add($idJobOffer, $idUser)
     {
-       // die(var_dump($user));
         $response = null;
         try{
             $query = "INSERT INTO ".$this->tableName." (idUser, idJobOffer)
@@ -58,15 +57,12 @@ class PostulationDAO{
     
     public function Delete($idUser)
     {
-        $parameters = array();
         $response = null;
         try{
             $query = "DELETE FROM ".$this->tableName." WHERE idUser = :idUser;";
             $this->connection = Connection::GetInstance();
             $value['idUser'] = $idUser;
-
             $response = $this->connection->ExecuteNonQuery($query, $value);
-
         }catch (PDOException $e){
             $response = $e->getMessage();
         }finally{
@@ -111,8 +107,12 @@ class PostulationDAO{
                 $postulation->setIdPostulation($response[0]['idPostulations']);
                 $postulation->setIdUser($response[0]['idUser']);
                 $postulation->setIdJobOffer($response[0]['idJobOffer']);
+
+                return $postulation;
             }
-            return $postulation;
+
+            return null;
+            
         } catch (PDOException $e) {
             
             return $e->getMessage();
@@ -127,7 +127,7 @@ class PostulationDAO{
             $query = "select idJobOffer from $this->tableName where idUser = '".$userID."';";
             $this->connection = Connection::GetInstance();
             $result = $this->connection->Execute($query);
-            
+
             if(!empty($result))
             $response = $result[0];
 

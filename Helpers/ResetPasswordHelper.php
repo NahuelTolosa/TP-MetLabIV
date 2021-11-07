@@ -2,9 +2,12 @@
 
 use DAO\DAOdB\ResetPasswordDAO as ResetPasswordDAO;
 use PDOException as PDOException;
-use Exception as Exception;
 use PHPMailer\PHPMailer\PHPMailer as PHPMailer;
-require_once 'vendor/autoload.php'; //libraries for use phpmailer
+use PHPMailer\PHPMailer\Exception as Exception;
+
+require 'PhpMailer/Exception.php';
+require 'PhpMailer/PHPMailer.php';
+require 'PhpMailer/SMTP.php';
 
 class ResetPasswordHelper{
     
@@ -17,44 +20,40 @@ class ResetPasswordHelper{
         try{
             $rows = ResetPasswordHelper::AddResetPasswordToDb($email, $token); //if we have changes on rows, send email
            
-            if($rows){
-                require_once('phpmail/PHPMailerAutoload.php');
-                $mail = new PHPMailer(true);
-                $mail->CharSet =  "utf-8";
-                $mail->IsSMTP();
+            if(!$rows) return false;
+
+            $mail = new PHPMailer(true);
+            $mail->CharSet =  "UTF-8";
+            $mail->IsSMTP();
                 // enable SMTP authentication
-                $mail->SMTPAuth = true;
-                // GMAIL username
-                $mail->Username = "your_email_id@gmail.com";
-                // GMAIL password
-                $mail->Password = "your_gmail_password";
-                $mail->SMTPSecure = "ssl";
+            $mail->SMTPAuth = true;
+            $mail->SMTPSecure = "tls";
                 // sets GMAIL as the SMTP server
-                $mail->Host = "smtp.gmail.com";
+            $mail->Host = "smtp.gmail.com";
                 // set the SMTP port for the GMAIL server
-                $mail->Port = "465"; //or 587
+            $mail->Port = "587"; 
 
-                $mail->From = 'your_gmail_id@gmail.com'; //company email
-                $mail->FromName = 'your_name';
-                $mail->AddAddress('utn-noreply.mail.com', 'Information');
+            $mail->Username = MAIL_USERNAME;
+            $mail->Password = MAIL_PASSWORD;
+            $mail->From = MAIL_USERNAME;
+            $mail->FromName = 'Universidad Tecnológica Nacional';
+
+            $mail->AddAddress($email);
                 
-                $url = "http://" . $_SERVER["HTTP_HOST"] . dirname($_SERVER["PHP_SELF"]) . "/".VIEWS_PATH . "resetPassword-show?token=$token";
+            $url = "http://" . $_SERVER["HTTP_HOST"] . dirname($_SERVER["PHP_SELF"]) . "/".VIEWS_PATH . "resetPassword-show?token=$token";
 
-                $mail->IsHTML(true); //format email to HTML
-                $mail->Subject = 'Solicitud de cambio de contraseña';
-                $mail->Body = "<h2>Solicitaste un cambio de contraseña para tu usuario</h2>
+            $mail->IsHTML(true); //format email to HTML
+            $mail->Subject = 'Solicitud de cambio de contraseña';
+            $mail->Body = "<h2>Solicitaste un cambio de contraseña para tu usuario</h2>
                                 <h4>Para cambiar tu contraseña accede a este link: </h4> $url
                                 <h4>Si usted no solicito un cambio de contraseña, solamente ingnore el mensaje</h4>";
 
-                $response = $mail->send();
-                
-            }else return false;
+            return ($mail->send()) ? true : false;
         }catch (Exception $e) {
-            $response = $e->getMessage();
-        }finally {
-            return $response;
+            throw $e;
         }
     }
+    
 
     /**
      * parameters: token generated on EmailTo and email 
@@ -81,14 +80,4 @@ class ResetPasswordHelper{
         return $resetPasswordDb->GetByEmail($email);
     }
 
-    
-    /*public static function EmailExistDb(string $email){
-        $resetPasswordDb = new ResetPasswordDAO();
-        $resetPasswordList = resetPasswordDb->GetAll();             //not usefull get all, need getbyid on DAO
-        foreach($resetPasswordList as $user){
-            if($user->getEmail == $email) return $user;
-            else return false;
-        }
-    }*/
-   
 }

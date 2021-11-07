@@ -2,7 +2,7 @@
      require_once('student-nav.php');
 ?>
 <main class="py-5">
-    <section id="listado" class="mb-5">
+    <section id="listado" class="mb-5 section">
         <div class="container">
             <h2 class="mb-4">Informacion Personal</h2>
             <table class="table bg-light-alpha">
@@ -94,7 +94,7 @@
             </table>
                 <form action="<?php echo FRONT_ROOT ?>Postulation/DropOffer" method="POST">
                     <input type="text" name="idUser" value="<?php echo $_SESSION['loggedUser']->getId()?>" class="form-control" hidden>
-                    <button type="submit" name="button" value="" class="btn btn-dark ml-auto d-block">Darse de baja</button>
+                    <button type="submit" name="button" value="" class="button">Darse de baja</button>
                 </form>
             <?php } ?>
         </div>

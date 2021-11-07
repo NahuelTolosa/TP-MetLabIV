@@ -89,56 +89,23 @@ class UserDAO{
 
     public function GetByEmail($email)
     {
-        $userDAO = array();
-        $response = null;
-        try {
-            $query = "SELECT * FROM " . $this->tableName . " WHERE userName='" . $email . "';";
-            $this->connection = Connection::GetInstance();
-            $response = $this->connection->ExecuteNonQuery($query);
-
-            //die(var_dump($response));
-            $user = new User();
-            $user->getId($response['id']);
-            $user->getUserName($response['userName']);
-            $user->getUserPassword($response['userPassword']);
-
-            array_push($userDAO, $response);
-            $response = $userDAO;
-        } catch (PDOException $e) {
-            $response = $e->getMessage();
-        } finally {
-            return $response;
-        }
-    }
-    public function GetByEmail2($email)
-    {
         $parameters = array();
         $response = null;
         $user = null;
-        
         $query = "SELECT * FROM " . $this->tableName . " WHERE userName='" . $email . "';";
-        
         //$parameters['userName'] = $email;
         
         try {
-            
             $this->connection = Connection::GetInstance();
-            
             $response = $this->connection->Exec($query, $parameters);
-            
-            
             $user = new User();
             if(!empty($response)){
-
                 $user->setId($response[0]['id']);
                 $user->setUserName($response[0]['userName']);
                 $user->setUserPassword($response[0]['userPassword']);
             }
-            //  die(var_dump($user));
-     
             return $user;
         } catch (PDOException $e) {
-            
             return $e->getMessage();
         }
     }

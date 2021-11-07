@@ -17,4 +17,7 @@ define("DB_HOST" , "localhost");
 define("DB_NAME" , "dbutn");
 define("DB_USER" , "root");
 define("DB_PASS" , "");
+
+define("MAIL_USERNAME", "utnmdpjoboffer@gmail.com");
+define("MAIL_PASSWORD", "untmdp123");
 ?>
