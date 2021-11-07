@@ -30,20 +30,32 @@ else {
                                         <tr>
                                             <td style="text-align: center;">
                                                 <details>
-                                                    <summary>
-                                                        <?php
-                                                            echo $company->getName();
-
-                                                            if(substr($_SESSION['loggedUser']->getId(),0,2) == "AD"){
-                                                                echo "<a href='".FRONT_ROOT."Company/ShowModify/".$company->getIdCompany()."'> Modificar </a>";
-                                                                echo "<a href='".FRONT_ROOT."Company/ShowDeleteView/".$company->getName()."/".$company->getIdCompany()."'> Dar de baja </a>";
-                                                            }
-                                                            
-                                                        ?>
-                                                    </summary><br>
-                                                        <p>CUIT:   <?php echo $company->getCuit()?></p>
-                                                        <p>Numero: <?php echo $company->getPhoneNumber()?></p>
-                                                        <p>Email:  <?php echo $company->getEmail()?></p>
+                                                    <summary class="summary">
+                                                        <div class="tittle">
+                                                            <?php
+                                                                echo "<strong>".$company->getName()."</strong><p>(Tocar para mas info)</p>";
+                                                            ?>
+                                                        </div>
+                                                        <div>
+                                                            <?php
+                                                            //hacer form para que pase los datos por post
+                                                                if(substr($_SESSION['loggedUser']->getId(),0,2) == "AD"){
+                                                                    echo "<a href='".FRONT_ROOT."Company/ShowModify/".$company->getIdCompany()."'> Modificar </a>";
+                                                                    echo "<a href='".FRONT_ROOT."Company/ShowDeleteView/".$company->getName()."/".$company->getIdCompany()."'> Dar de baja </a>";
+                                                                }
+                                                                
+                                                            ?>
+                                                        </div>
+                                                    </summary>
+                                                    <div class="summary-description">
+                                                        <div class="company-image">
+                                                            <p><strong>Imagen</strong></p>
+                                                        </div>
+                                                        <div class="summary-info">
+                                                            <p>CUIT:   <?php echo $company->getCuit()?></p>
+                                                            <p>Numero: <?php echo $company->getPhoneNumber()?></p>
+                                                            <p>Email:  <?php echo $company->getEmail()?></p>
+                                                        </div>
                                                 </details>
                                             </td>
                                         </tr>

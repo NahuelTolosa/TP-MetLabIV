@@ -15,73 +15,57 @@
                     }
             ?>
             <form action="<?php echo FRONT_ROOT ?>JobOffer/Add" method="post" class="bg-light-alpha p-5">
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="form-group">
-                            <label for="tittle">Titulo</label>
-                            <input type="text" name="tittle" value="" class="form-control" placeholder='Titulo'
-                                required>
-                        </div>
+
+                <div style="width:65%; margin:auto;">
+                
+                    <div class="input-area">
+                        <label for="tittle">Titulo</label>
+                        <input type="text" name="tittle" value="" class="input" placeholder='Titulo' required>
                     </div>
-                    <div class="col-lg-4">
-                        <div class="form-group">
-                            <label for="company">Compania</label>
-                            <select name="company" id="company">
-                                <?php
-                                    foreach($companyDAO->GetAll() as $company){
-                                        if($company->getIsActive()){
-                                        
-                                        ?>
-
-
-                                <option value="<?php echo $company->getIdCompany()?>">
-                                    <?php echo $company->getName()?>
-                                </option>
-                                <?php } } ?>
-                            </select>
-                        </div>
+                    
+                    <div class="input-area">
+                        <label for="company">Compania</label>
+                        <select name="company" id="company" class="input">
+                            <?php
+                                foreach($companyDAO->GetAll() as $company){
+                                    if($company->getIsActive()){
+                            ?>
+                            <option value="<?php echo $company->getIdCompany()?>">
+                                <?php echo $company->getName()?>
+                            </option>
+                            <?php } } ?>
+                        </select>
                     </div>
 
-                    <div class="col-lg-4">
-                        <div class="form-group">
-                            <label for="salary">Salario</label>
-                            <input type="number" name="salary" value="0" class="form-control" min="0" placeholder=''>
-                        </div>
+                    <div class="input-area">
+                        <label for="salary">Salario</label>
+                        <input type="number" name="salary" value="0" class="input" min="0" placeholder=''>
                     </div>
-                    <div class="col-lg-4">
-                        <div class="form-group">
-                            <p>Modalidad</p>
-                            <label><input type="radio" name="workDay" class="radioSize" value="Part-Time">
-                                Part-Time</label>
-                            <label><input type="radio" name="workDay" class="radioSize" value="Full-Time">
-                                Full-Time</label>
-                        </div>
+                    
+                    <div class="input-area">
+                        <label for="salary">Puesto solicitado</label>
+                        <select id="reference" class="input" name="reference">
+                            <?php foreach ($jobPositionDAO->GetAll() as $jobPosition) {?>
+                            <option value="<?php echo $jobPosition->getJobPositionId()?>"><?php echo $jobPosition->getDescription()?></option>
+                            <?php } ?>
+                        </select>
                     </div>
-                    <div class="col-lg-4">
-                        <div class="form-group">
-                            <label for="salary">Puesto solicitado</label>
-                            <div class="form-group">
-                                <select id="reference" class="form-control" name="reference">
-                                    <?php foreach ($jobPositionDAO->GetAll() as $jobPosition) {?>
-
-                                    <option value="<?php echo $jobPosition->getJobPositionId()?>">
-                                        <?php echo $jobPosition->getDescription()?>
-                                    </option>
-                                    <?php } ?>
-                                </select>
-                            </div>
-                        </div>
+                    
+                    <div class="input-area">
+                        <label for="description">Descripcion</label>
+                        <textarea id="description" class="input" name="description" rows="3"></textarea>
                     </div>
-                    <div class="col-lg-4">
-                        <div class="form-group">
-                            <label for="description">Descripcion</label>
-                            <div class="form-group">
-                                <textarea id="description" class="form-control" name="description" rows="3"></textarea>
-                            </div>
-                        </div>
+                    
+                    <div class="input-area">
+                        <p>Modalidad</p>
+                        <label><input type="radio" name="workDay" class="radioSize" value="Part-Time"> Part-Time</label>
+                        <label><input type="radio" name="workDay" class="radioSize" value="Full-Time"> Full-Time</label>
+                    </div>
+                    
+                    <div class="input-area--button">
+                        <button type="submit" name="button" class="button">Agregar</button>
                     </div>
                 </div>
-                <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Agregar</button>
             </form>
         </div>
     </section>

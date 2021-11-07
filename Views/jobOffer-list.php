@@ -57,6 +57,7 @@ else if(substr($_SESSION['loggedUser']->getId(),0,2) == "AD")
                                     </div>
                                     <div>
                                         <?php
+                                        //hacer form para que pase los datos por post
                                             if(substr($_SESSION['loggedUser']->getId(),0,2) == "AD") //hacer un form
                                             {
                                                 echo "<a href='".FRONT_ROOT."JobOffer/ShowModify/".$jobOffer->getOfferID()."'> Modificar </a>";
