@@ -88,6 +88,10 @@ class User{
 
         return $this;
     }
+    public function GetNumerID(){
+        // die(var_dump(substr($this->id,2,strlen($this->id)-3)));
+        return substr($this->id,2,strlen($this->id)-3);
+    }
 }
 
 ?>

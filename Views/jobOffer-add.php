@@ -1,9 +1,14 @@
 <?php
-         if (!isset($_SESSION['loggedUser']))
-         require_once('logIn.php');
-       else {
-          if(substr($_SESSION['loggedUser']->getId(),0,2) == "AD")
-             require_once('admin-nav.php');
+
+use Helpers\Utils;
+
+if (!isset($_SESSION['loggedUser']))
+    require_once('logIn.php');
+else {
+    if(Utils::isAdminLogged())
+        require_once('admin-nav.php');
+    else
+        require_once('company-nav.php');
     
 ?>
 <main class="py-5">
@@ -23,6 +28,8 @@
                         <input type="text" name="tittle" value="" class="input" placeholder='Titulo' required>
                     </div>
                     
+                    <?php if(Utils::isAdminLogged()){ ?>
+
                     <div class="input-area">
                         <label for="company">Compania</label>
                         <select name="company" id="company" class="input">
@@ -36,7 +43,9 @@
                             <?php } } ?>
                         </select>
                     </div>
-
+                    <?php }else{ ?>
+                        <input type="text" name="company" value="<?php echo $_SESSION['company']->getIdCompany()?>" hidden>
+                    <?php } ?>
                     <div class="input-area">
                         <label for="salary">Salario</label>
                         <input type="number" name="salary" value="0" class="input" min="0" placeholder=''>

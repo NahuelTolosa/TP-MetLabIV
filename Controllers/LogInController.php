@@ -1,5 +1,8 @@
 <?php namespace Controllers;
 
+use DAO\DAOdB\CompanyDAO;
+use DAO\DAOdB\JobOfferDAO;
+use DAO\DAOJson\JobPositionDAO;
 use DAO\DAOdB\UserDAO as UserDAO;
 use DAO\DAOJson\CarreerDAO;
 use DAO\DAOJson\StudentDAO;
@@ -23,7 +26,7 @@ class LogInController
                 
                 $response = $this->PasswordValidate($user, $password);
                 
-                if($response) $isSession = SessionHelper::SetSessionUser($user);      //seteo user session
+                if($response) $isSession = SessionHelper::SetSessionUser("loggedUser",$user);      //seteo user session
             }
             $this->RedirectLogIn($isSession, $user);  //response and session key
             return $isSession;
@@ -42,7 +45,10 @@ class LogInController
             if($isSession && SessionHelper::GetValue($sessionKey) == $sessionKey){
                 $userCheck = $_SESSION['loggedUser'];
 
-                if(substr($userCheck->getId(),0,2) == "ST"){
+                if (substr($userCheck->getId(),0,2) == "AD"){
+                    require_once(VIEWS_PATH."admin-menu.php");
+                } 
+                elseif(substr($userCheck->getId(),0,2) == "ST"){
                     $studentDAO=new StudentDAO();
                     $student= $studentDAO->GetByEmail($_SESSION['loggedUser']->getUserName());
                     $careerDAO= new CarreerDAO();
@@ -51,8 +57,20 @@ class LogInController
                     // aunque no se deba lo hicimos de esta forma para forzar la carga de daos necesarios para mostrar informacion del student
                     $studentC->ShowPersonalInfo();
                 }
-                else if (substr($userCheck->getId(),0,2) == "AD") require_once(VIEWS_PATH."admin-menu.php"); //ToDo
-                else if (substr($userCheck->getId(),0,2) == "CO") require_once(VIEWS_PATH."company-showPersonalInfo.php");
+                elseif (substr($userCheck->getId(),0,2) == "CO"){
+
+                    $companyDAO = new CompanyDAO();
+                    $jobOfferDAO = new JobOfferDAO();
+                    $companyController = new CompanyController();
+
+                    $company = $companyDAO->GetByID($_SESSION['loggedUser']->GetNumerID());
+                    $company->setJoboffers($jobOfferDAO->GetByCompanyID($_SESSION['loggedUser']->GetNumerID()));
+
+                    SessionHelper::SetSessionUser("company",$company); //seteo los datos de la empresa en cuestion
+                    $companyController->ShowPersonalInfo();
+                    
+                }
+                 
             }else{
                 $message = "Email o contraseña incorrecta";
                 require_once(VIEWS_PATH."logIn.php"); 

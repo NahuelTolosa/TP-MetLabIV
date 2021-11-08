@@ -6,7 +6,7 @@
     use DAO\DAOJson\CarreerDAO;
     use DAO\DAOdB\PostulationDAO;
     use DAO\DAOdB\JobOfferDAO;
-    use DAO\DAOJson\CompanyDAO;
+    use DAO\DAOdB\CompanyDAO;
 use DAO\DAOJson\JobPositionDAO;
 use Models\JobOffer;
 

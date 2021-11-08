@@ -5,9 +5,10 @@ namespace Controllers;
 use DAO\DAOdB\PostulationDAO as PostulationDAO;
 use DAO\DAOdB\JobOfferDAO as JobOfferDAO;
 use DAO\DAOdB\UserDAO;
-use DAO\DAOJson\CompanyDAO as CompanyDAO;
+use DAO\DAOdB\CompanyDAO as CompanyDAO;
 use DAO\DAOJson\JobPositionDAO as JobPositionDAO;
 use Helpers\ThanksMailHelper as ThanksMailHelper;
+use Helpers\Utils;
 use Models\JobOffer as JobOffer;
 
 class JobOfferController
@@ -36,7 +37,7 @@ class JobOfferController
         $postulationDAO = new PostulationDAO();
         $hasApplied =  false;
 
-        if (substr($_SESSION['loggedUser']->getId(), 0, 2) == "ST"  && !empty($postulationDAO->GetOfferByID($_SESSION['loggedUser']->getId()))) {
+        if (Utils::isStudentLogged()  && !empty($postulationDAO->GetOfferByID($_SESSION['loggedUser']->getId()))) {
             $hasApplied =  true;
         }
         if ($message == "") {
@@ -45,7 +46,9 @@ class JobOfferController
         } else {
             $jobOfferList = $this->jobOfferDAO->GetFiltered($message);
         }
+
         require_once(VIEWS_PATH . "jobOffer-list.php");
+
     }
 
     public function ShowDeleteView($tittle, $offerID)
@@ -80,7 +83,7 @@ class JobOfferController
     public function Add($tittle, $company, $salary, $workDay, $reference, $description)
     {
         $companyController = new CompanyController();
-        $company = $companyController->getCompany($_POST['company']); // trae la compania de la api
+        $company = (isset($_SESSION['company]'])) ? $_SESSION['company]'] : $companyController->getCompany($_POST['company']); // trae la compania de la db en caso de que este agregando la oferta un admin
         $message = "";
 
         if ($company != null) {
@@ -97,6 +100,7 @@ class JobOfferController
         } else {
             $message = "<p style='color: #f00'>La empresa ingresada no existe en el sistema</p>";
         }
+
         $this->ShowAddView($message);
     }
 
@@ -111,7 +115,15 @@ class JobOfferController
             if($response) $message = "<h4 style='color: #072'>Oferta laboral dada de baja con éxito</h4>
                                       <h4 style='color: #072'>Email enviado correctamente </h4>";
         }
-        $this->ShowListView($message);
+        if(Utils::isCompanyLogged()){
+            $jobOfferDAO = new JobOfferDAO();
+            $_SESSION['company']->setJoboffers($jobOfferDAO->GetByCompanyID($_SESSION['loggedUser']->GetNumerID()));
+            $companyController = new CompanyController();
+            $companyController->ShowPersonalInfo();
+        }else{
+            $this->ShowListView($message);
+        }
+        
     }
 
     public function MessageDeleteOffer()
@@ -167,4 +179,5 @@ class JobOfferController
                                 <h3>Universidad Tecnológica Nacional.</h3>";
         return $body;
     }
+
 }

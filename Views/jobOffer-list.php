@@ -43,6 +43,7 @@ else if(substr($_SESSION['loggedUser']->getId(),0,2) == "AD")
                         
                         foreach($jobOfferList as $jobOffer)
                         {
+                            if($jobOffer->getActive()){
                             
                     ?>
                     <tr>
@@ -66,7 +67,7 @@ else if(substr($_SESSION['loggedUser']->getId(),0,2) == "AD")
                                             if(substr($_SESSION['loggedUser']->getId(),0,2) == "ST" && $hasApplied==false)
                                             {?>
                                                 <form action="<?php echo FRONT_ROOT ?>Postulation/ApplyOffer" method="POST">
-                                                    <input type="text" name="idPostulation" value="<?php echo $jobOffer->getOfferID()?>" class="" hidden>
+                                                    <input type="text" name="idJobOffer" value="<?php echo $jobOffer->getOfferID()?>" class="" hidden>
                                                     <input type="text" name="idUser" value="<?php echo $_SESSION['loggedUser']->getId()?>" class="" hidden>
                                                     <button type="submit" name="button" value="" class="button">Postularse</button>
                                                 </form>
@@ -96,7 +97,7 @@ else if(substr($_SESSION['loggedUser']->getId(),0,2) == "AD")
                         </td>
                     </tr>
                     <?php
-                            
+                            } 
                         }
                     ?>
                     </tr>
