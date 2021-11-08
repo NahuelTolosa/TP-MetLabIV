@@ -124,5 +124,18 @@
             
             $this->ShowListView($message);
         }
+
+        public function ShowFiltered($filter)
+        {
+            $companyList = $this->companyDAO->SearchByName($filter);
+            $message ="";
+
+
+            if(empty($companyList)){
+                $message = "<h6 style='color: #702'>No se encontraron companias con ese nombre</h6>";
+            }
+
+            require_once(VIEWS_PATH."company-list.php");
+        }
     }
 ?>

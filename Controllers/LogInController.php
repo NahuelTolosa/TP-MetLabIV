@@ -20,13 +20,13 @@ class LogInController
         
         public function ValidateLogIn($username, $password){
             $isSession = false;
-
             $user = $this->UserExists($username);        //return username, pass and userIdDb
             if(!is_null($user)){
                 
                 $response = $this->PasswordValidate($user, $password);
                 
                 if($response) $isSession = SessionHelper::SetSessionUser("loggedUser",$user);      //seteo user session
+
             }
             $this->RedirectLogIn($isSession, $user);  //response and session key
             return $isSession;

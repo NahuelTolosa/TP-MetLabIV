@@ -114,6 +114,18 @@ class CompanyDAO implements IDAO{
         }
     }
 
+    public function SearchByName($filter)
+    {
+        $this->RetrieveData();
+        $result=array();
+        foreach($this->companyList as $company){
+            if(str_contains(strtolower($company->getName()), $filter)){
+                array_push($result, $company);
+            }
+        }
+
+        return $result;
+    }
 
 }
 
