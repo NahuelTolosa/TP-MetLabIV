@@ -4,19 +4,17 @@
      </span>
      <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Student/ShowPersonalInfo">Informacion Personal</a>
+               <a class="nav-link link-style" href="<?php echo FRONT_ROOT ?>Student/ShowPersonalInfo">Informacion Personal</a>
           </li>
           <li class="nav-item">
-               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Student/ShowListView">Listar Alumnos</a>
+               <a class="nav-link link-style" href="<?php echo FRONT_ROOT ?>JobOffer/ShowListView">Ver Ofertas laborales</a>
 
           </li>      
-               
-          </li>     
           <li class="nav-item">
-               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Company/ShowListView">Lista de Compañias</a>
+               <a class="nav-link link-style" href="<?php echo FRONT_ROOT ?>Company/ShowListView">Lista de Compañias</a>
           </li>      
           <li class="nav-item">
-               <a class="nav-link" style="color: rgb(238, 238, 238);" href="<?php echo FRONT_ROOT ?>LogIn/LogOut">| <strong> Cerrar sesion</strong></a>
+               <a class="nav-link link-style" style="color: rgb(238, 238, 238);" href="<?php echo FRONT_ROOT ?>LogIn/LogOut"><strong> Cerrar sesion</strong></a>
           </li>   
      </ul>
 </nav>

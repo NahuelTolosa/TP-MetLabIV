@@ -1,6 +1,8 @@
 <?php
     namespace Models;
 
+    use Controllers\CompanyController as CompanyController;
+
     class JobOffer
     {
         private $offerID;
@@ -213,7 +215,4 @@
                 return $this;
         }
     }
-
-    
-
 ?>

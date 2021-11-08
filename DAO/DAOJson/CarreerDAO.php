@@ -1,6 +1,6 @@
-<?php namespace DAO;
+<?php namespace DAO\DAOJson;
 
-use Models\Carreer as Carreer;
+use Models\Career as Career;
 
 
 class CarreerDAO{
@@ -9,7 +9,7 @@ class CarreerDAO{
     private $careerList = array();
 
 
-    public function Add(Carreer $carreer)
+    public function Add(Career $carreer)
     {
         $this->RetrieveData();
             
@@ -47,7 +47,7 @@ class CarreerDAO{
 
             foreach($arrayToDecode as $valuesArray)
             {
-                $career = new Carreer();
+                $career = new Career();
                 $career->setCareerId($valuesArray["careerId"]);
                 $career->setDescription($valuesArray["description"]);
                 $career->setActive($valuesArray["active"]);

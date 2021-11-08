@@ -1,64 +1,86 @@
-<?php
-    namespace Controllers;
+<?php namespace Controllers;
 
-    use DAO\StudentDAO as StudentDAO;
+use DAO\DAOdB\CompanyDAO;
+use DAO\DAOdB\JobOfferDAO;
+use DAO\DAOJson\JobPositionDAO;
+use DAO\DAOdB\UserDAO as UserDAO;
+use DAO\DAOJson\CarreerDAO;
+use DAO\DAOJson\StudentDAO;
+use Models\User as User;
+use Helpers\SessionHelper as SessionHelper;
 
-    class LogInController
+class LogInController
     {
-        public function ValidateLogIn($email = "")
+        private $userLog;
+
+        public function __construct()
         {
-            $validation = $this->serchStudent($email);
+            $this->userLog = new User();
+        }
+        
+        public function ValidateLogIn($username, $password){
+            $isSession = false;
 
-
-            if($email==ADMIN){
-
-                $_SESSION["user"]="admin";
-
-                require_once(VIEWS_PATH."admin-menu.php");
-            }
-             if(!is_null($validation)){
+            $user = $this->UserExists($username);        //return username, pass and userIdDb
+            if(!is_null($user)){
                 
-                $_SESSION["studentId"]=  $validation->getStudentId();
-                $_SESSION["careerId"]= $validation->getCareerId();
-                $_SESSION["firstName"]= $validation->getFirstName();
-                $_SESSION["lastName"]= $validation->getLastName();
-                $_SESSION["dni"]= $validation->getDni();
-                $_SESSION["fileNumber"]= $validation->getFileNumber();
-                $_SESSION["gender"]= $validation->getGender();
-                $_SESSION["birthDate"]= $validation->getBirthDate();
-                $_SESSION["email"]= $validation->getEmail();
-                $_SESSION["phoneNumber"]= $validation->getPhoneNumber();
-                $_SESSION["active"]=  $validation->getActive();
-
-                require_once(VIEWS_PATH."student-showPersonalInfo.php");
+                $response = $this->PasswordValidate($user, $password);
+                
+                if($response) $isSession = SessionHelper::SetSessionUser("loggedUser",$user);      //seteo user session
             }
-            else{
-                $message="No hay usuarios registrados con ese Email";
-                require_once(VIEWS_PATH."logIn.php");
-            }
-
-            
+            $this->RedirectLogIn($isSession, $user);  //response and session key
+            return $isSession;
         }
 
-        private function serchStudent($email = "")
-        {
-            $studentDAO = new StudentDAO();
-            $array = $studentDAO->GetAll();
-            
+        public function UserExists($username){
+            $userDAO = new UserDAO();
+            return $userDAO->GetByEmail($username); //getByUser return object or null
+        }
 
+        public function PasswordValidate($user, $password){
+           return ($user->getUserPassword() == $password) ? true : false; 
+        }
 
-            foreach($array as $localStudent){
-                if($localStudent->getEmail() == $email){
-                    return $localStudent;
+        public function RedirectLogIn($isSession, $sessionKey){
+            if($isSession && SessionHelper::GetValue($sessionKey) == $sessionKey){
+                $userCheck = $_SESSION['loggedUser'];
+
+                if (substr($userCheck->getId(),0,2) == "AD"){
+                    require_once(VIEWS_PATH."admin-menu.php");
+                } 
+                elseif(substr($userCheck->getId(),0,2) == "ST"){
+                    $studentDAO=new StudentDAO();
+                    $student= $studentDAO->GetByEmail($_SESSION['loggedUser']->getUserName());
+                    $careerDAO= new CarreerDAO();
+                    $studentC = new StudentController();
+    
+                    // aunque no se deba lo hicimos de esta forma para forzar la carga de daos necesarios para mostrar informacion del student
+                    $studentC->ShowPersonalInfo();
                 }
+                elseif (substr($userCheck->getId(),0,2) == "CO"){
+
+                    $companyDAO = new CompanyDAO();
+                    $jobOfferDAO = new JobOfferDAO();
+                    $companyController = new CompanyController();
+
+                    $company = $companyDAO->GetByID($_SESSION['loggedUser']->GetNumerID());
+                    $company->setJoboffers($jobOfferDAO->GetByCompanyID($_SESSION['loggedUser']->GetNumerID()));
+
+                    SessionHelper::SetSessionUser("company",$company); //seteo los datos de la empresa en cuestion
+                    $companyController->ShowPersonalInfo();
+                    
+                }
+                 
+            }else{
+                $message = "Email o contraseña incorrecta";
+                require_once(VIEWS_PATH."logIn.php"); 
             }
-            return null;
         }
 
         public function LogOut()
         {
-            session_destroy();
-            $message= "";
+            SessionHelper::DestroySession();
+            $message= "Chau mil besos, mil besitos, vuelva pronto, mil besosss";
             require_once(VIEWS_PATH."logIn.php");
         }
     }

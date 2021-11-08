@@ -1,7 +1,6 @@
-<?php
-    namespace DAO;
+<?php namespace DAO\DAOJson;
 
-    use DAO\IStudentDAO as IStudentDAO;
+    use DAO\DAOJson\IStudentDAO as IStudentDAO;
     use Models\Student as Student;
 
     class StudentDAO implements IDAO
@@ -78,10 +77,19 @@
                 $student->setPhoneNumber($valuesArray["phoneNumber"]);
                 $student->setActive($valuesArray["active"]);
 
-
                 array_push($this->studentList, $student);
             }
             
+        }
+
+        public function GetByEmail($email)
+        {
+            
+            foreach ($this->GetAll() as $student) {
+                if($student->getEmail() == $email){
+                    return $student;
+                }
+            }
         }
     }
 ?>

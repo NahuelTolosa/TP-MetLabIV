@@ -1,7 +1,7 @@
 <?php 
     namespace Models;
 
-    class Carreer
+    class Career
     {
         private $careerId;
         private $description;

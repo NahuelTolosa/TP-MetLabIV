@@ -1,5 +1,10 @@
 <?php
-   require_once('admin-nav.php');
+     if (!isset($_SESSION['loggedUser']))
+       require_once('logIn.php');
+     else {
+        if(substr($_SESSION['loggedUser']->getId(),0,2) == "AD")
+           require_once('admin-nav.php');
+   
 ?>
 <main class="py-5">
      <section id="listado" class="mb-5">
@@ -38,7 +43,9 @@
                          </div>
                     </div>
                     <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Agregar</button>
+                    <button type="submit" name="button" class="btn btn-danger ml-auto d-block" value=" <?php echo "<a href='".FRONT_ROOT."Company/ShowModify/'>  </a>";  ?>">Volver</button>
                </form>
           </div>
      </section>
 </main>
+<?php } ?>

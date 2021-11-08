@@ -1,7 +1,7 @@
-<?php namespace DAO;
+<?php namespace DAO\DAOJson;
 
 use Models\Company as Company;
-use DAO\JobOfferDAO as JobOfferDAO;
+use DAO\DAOJson\JobOfferDAO as JobOfferDAO;
 
 class CompanyDAO implements IDAO{
 
@@ -38,7 +38,7 @@ class CompanyDAO implements IDAO{
         $this->SaveData();
     }
 
-    public function Update($object) //ToDo
+    public function Update($object)
     {
         $this->RetrieveData();
         
@@ -78,7 +78,6 @@ class CompanyDAO implements IDAO{
         file_put_contents('Data/companies.json', $jsonContent);
     }
 
-
     private function RetrieveData()
     {
         $this->companyList = array();
@@ -98,10 +97,6 @@ class CompanyDAO implements IDAO{
                 $company->setPhoneNumber($valuesArray["phoneNumber"]);
                 $company->setEmail($valuesArray["email"]);
                 $company->setIsActive($valuesArray["isActive"]);
-
-                $offerDAO = new JobOfferDAO();
-
-                //$company->setJobOffers($offerDAO->getOffersByID($company->getIdCompany()));
 
                 array_push($this->companyList, $company);
             }

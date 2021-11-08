@@ -1,5 +1,4 @@
-<?php
-namespace DAO;
+<?php namespace DAO\DAOJson;
 
 interface IDAO{
     function GetAll();

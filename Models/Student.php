@@ -3,8 +3,8 @@
 
     use Models\Person as Person;
 
-    class Student extends Person
-    {
+    class Student{
+            
         private $studentId;
         private $careerId;
         private $firstName;
@@ -18,7 +18,6 @@
         private $active;
 
     
-        
         public function getStudentId()
         {
                 return $this->studentId;
@@ -162,4 +161,3 @@
         }
     }
 ?>
-

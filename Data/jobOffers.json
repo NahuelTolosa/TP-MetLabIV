@@ -1,0 +1,13 @@
+[
+    {
+        "offerID": "JO123456G",
+        "idCompany": 123456,
+        "tittle": "Titulo",
+        "date": "22-10-2021",
+        "description": "Descripcion del puesto de trabajo",
+        "salary": "100000",
+        "workDay": "Part-Time",
+        "postulations": [],
+        "active": true
+    }
+]
