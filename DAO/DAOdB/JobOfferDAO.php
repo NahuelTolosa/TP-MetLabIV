@@ -127,14 +127,14 @@ class JobOfferDAO implements IDAO{
         $response = null;
         $arrayUser = array();
         try{
-            $query = "select users.userName from postulations as p inner join users on p.idUser = users.id where idJobOffer =".$offerID;
+            $query = "select users.userName from postulations as p inner join users on p.idUser = users.id where idJobOffer ='".$offerID."';";
             $this->connection = Connection::GetInstance();
             $result = $this->connection->Execute($query);
 
             foreach($result as $user){
                 array_push($arrayUser, $user['userName']);
             }
-
+            
            $response = $arrayUser;
         }catch (PDOException $e){
             $response = $e->getMessage();

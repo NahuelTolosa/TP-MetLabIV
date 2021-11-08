@@ -42,6 +42,7 @@
             }
             elseif ($_POST){
                 $this->parameters = $_POST;
+                
                 unset($this->parameters["button"]);
             }
                 
