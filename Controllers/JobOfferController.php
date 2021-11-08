@@ -8,6 +8,7 @@ use DAO\DAOdB\UserDAO;
 use DAO\DAOdB\CompanyDAO as CompanyDAO;
 use DAO\DAOJson\JobPositionDAO as JobPositionDAO;
 use Helpers\ThanksMailHelper as ThanksMailHelper;
+use Helpers\Utils;
 use Models\JobOffer as JobOffer;
 
 class JobOfferController
@@ -36,7 +37,7 @@ class JobOfferController
         $postulationDAO = new PostulationDAO();
         $hasApplied =  false;
 
-        if (substr($_SESSION['loggedUser']->getId(), 0, 2) == "ST"  && !empty($postulationDAO->GetOfferByID($_SESSION['loggedUser']->getId()))) {
+        if (Utils::isStudentLogged()  && !empty($postulationDAO->GetOfferByID($_SESSION['loggedUser']->getId()))) {
             $hasApplied =  true;
         }
         if ($message == "") {
@@ -45,7 +46,9 @@ class JobOfferController
         } else {
             $jobOfferList = $this->jobOfferDAO->GetFiltered($message);
         }
+
         require_once(VIEWS_PATH . "jobOffer-list.php");
+
     }
 
     public function ShowDeleteView($tittle, $offerID)
@@ -110,7 +113,15 @@ class JobOfferController
             if($response) $message = "<h4 style='color: #072'>Oferta laboral dada de baja con éxito</h4>
                                       <h4 style='color: #072'>Email enviado correctamente </h4>";
         }
-        $this->ShowListView($message);
+        if(Utils::isCompanyLogged()){
+            $jobOfferDAO = new JobOfferDAO();
+            $_SESSION['company']->setJoboffers($jobOfferDAO->GetByCompanyID($_SESSION['loggedUser']->GetNumerID()));
+            $companyController = new CompanyController();
+            $companyController->ShowPersonalInfo();
+        }else{
+            $this->ShowListView($message);
+        }
+        
     }
 
     public function MessageDeleteOffer()

@@ -67,7 +67,6 @@ class LogInController
                     $company->setJoboffers($jobOfferDAO->GetByCompanyID($_SESSION['loggedUser']->GetNumerID()));
 
                     SessionHelper::SetSessionUser("company",$company); //seteo los datos de la empresa en cuestion
-                    
                     $companyController->ShowPersonalInfo();
                     
                 }

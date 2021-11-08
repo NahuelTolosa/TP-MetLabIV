@@ -100,7 +100,7 @@ class CompanyDAO implements IDAO{
         $userList = array();
         $company = null;
         try{
-            $query = "SELECT * FROM ".$this->tableName." WHERE idCompany = '".$id."';";
+            $query = "SELECT * FROM ".$this->tableName." WHERE idCompany = ".$id.";";
             $this->connection = Connection::GetInstance();
             $result = $this->connection->Execute($query);
 

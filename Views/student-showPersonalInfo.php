@@ -75,7 +75,7 @@
                         <td><strong>Titulo:</strong> <?php echo $offer->getTittle()  ?></td>
                     <tr>
                     <tr>
-                        <td><strong>Compania:</strong><?php echo $companyDAO->GetByID($offer->getIdCompany())->getName() ?>
+                        <td><strong>Compañia:</strong><?php echo ($companyDAO->GetByID(intval($offer->getIdCompany())))->getName();?>
                         </td>
                     <tr>
                     <tr>

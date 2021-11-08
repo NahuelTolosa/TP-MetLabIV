@@ -7,7 +7,7 @@ class Utils{
         return (substr($_SESSION['loggedUser']->getId(),0,2) == "AD") ? true : false;
     }
 
-    public static function isCompnayLogged(){
+    public static function isCompanyLogged(){
         return (substr($_SESSION['loggedUser']->getId(),0,2) == "CO") ? true : false;
     }
 

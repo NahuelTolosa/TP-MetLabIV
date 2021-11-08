@@ -3,6 +3,7 @@ namespace DAO\DAOdB;
 
 use Models\JobOffer as JobOffer;
 use DAO\DAOdB\Connection as Connection;
+use Helpers\Utils;
 use PDOException as PDOException;
 
 class JobOfferDAO implements IDAO{  
@@ -32,6 +33,11 @@ class JobOfferDAO implements IDAO{
             
             $this->connection = Connection::GetInstance();
             $response = $this->connection->ExecuteNonQuery($query, $value);
+
+            if(Utils::isCompanyLogged()){
+                $jobOfferDAO = new JobOfferDAO();
+                $_SESSION['company']->setJoboffers($jobOfferDAO->GetByCompanyID($_SESSION['loggedUser']->GetNumerID()));
+            }
         }catch (PDOException $e){
             $response = $e->getMessage();
         }finally{

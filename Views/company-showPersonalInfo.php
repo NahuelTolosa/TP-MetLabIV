@@ -49,7 +49,10 @@
                     </tbody>
             </table>
                 
-            <?php }else{ foreach ($_SESSION['company']->getJobOffers() as $offer) {?>
+            <?php }else{ 
+                foreach ($_SESSION['company']->getJobOffers() as $offer) {
+                    if($offer->getActive()){
+            ?>
 
                 <table class="table bg-light-alpha">
                     <thead>
@@ -75,11 +78,13 @@
                             <tr>
                         </tbody>
                 </table>
-                <form action="<?php echo FRONT_ROOT ?>Postulation/DropOffer" method="POST">
-                    <input type="text" name="idUser" value="<?php echo $_SESSION['loggedUser']->getId()?>" class="form-control" hidden>
+                <form action="<?php echo FRONT_ROOT ?>JobOffer/DeleteOffer" method="POST">
+                    <input type="text" name="offerID" value="<?php echo $offer->getOfferID()?>" class="form-control" hidden>
                     <button type="submit" name="button" value="" class="button">Dar de baja</button>
                 </form>
-            <?php }} ?>
+
+            <?php }}} ?>
+            
         </div>
     </section>
 </main>

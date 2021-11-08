@@ -20,10 +20,10 @@ class PostulationController
         $this->postulationDAO = new PostulationDAO(); 
     }
 
-    public function ApplyOffer($idPostulation, $idUser)
+    public function ApplyOffer($idJobOffer, $idUser)
     {
         
-        $result = $this->postulationDAO->Add($idPostulation, $idUser);
+        $result = $this->postulationDAO->Add($idJobOffer, $idUser);
 
         $careerDAO= new CarreerDAO();
         $offerDAO = new JobOfferDAO();
@@ -40,7 +40,8 @@ class PostulationController
         
         $jobPositionDAO = new JobPositionDAO();
         
-        require_once(VIEWS_PATH."student-showPersonalInfo.php");
+        $studentController = new StudentController();
+        $studentController->ShowPersonalInfo();
         
     }
     
