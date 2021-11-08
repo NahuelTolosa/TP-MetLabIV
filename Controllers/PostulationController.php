@@ -55,7 +55,8 @@ class PostulationController
     }
 
     public function DropOffer($idUser){
-        $this->postulationDAO->Delete($idUser);
+        $this->postulationDAO->DeleteByMail($idUser);
+        
         $dropMessage="<p>Usted fue dado de baja de la postulación.</p>";
 
         $careerDAO= new CarreerDAO();

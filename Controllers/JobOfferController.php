@@ -71,9 +71,9 @@ class JobOfferController
         require_once(VIEWS_PATH . "jobOffer-userPostulation.php");
     }
 
-    public function ShowDropOfferUserView($user, $offerID)
+    public function ShowDropOfferUserView($user)
     {
-        die(var_dump($user, $offerID));
+        
         require_once(VIEWS_PATH . "jobOffer-dropUserPostulation.php");
     }
 
@@ -155,15 +155,19 @@ class JobOfferController
         $this->ShowListView($message);
     }
 
-    public function DropOfferUser($userName)
+    public function DropOfferUser($user)
     {
-        $userDAO = new UserDAO();
-        $user = $this->userDAO->GetByEmail($userName);
-        $row = $this->postulationDAO->Delete($user->getId);
+        // $userDAO = UserDAO::GetInstance();
+        // $userInstance =  $userDAO->GetByEmail($user);
+        // $row = $postulationDAO->Delete($userInstance->getId());
+        
+        $postulationDAO = PostulationDAO::GetInstance();
+        $row = $postulationDAO->DeleteByMail($user);
         $message = "";
         if ($row){
+            
             $body = $this->MessageDropOfferUser();
-            $response = ThanksMailHelper::SendEmail($body,"Baja en oferta laboral",$userName);
+            $response = ThanksMailHelper::SendEmail($body,"Baja en oferta laboral",$user);
             if($response) $message = "<h4 style='color: #072'>Usuario dado de baja con éxito</h4>
                                     <h4 style='color: #072'>Email enviado correctamente </h4>";
         }

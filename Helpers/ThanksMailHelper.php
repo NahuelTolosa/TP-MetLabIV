@@ -11,6 +11,7 @@ class ThanksMailHelper{
      * function that configures and send email
      */
     public static function SendEmail($body, $subject, $usersEmail){
+        
         try{
             if(empty($usersEmail)) return false;
                 
