@@ -101,7 +101,9 @@ class Company{
         return $this;
     }
 
-    
+    public function addOffer($offer){
+        array_push($this->jobOffers,$offer);
+    }
 }
 
 ?>

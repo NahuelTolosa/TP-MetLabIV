@@ -29,7 +29,7 @@ class JobOfferDAO implements IDAO{
             $value['workDay'] = $jobOffer->getWorkDay();
             $value['active'] = $jobOffer->getActive();
             $value['reference'] = $jobOffer->getReference();
-            // die(var_dump($value));
+            
             $this->connection = Connection::GetInstance();
             $response = $this->connection->ExecuteNonQuery($query, $value);
         }catch (PDOException $e){

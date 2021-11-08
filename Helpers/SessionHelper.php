@@ -32,9 +32,9 @@ class SessionHelper{
     /**
      * set session with user value
      */
-    public static function SetSessionUser($user){
-        SessionHelper::SetSession('loggedUser', $user);
-        return (SessionHelper::IsSession('loggedUser')) ? true : false;
+    public static function SetSessionUser($key,$value){
+        SessionHelper::SetSession($key, $value);
+        return (SessionHelper::IsSession($key)) ? true : false;
     }
 }
 

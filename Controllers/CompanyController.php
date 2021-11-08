@@ -1,8 +1,10 @@
 <?php
     namespace Controllers;
 
-    use DAO\DAOJson\CompanyDAO as CompanyDAO;
+    use DAO\DAOdB\CompanyDAO as CompanyDAO;
     use Models\Company as Company;
+    use DAO\DAOdB\JobOfferDAO;
+    use DAO\DAOJson\JobPositionDAO;
 
     class CompanyController
     {
@@ -36,6 +38,12 @@
             $company = $this->companyDAO->GetByID($companyID);
             
             require_once(VIEWS_PATH."company-modify.php");
+        }
+
+        public function ShowPersonalInfo(){
+            $jobPositionDAO = new JobPositionDAO();
+            require_once(VIEWS_PATH."company-showPersonalInfo.php");
+
         }
         
         public function Add($name, $cuit, $phoneNumber, $email)

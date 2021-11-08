@@ -2,9 +2,9 @@
 
 use DAO\DAOdB\CompanyDAO;
 use DAO\DAOdB\JobOfferDAO;
+use DAO\DAOJson\JobPositionDAO;
 use DAO\DAOdB\UserDAO as UserDAO;
 use DAO\DAOJson\CarreerDAO;
-use DAO\DAOJson\JobPositionDAO;
 use DAO\DAOJson\StudentDAO;
 use Models\User as User;
 use Helpers\SessionHelper as SessionHelper;
@@ -26,7 +26,7 @@ class LogInController
                 
                 $response = $this->PasswordValidate($user, $password);
                 
-                if($response) $isSession = SessionHelper::SetSessionUser($user);      //seteo user session
+                if($response) $isSession = SessionHelper::SetSessionUser("loggedUser",$user);      //seteo user session
             }
             $this->RedirectLogIn($isSession, $user);  //response and session key
             return $isSession;
@@ -58,14 +58,18 @@ class LogInController
                     $studentC->ShowPersonalInfo();
                 }
                 elseif (substr($userCheck->getId(),0,2) == "CO"){
+
                     $companyDAO = new CompanyDAO();
                     $jobOfferDAO = new JobOfferDAO();
-                    $jobPositionDAO = new JobPositionDAO();
+                    $companyController = new CompanyController();
 
                     $company = $companyDAO->GetByID($_SESSION['loggedUser']->GetNumerID());
                     $company->setJoboffers($jobOfferDAO->GetByCompanyID($_SESSION['loggedUser']->GetNumerID()));
+
+                    SessionHelper::SetSessionUser("company",$company); //seteo los datos de la empresa en cuestion
                     
-                    require_once(VIEWS_PATH."company-showPersonalInfo.php");
+                    $companyController->ShowPersonalInfo();
+                    
                 }
                  
             }else{

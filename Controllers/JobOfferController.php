@@ -5,7 +5,7 @@ namespace Controllers;
 use DAO\DAOdB\PostulationDAO as PostulationDAO;
 use DAO\DAOdB\JobOfferDAO as JobOfferDAO;
 use DAO\DAOdB\UserDAO;
-use DAO\DAOJson\CompanyDAO as CompanyDAO;
+use DAO\DAOdB\CompanyDAO as CompanyDAO;
 use DAO\DAOJson\JobPositionDAO as JobPositionDAO;
 use Helpers\ThanksMailHelper as ThanksMailHelper;
 use Models\JobOffer as JobOffer;
@@ -78,7 +78,7 @@ class JobOfferController
     public function Add($tittle, $company, $salary, $workDay, $reference, $description)
     {
         $companyController = new CompanyController();
-        $company = $companyController->getCompany($_POST['company']); // trae la compania de la api
+        $company = (isset($_SESSION['company]'])) ? $_SESSION['company]'] : $companyController->getCompany($_POST['company']); // trae la compania de la db en caso de que este agregando la oferta un admin
         $message = "";
 
         if ($company != null) {
@@ -95,6 +95,7 @@ class JobOfferController
         } else {
             $message = "<p style='color: #f00'>La empresa ingresada no existe en el sistema</p>";
         }
+
         $this->ShowAddView($message);
     }
 

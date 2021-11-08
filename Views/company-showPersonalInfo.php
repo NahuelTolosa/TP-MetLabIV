@@ -15,16 +15,16 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><strong>Razon Social: </strong> <?php echo $company->getName() ?></td>
+                        <td><strong>Razon Social: </strong> <?php echo $_SESSION['company']->getName() ?></td>
                     <tr>
                     <tr>
-                        <td><strong>Cuit: </strong><?php echo $company->getCuit() ?></td>
+                        <td><strong>Cuit: </strong><?php echo $_SESSION['company']->getCuit() ?></td>
                     <tr>
                     <tr>
-                        <td><strong>Número: </strong> <?php echo $company->getPhoneNumber() ?></td>
+                        <td><strong>Número: </strong> <?php echo $_SESSION['company']->getPhoneNumber() ?></td>
                     <tr>
                     <tr>
-                        <td><strong>Email: </strong> <?php echo $company->getEmail() ?></td>
+                        <td><strong>Email: </strong> <?php echo $_SESSION['company']->getEmail() ?></td>
                     <tr>
                 </tbody>
             </table>
@@ -37,7 +37,7 @@
                 <h2 class="mb-4">Ofertas de trabajo vigente</h2>
             </div>
 
-            <?php if(is_null($company->getJobOffers())){ ?>
+            <?php if(is_null($_SESSION['company']->getJobOffers())){ ?>
 
             <table class="table bg-light-alpha">
                 <thead>
@@ -49,7 +49,7 @@
                     </tbody>
             </table>
                 
-            <?php }else{ foreach ($company->getJobOffers() as $offer) {?>
+            <?php }else{ foreach ($_SESSION['company']->getJobOffers() as $offer) {?>
 
                 <table class="table bg-light-alpha">
                     <thead>
