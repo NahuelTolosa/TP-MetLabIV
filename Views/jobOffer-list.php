@@ -27,7 +27,7 @@ else if(substr($_SESSION['loggedUser']->getId(),0,2) == "AD")
                 </select>
                 <div class="buttons-filter">
                     <button type="submit" name="button" class="button">Buscar</button>
-                    <button type="submit" name="clear" class="button" value="<?php echo "<input type='reset' name='reset'  value='reset'>" ?>">Vaciar</button>
+                    <button type="submit" name="clear" class="button" value="1">Vaciar</button>
                 </div>
                 
                 
@@ -55,15 +55,25 @@ else if(substr($_SESSION['loggedUser']->getId(),0,2) == "AD")
                                             echo "<strong>".$jobOffer->getTittle()."</strong><p>(Tocar para mas info)</p>";
                                         ?>
                                     </div>
-                                    <div>
+                                    <div class="tittle">
                                         <?php
-                                        //hacer form para que pase los datos por post
                                             if(substr($_SESSION['loggedUser']->getId(),0,2) == "AD") //hacer un form
-                                            {
-                                                echo "<a href='".FRONT_ROOT."JobOffer/ShowModify/".$jobOffer->getOfferID()."'> Modificar </a>";
-                                                echo "<a href='".FRONT_ROOT."JobOffer/ShowDeleteView/".$jobOffer->getTittle()."/".$jobOffer->getOfferID()."'> Dar de baja </a>";
-                                                echo "<a href='".FRONT_ROOT."JobOffer/ShowAllUserOfferView/".$jobOffer->getTittle()."/".$jobOffer->getOfferID()."'> Postulaciones </a>";
-                                            }
+                                            { ?>
+                                                <form action="<?php echo FRONT_ROOT ?>JobOffer/ShowModify" method="POST">
+                                                    <input type="text" name="offerID" value="<?php echo $jobOffer->getOfferID() ?>" style="display:none">
+                                                    <button type="submit" name="button" value="" class="button">Modificar</button>
+                                                </form>
+                                                <form action="<?php echo FRONT_ROOT ?>JobOffer/ShowDeleteView" method="POST">
+                                                    <input type="text" name="tittle" value="<?php echo $jobOffer->getTittle() ?>" style="display:none">
+                                                    <input type="text" name="offerID" value="<?php echo $jobOffer->getOfferID() ?>" style="display:none">
+                                                    <button type="submit" name="button" value="" class="button">Dar de baja</button>
+                                                </form>
+                                                <form action="<?php echo FRONT_ROOT ?>JobOffer/ShowAllUserOfferView" method="POST">
+                                                    <input type="text" name="tittle" value="<?php echo $jobOffer->getTittle() ?>" style="display:none">
+                                                    <input type="text" name="offerID" value="<?php echo $jobOffer->getOfferID() ?>" style="display:none">
+                                                    <button type="submit" name="button" value="" class="button">Postulantes</button>
+                                                </form>
+                                        <?php }
                                             if(substr($_SESSION['loggedUser']->getId(),0,2) == "ST" && $hasApplied==false)
                                             {?>
                                                 <form action="<?php echo FRONT_ROOT ?>Postulation/ApplyOffer" method="POST">

@@ -4,7 +4,6 @@ namespace Controllers;
 
 use DAO\DAOdB\PostulationDAO as PostulationDAO;
 use DAO\DAOdB\JobOfferDAO as JobOfferDAO;
-use DAO\DAOdB\UserDAO;
 use DAO\DAOdB\CompanyDAO as CompanyDAO;
 use DAO\DAOJson\JobPositionDAO as JobPositionDAO;
 use Helpers\ThanksMailHelper as ThanksMailHelper;
@@ -106,6 +105,7 @@ class JobOfferController
 
     public function DeleteOffer($offerID)
     {
+        //Se borra la oferta en la tabla de ofertas (baja lógica)
         $row = $this->jobOfferDAO->Delete($offerID);
         $message = "";
         if ($row) {
@@ -115,6 +115,11 @@ class JobOfferController
             if($response) $message = "<h4 style='color: #072'>Oferta laboral dada de baja con éxito</h4>
                                       <h4 style='color: #072'>Email enviado correctamente </h4>";
         }
+
+        //Se borran las postulaciones asociadas a la oferta (baja física)
+        $postulationDAO = PostulationDAO::GetInstance();
+        $postulationDAO->DeleteByOffer($offerID);
+
         if(Utils::isCompanyLogged()){
             $jobOfferDAO = new JobOfferDAO();
             $_SESSION['company']->setJoboffers($jobOfferDAO->GetByCompanyID($_SESSION['loggedUser']->GetNumerID()));
@@ -157,10 +162,6 @@ class JobOfferController
 
     public function DropOfferUser($user)
     {
-        // $userDAO = UserDAO::GetInstance();
-        // $userInstance =  $userDAO->GetByEmail($user);
-        // $row = $postulationDAO->Delete($userInstance->getId());
-        
         $postulationDAO = PostulationDAO::GetInstance();
         $row = $postulationDAO->DeleteByMail($user);
         $message = "";

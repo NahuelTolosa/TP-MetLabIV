@@ -76,6 +76,23 @@ class PostulationDAO{
         }
     }
 
+    public function DeleteByOffer($idJobOffer)
+    {
+        $response = null;
+        try{
+
+            $query = "DELETE FROM ".$this->tableName." WHERE idJobOffer = :idJobOffer;";
+            $this->connection = Connection::GetInstance();
+            $value['idJobOffer'] = $idJobOffer;
+            $response = $this->connection->ExecuteNonQuery($query, $value);
+
+            return $response;
+
+        }catch (PDOException $e){
+            return $e->getMessage();
+        }
+    }
+
     public function DeleteByMail($userName)
     {
         $response = null;

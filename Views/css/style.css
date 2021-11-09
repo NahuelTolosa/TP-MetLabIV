@@ -167,3 +167,12 @@
     border: 1px solid black;
 }
 /*************************POSTULACIONES****************************/
+
+/*************************JOB OFFERS*******************************/
+.joboffers-summary-options{
+    display: flex;
+    flex-direction: row;
+}
+.joboffers-summary-options .button{
+    width: 100px;
+}
