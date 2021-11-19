@@ -1,4 +1,7 @@
 <?php
+
+use Helpers\Utils;
+
 if (!isset($_SESSION['loggedUser']))
     require_once('logIn.php');
 else {
@@ -57,38 +60,35 @@ else if(substr($_SESSION['loggedUser']->getId(),0,2) == "AD")
                                     </div>
                                     <div class="tittle">
                                         <?php
-                                            if(substr($_SESSION['loggedUser']->getId(),0,2) == "AD") //hacer un form
+                                            if(Utils::isAdminLogged()) //hacer un form
                                             { ?>
                                                 <form action="<?php echo FRONT_ROOT ?>JobOffer/ShowModify" method="POST">
                                                     <input type="text" name="offerID" value="<?php echo $jobOffer->getOfferID() ?>" style="display:none">
-                                                    <button type="submit" name="button" value="" class="button">Modificar</button>
+                                                    <button style="margin:0 5px" type="submit" name="button" value="" class="button">Modificar</button>
                                                 </form>
                                                 <form action="<?php echo FRONT_ROOT ?>JobOffer/ShowDeleteView" method="POST">
                                                     <input type="text" name="tittle" value="<?php echo $jobOffer->getTittle() ?>" style="display:none">
                                                     <input type="text" name="offerID" value="<?php echo $jobOffer->getOfferID() ?>" style="display:none">
-                                                    <button type="submit" name="button" value="" class="button">Dar de baja</button>
+                                                    <button style="margin:0 5px" type="submit" name="button" value="" class="button">Dar de baja</button>
                                                 </form>
                                                 <form action="<?php echo FRONT_ROOT ?>JobOffer/ShowAllUserOfferView" method="POST">
                                                     <input type="text" name="tittle" value="<?php echo $jobOffer->getTittle() ?>" style="display:none">
                                                     <input type="text" name="offerID" value="<?php echo $jobOffer->getOfferID() ?>" style="display:none">
-                                                    <button type="submit" name="button" value="" class="button">Postulantes</button>
+                                                    <button style="margin:0 5px" type="submit" name="button" value="" class="button">Postulantes</button>
                                                 </form>
                                         <?php }
-                                            if(substr($_SESSION['loggedUser']->getId(),0,2) == "ST" && $hasApplied==false)
+                                            if(Utils::isStudentLogged() && $hasApplied==false)
                                             {?>
                                                 <form action="<?php echo FRONT_ROOT ?>Postulation/ApplyOffer" method="POST">
                                                     <input type="text" name="idJobOffer" value="<?php echo $jobOffer->getOfferID()?>" class="" hidden>
                                                     <input type="text" name="idUser" value="<?php echo $_SESSION['loggedUser']->getId()?>" class="" hidden>
-                                                    <button type="submit" name="button" value="" class="button">Postularse</button>
+                                                    <button style="margin:0 5px" type="submit" name="button" value="" class="button">Postularse</button>
                                                 </form>
                                         <?php } ?>
                                     </div>
                                 </summary>
                                 <div class="summary-description">
                                     <div class="company-image">
-                                        <div>
-                                            <p><strong>Imagen</strong></p>
-                                        </div>
                                         <div>
                                             <p><strong>Empresa:</strong> <?php echo $jobOffer->getTittle()?></p><!--Esto está mal-->
                                         </div>

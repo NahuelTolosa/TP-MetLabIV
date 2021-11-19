@@ -31,7 +31,7 @@ class JobOfferController
 
     public function ShowListView($message = "", $filter = "null")
     {
-        $jobPositionDAO = new jobPositionDAO();
+        $jobPositionDAO = new JobPositionDAO();
         $jobOfferDAO = JobOfferDAO::GetInstance();
         $postulationDAO = new PostulationDAO();
         $hasApplied =  false;

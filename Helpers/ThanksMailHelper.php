@@ -37,6 +37,8 @@ class ThanksMailHelper{
             $mail->IsHTML(true);                    //format email to HTML
             $mail->Subject = $subject;
             $mail->Body = $body;
+
+            $mail->send();
             
         }catch (Exception $e) {
             throw $e;
