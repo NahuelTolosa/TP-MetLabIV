@@ -7,8 +7,13 @@
     class JobPositionDAO implements IDAO
     {
 
-        private $jobPositions=array();
+        private $jobPositions = array();
 
+        public function __construct()
+        {
+            $jobPositions = $this->RetrieveData();
+        }
+        
 
         public function Add($student)
         {
@@ -61,8 +66,6 @@
         }
 
         public function GetNameById($id){
-
-            $this->RetrieveData();
 
             foreach($this->jobPositions as $jobPosition){
                 if($jobPosition->getJobPositionId() == $id){

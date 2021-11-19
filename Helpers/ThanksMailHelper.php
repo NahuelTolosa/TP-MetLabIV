@@ -11,6 +11,7 @@ class ThanksMailHelper{
      * function that configures and send email
      */
     public static function SendEmail($body, $subject, $usersEmail){
+        
         try{
             if(empty($usersEmail)) return false;
                 
@@ -37,12 +38,8 @@ class ThanksMailHelper{
             $mail->Subject = $subject;
             $mail->Body = $body;
 
-            //return ($mail->send()) ? true : false;
-            if ($mail->send()){
-                echo "esssssito";
-            }else{
-                echo "F";
-            }
+            $mail->send();
+            
         }catch (Exception $e) {
             throw $e;
         }

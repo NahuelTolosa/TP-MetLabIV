@@ -56,20 +56,16 @@ class PostulationController
 
     public function DropOffer($idUser){
         $this->postulationDAO->Delete($idUser);
+        
         $dropMessage="<p>Usted fue dado de baja de la postulación.</p>";
 
-        $careerDAO= new CarreerDAO();
-        $offerDAO = new JobOfferDAO();
-        $companyDAO = new CompanyDAO();
-        $studentDAO = new StudentDAO();
-        $jobPositionDAO = new JobPositionDAO();
+        $studentController = new StudentController();
 
-        $student=  $studentDAO->GetByEmail($_SESSION['loggedUser']->getUserName());
+        $studentController->ShowPersonalInfo();
+    }
 
-        $postulation = $this->postulationDAO->GetByUserID($_SESSION['loggedUser']->getId());
-        $offer = (is_null($postulation)) ? null :$offerDAO->GetById($postulation->getIdJobOffer());
-
-        require_once(VIEWS_PATH."student-showPersonalInfo.php");
+    public function DropByOffer($idOffer){
+        
     }
     
 }

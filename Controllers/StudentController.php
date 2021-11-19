@@ -53,7 +53,6 @@ class StudentController
             $jobPositionDAO = new JobPositionDAO();
             
             $student= $this -> studentDAO->GetByEmail($_SESSION['loggedUser']->getUserName());
-
             $postulation = $this->postulationDAO->GetByUserID($_SESSION['loggedUser']->getId());
             $offer = (is_null($postulation)) ? null : $offerDAO->GetById($postulation->getIdJobOffer());
 

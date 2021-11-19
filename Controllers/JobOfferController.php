@@ -4,7 +4,6 @@ namespace Controllers;
 
 use DAO\DAOdB\PostulationDAO as PostulationDAO;
 use DAO\DAOdB\JobOfferDAO as JobOfferDAO;
-use DAO\DAOdB\UserDAO;
 use DAO\DAOdB\CompanyDAO as CompanyDAO;
 use DAO\DAOJson\JobPositionDAO as JobPositionDAO;
 use Helpers\ThanksMailHelper as ThanksMailHelper;
@@ -32,7 +31,7 @@ class JobOfferController
 
     public function ShowListView($message = "", $filter = "null")
     {
-        $jobPositionDAO = new jobPositionDAO();
+        $jobPositionDAO = new JobPositionDAO();
         $jobOfferDAO = JobOfferDAO::GetInstance();
         $postulationDAO = new PostulationDAO();
         $hasApplied =  false;
@@ -71,9 +70,9 @@ class JobOfferController
         require_once(VIEWS_PATH . "jobOffer-userPostulation.php");
     }
 
-    public function ShowDropOfferUserView($user, $offerID)
+    public function ShowDropOfferUserView($user)
     {
-        die(var_dump($user, $offerID));
+        
         require_once(VIEWS_PATH . "jobOffer-dropUserPostulation.php");
     }
 
@@ -106,6 +105,7 @@ class JobOfferController
 
     public function DeleteOffer($offerID)
     {
+        //Se borra la oferta en la tabla de ofertas (baja lógica)
         $row = $this->jobOfferDAO->Delete($offerID);
         $message = "";
         if ($row) {
@@ -115,6 +115,11 @@ class JobOfferController
             if($response) $message = "<h4 style='color: #072'>Oferta laboral dada de baja con éxito</h4>
                                       <h4 style='color: #072'>Email enviado correctamente </h4>";
         }
+
+        //Se borran las postulaciones asociadas a la oferta (baja física)
+        $postulationDAO = PostulationDAO::GetInstance();
+        $postulationDAO->DeleteByOffer($offerID);
+
         if(Utils::isCompanyLogged()){
             $jobOfferDAO = new JobOfferDAO();
             $_SESSION['company']->setJoboffers($jobOfferDAO->GetByCompanyID($_SESSION['loggedUser']->GetNumerID()));
@@ -155,15 +160,15 @@ class JobOfferController
         $this->ShowListView($message);
     }
 
-    public function DropOfferUser($userName)
+    public function DropOfferUser($user)
     {
-        $userDAO = new UserDAO();
-        $user = $this->userDAO->GetByEmail($userName);
-        $row = $this->postulationDAO->Delete($user->getId);
+        $postulationDAO = PostulationDAO::GetInstance();
+        $row = $postulationDAO->DeleteByMail($user);
         $message = "";
         if ($row){
+            
             $body = $this->MessageDropOfferUser();
-            $response = ThanksMailHelper::SendEmail($body,"Baja en oferta laboral",$userName);
+            $response = ThanksMailHelper::SendEmail($body,"Baja en oferta laboral",$user);
             if($response) $message = "<h4 style='color: #072'>Usuario dado de baja con éxito</h4>
                                     <h4 style='color: #072'>Email enviado correctamente </h4>";
         }

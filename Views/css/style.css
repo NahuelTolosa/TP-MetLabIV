@@ -1,6 +1,7 @@
 .body{
     display: flex;
     flex-direction: column;
+    background-color: #aaa;
 }
 
 .main-container{
@@ -163,6 +164,14 @@
 }
 .summary-description div{
     margin: 15px;
-    border: 1px solid black;
 }
 /*************************POSTULACIONES****************************/
+
+/*************************JOB OFFERS*******************************/
+.joboffers-summary-options{
+    display: flex;
+    flex-direction: row;
+}
+.joboffers-summary-options .button{
+    width: 100px;
+}

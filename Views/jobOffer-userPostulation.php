@@ -10,7 +10,7 @@
     <section id="listado" class="mb-5">
         <div class="container">
             <h2 class="mb-4">Postulaciones activas "<?php echo $tittle?>"</h2>
-            <form action="<?php echo FRONT_ROOT ?>JobOffer/DropOfferUser" method="post" class="bg-light-alpha p-5">
+            <form action="<?php echo FRONT_ROOT ?>JobOffer/ShowDropOfferUserView" method="post" class="bg-light-alpha p-5">
                         <table class="table bg-light-alpha">
                 <?php foreach ($userList as $user) {?>
                     <tbody>
@@ -21,7 +21,6 @@
                                 <?php echo $user; ?> 
                             </div> 
                             <input type='text' name='user' value="<?php echo $user ?>" class='form-control' hidden>
-                            <input type='text' name='offerID' value="<?php echo $offerID ?>" class='form-control' hidden>
                             <button class="btn btn-danger" type="submit">Rechazar</button>
                         </td>
                     <tr>

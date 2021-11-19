@@ -11,13 +11,8 @@
         <div class="container">
             <h2 class="mb-4">Modificacion de Oferta Laboral</h2>
             <form action="<?php echo FRONT_ROOT ?>JobOffer/Update/" method="post" class="bg-light-alpha p-5">
+                <input type="text" name="offerID" value="<?php echo $jobOffer->getOfferID() ?>" class="form-control" style="display:none">
                 <div class="row">
-                <div class="col-lg-4">
-                        <div class="form-group">
-                            <input type="text" name="offerID" value="<?php echo $jobOffer->getOfferID() ?>"
-                                class="form-control" hidden>
-                        </div>
-                    </div>
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label for="">Titulo</label>
